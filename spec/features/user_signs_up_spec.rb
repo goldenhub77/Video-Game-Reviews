@@ -15,8 +15,8 @@ feature 'user signs up', %q(
     fill_in 'Password Confirmation', with: 'Pa$$word'
     click_button 'Sign Up'
 
-    expect(page).to have_content('Sign In')
-    expect(page).to have_content('You have successfully signed up')
+    expect(page).to have_content('Sign Out')
+    expect(page).to have_content('You have signed up successfully.')
   end
 
   it 'fails' do
@@ -29,6 +29,11 @@ feature 'user signs up', %q(
     fill_in 'Password Confirmation', with: 'Password'
     click_button 'Sign Up'
 
-    expect(page).to have_content('Account not created')
+    expect(page).to have_content('4 errors prohibited this user from being saved:')
+    expect(page).to have_content('Email is invalid')
+    expect(page).to have_content("Password confirmation doesn't match Password")
+    expect(page).to have_content("First name can't be blank")
+    expect(page).to have_content("Last name can't be blank")
+
   end
 end
