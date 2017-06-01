@@ -10,7 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170531144710) do
+
+ActiveRecord::Schema.define(version: 20170531223720) do
+
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -35,4 +37,17 @@ ActiveRecord::Schema.define(version: 20170531144710) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "video_games", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "developer", null: false
+    t.text "description", null: false
+    t.string "platforms", default: [], null: false, array: true
+    t.string "genre", null: false
+    t.date "release_date", null: false
+    t.integer "rating", default: 0, null: false
+    t.decimal "price", precision: 8, scale: 2, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_video_games_on_title", unique: true
+  end
 end
