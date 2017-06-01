@@ -5,22 +5,28 @@ feature 'existing user updates information', %q(
   I want to sign in
   So that I can post items and review them
 ) do
+
+  let!(:user) { FactoryGirl.create(:user) }
+  
   it 'sucessfully' do
     visit new_user_session_path
-    user = FactoryGirl.create(:user)
 
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
-    click_button 'Sign In'
-    click_link 'Edit'
 
-    fill_in 'Last Name', with: "Bond"
+    click_button 'Log In'
+    click_link 'Edit Account'
+
+    fill_in 'Last Name', with: 'Bond'
+    fill_in 'Current Password', with: user.password
 
     click_button 'Update'
 
     expect(page).to have_content('Sign Out')
-    expect(page).not_to have_content('Sign In')
-    expect(page).to have_content('You have successfully updated you account')
-    expect(user.last_name).to eq("Bond")
+    expect(page).not_to have_content('Log In')
+    expect(page).to have_content('Your account has been updated successfully.')
+
+    updated_user = User.find(user.id)
+    expect(updated_user.id).to eq(user.id)
   end
 end

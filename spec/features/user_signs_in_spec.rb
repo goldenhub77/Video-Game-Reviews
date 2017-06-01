@@ -11,20 +11,20 @@ feature 'user signs in', %q(
 
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
-    click_button 'Sign In'
+    click_button 'Log In'
 
     expect(page).to have_content('Sign Out')
-    expect(page).not_to have_content('Sign In')
-    expect(page).to have_content('You have successfully signed in')
+    expect(page).not_to have_content('Log In')
+    expect(page).to have_content('Signed in successfully.')
   end
 
   it 'fails' do
-    visit new_user_sessions_path
+    visit new_user_session_path
 
     fill_in 'Email', with: 'unknown@email.com'
     fill_in 'Password', with: 'badpassword'
-    click_button 'Sign In'
+    click_button 'Log In'
 
-    expect(page).to have_content('Invalid email or password!')
+    expect(page).to have_content('Invalid Email or password.')
   end
 end

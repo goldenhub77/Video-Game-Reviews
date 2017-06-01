@@ -12,13 +12,13 @@ feature 'user signs out', %q(
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
 
-    click_button 'Sign In'
+    click_button 'Log In'
 
     expect(page).to have_content('Sign Out')
 
-    click_button 'Sign Out'
+    click_link 'Sign Out'
 
-    expect(page).not_to have_content('Sign In')
-    expect(page).to have_content('You have successfully signed out')
+    expect(page).not_to have_content('Log In')
+    expect(page).to have_content('Signed out successfully.')
   end
 end
