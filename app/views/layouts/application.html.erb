@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>VideoGameReviews</title>
+    <title>Video Game Reviews</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <%= stylesheet_link_tag href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' %>
   </head>
 
-  <body>
-    <header>
-      <%= render 'layouts/navigation' %>
-    </header>
-    
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+  <body class='fixed skin-black'>
+    <div class='wrapper'>
+      <%= render 'layouts/navigation/layout' %>
+      <div class='content-wrapper'>
+        <div class="container">
+          <p class="notice"><%= notice %></p>
+          <p class="alert"><%= alert %></p>
+          <%= yield %>
+        </div>
+      </div>
+      <%= render 'layouts/navigation/footer' %>
+    </div>
   </body>
 </html>
