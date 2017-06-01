@@ -1,0 +1,7 @@
+h1, h2, h3, h4, h5, form, .devise-links {
+  text-align: center;
+}
+
+form input:last-of-type {
+  margin-bottom: 1rem;
+}

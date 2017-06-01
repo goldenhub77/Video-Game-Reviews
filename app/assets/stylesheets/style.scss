@@ -1,0 +1,12 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "AdminLTE";
+@import "skins/skin-black";
+
+.content-wrapper, .main-footer {
+  margin: 0;
+}
+p.notice, p.alert {
+  text-align: center;
+  font-weight: bolder;
+}
