@@ -6,7 +6,7 @@ feature 'existing user updates information', %q(
   So that I can post items and review them
 ) do
   it 'sucessfully' do
-    visit new_user_sessions_path
+    visit new_user_session_path
     user = FactoryGirl.create(:user)
 
     fill_in 'Email', with: user.email

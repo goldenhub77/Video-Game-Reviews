@@ -6,7 +6,7 @@ feature 'user signs out', %q(
   So that no one else can post items or reviews on my behalf
 ) do
   it 'sucessfully' do
-    visit new_user_sessions_path
+    visit new_user_session_path
     user = FactoryGirl.create(:user)
 
     fill_in 'Email', with: user.email
