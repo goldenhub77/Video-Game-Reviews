@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
+  before_action :authenticate_user!, except: [:home]
   before_action :configure_permitted_parameters, if: :devise_controller?
+
 
   def authorize_admin!
     if current_user.nil? or !current_user.is_admin?
