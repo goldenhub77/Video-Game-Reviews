@@ -2,7 +2,10 @@ require 'rails_helper'
 
 RSpec.describe VideoGame, type: :model do
   describe '.create' do
+    let!(:user) { FactoryGirl.create(:user) }
+
     it 'successfully' do
+
       video_game = VideoGame.create(
         title: "Overwatch",
         developer: "Blizzard Entertainment",
@@ -11,7 +14,8 @@ RSpec.describe VideoGame, type: :model do
         genre: "Shooter",
         release_date: Date.parse('2016-05-20'),
         rating: 95,
-        price: 59.99
+        price: 59.99,
+        user_id: user.id
       )
       expect(video_game.valid?).to be_truthy
       expect(video_game.errors).to be_empty
@@ -26,7 +30,8 @@ RSpec.describe VideoGame, type: :model do
         genre: "",
         release_date: "",
         rating: "abc",
-        price: "abc"
+        price: "abc",
+        user_id: user.id
       )
       expect(video_game.valid?).to be_falsey
       expect(video_game.errors.full_messages).to include(

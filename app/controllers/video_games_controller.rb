@@ -8,14 +8,11 @@ class VideoGamesController < ApplicationController
 
   #views all available video games sorted by title
   def index
-    if !video_game_params["user_id"].nil?
-      @title = "#{current_user.first_name} #{current_user.last_name}'s games"
-      user = User.find(video_game_params["user_id"])
-      @video_games = user.video_games
-    else
-      @title = 'Available Games'
-    end
+    @title = 'Available Games'
+  end
 
+  def show
+    @game = VideoGame.where(video_game_params).first
   end
 
   #change existing video game if owner
@@ -42,7 +39,7 @@ class VideoGamesController < ApplicationController
   protected
 
   def video_game_params
-    params.permit([:user_id])
+    params.permit(:id)
   end
 
   def load_games

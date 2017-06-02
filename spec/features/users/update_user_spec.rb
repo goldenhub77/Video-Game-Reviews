@@ -1,9 +1,8 @@
 require 'rails_helper'
 
 feature 'existing user updates information', %q(
-  As an unauthenticated user
-  I want to sign in
-  So that I can post items and review them
+  As an authenticated user
+  I want to update my account
 ) do
 
   let!(:user) { FactoryGirl.create(:user) }
