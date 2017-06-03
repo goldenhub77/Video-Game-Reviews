@@ -5,6 +5,34 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+PLATFORMS =
+[
+  { name: 'Windows' },
+  { name: 'Mac' },
+  { name: 'Linux' },
+  { name: 'Xbox' },
+  { name: 'Xbox 360' },
+  { name: 'Xbox One' },
+  { name: 'Playstation' },
+  { name: 'Playstation 2' },
+  { name: 'Playstation 3' },
+  { name: 'Playstation 4' },
+  { name: 'Android' },
+  { name: 'IOS' }
+]
+
+GENRES =
+[
+  { name: 'First Person Shooter', abbr: 'FPS' },
+  { name: 'Adventure', abbr: 'ADV' },
+  { name: 'Role Playing Game', abbr: 'RPG' },
+  { name: 'Puzzle'},
+  { name: 'Simulation', abbr: 'SIM' },
+  { name: 'Strategy' },
+  { name: 'Sports' },
+  { name: 'Fighting' },
+  { name: 'Survival' }
+]
 
 10.times do
   user = FactoryGirl.build(:user)
@@ -18,4 +46,12 @@
       end
     end
   end
+end
+
+PLATFORMS.each do |platform|
+  Platform.find_or_create_by(name: platform[:name])
+end
+
+GENRES.each do |genre|
+  Genre.find_or_create_by(name: genre[:name], abbr: genre[:abbr])
 end

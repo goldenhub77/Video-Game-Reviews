@@ -1,7 +1,7 @@
 module DeviseHelper
   def devise_error_messages!
     return "" unless devise_error_messages?
-
+    binding.pry
     messages = resource.errors.full_messages.map { |msg| content_tag(:p, msg) }.join
     if resource.errors.count == 1
       error_text = 'error'
