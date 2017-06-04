@@ -63,4 +63,18 @@ RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include Devise::Test::ControllerHelpers, type: :view
+  include Warden::Test::Helpers
+  Warden.test_mode!
+
+  config.after(:each) do
+    Warden.test_reset!
+  end
+
+  def sign_in(user, opts = {})
+    login_as(user, opts)
+  end
+
+  def sign_out(*scopes)
+    logout(*scopes)
+  end
 end

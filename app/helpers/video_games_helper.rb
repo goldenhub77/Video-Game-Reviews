@@ -1,6 +1,6 @@
 module VideoGamesHelper
   def video_game_error_messages!
-    return "" unless devise_error_messages?
+    return "" unless video_game_error_messages?
 
     messages = @new_video_game.errors.full_messages.map { |msg| content_tag(:p, msg) }.join
     if @new_video_game.errors.count == 1
@@ -18,7 +18,7 @@ module VideoGamesHelper
     html.html_safe
   end
 
-  def devise_error_messages?
+  def video_game_error_messages?
     !@new_video_game.errors.empty?
   end
 

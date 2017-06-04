@@ -29,7 +29,7 @@ feature 'user signs up', %q(
     fill_in 'Password Confirmation', with: 'Password'
     click_button 'Sign Up'
 
-    expect(page).to have_content('4 errors prohibited this user from being saved:')
+    expect(page).to have_content('4 errors in user form.')
     expect(page).to have_content('Email is invalid')
     expect(page).to have_content("Password confirmation doesn't match Password")
     expect(page).to have_content("First name can't be blank")

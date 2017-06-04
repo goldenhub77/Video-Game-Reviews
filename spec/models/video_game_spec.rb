@@ -10,11 +10,10 @@ RSpec.describe VideoGame, type: :model do
         title: "Overwatch",
         developer: "Blizzard Entertainment",
         description: "Fantastic, frantic shooter with some violence, open chat.",
-        platforms: ["Mac", "PlayStation 4", "Windows", "Xbox One"],
-        genre: "Shooter",
+        platforms: ["platform"],
+        genre: "genre",
         release_date: Date.parse('2016-05-20'),
         rating: 95,
-        price: 59.99,
         user_id: user.id
       )
       expect(video_game.valid?).to be_truthy
@@ -30,7 +29,6 @@ RSpec.describe VideoGame, type: :model do
         genre: "",
         release_date: "",
         rating: "abc",
-        price: "abc",
         user_id: user.id
       )
       expect(video_game.valid?).to be_falsey
@@ -39,7 +37,7 @@ RSpec.describe VideoGame, type: :model do
         "Title is too short (minimum is 5 characters)",
         "Developer can't be blank", "Description is too short (minimum is 15 characters)",
         "Platforms can't be blank", "Genre can't be blank",
-        "Release date can't be blank", "Rating is not a number", "Price is not a number"
+        "Release date can't be blank", "Rating is not a number"
       )
     end
   end

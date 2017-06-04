@@ -7,20 +7,23 @@ feature 'user updates an existing video game', %q(
 ) do
 
   let!(:user) { FactoryGirl.create(:user) }
+  let!(:platform) { FactoryGirl.create(:platform) }
+  let!(:genre) { FactoryGirl.create(:genre) }
+  let!(:video_game) { FactoryGirl.create(:video_game, user_id: user.id) }
 
   it 'sucessfully' do
     visit root_path
     sign_in(user)
-    visit edit_video_game_path
-    game = FactoryGirl.build(:video_game)
+    visit edit_video_game_path(video_game.id)
+
 
     fill_in 'Title', with: 'Overwatch'
     fill_in 'Developer', with: 'Blizzard Entertainment'
     fill_in 'Description', with: game.description
-    check_box 'Platforms', with: ['Xbox', 'Windows', 'Playstation']
-    fill_in 'Date', with: '5/16/17'
+    check "video_game_platforms_#{platform.id}"
+    fill_in 'Release Date', with: '06/10/2015'
 
-    click_button 'Create Video Game'
+    click_button 'Update Game'
 
     expect(page).to have_content('You have created Overwatch successfully')
   end
@@ -28,23 +31,22 @@ feature 'user updates an existing video game', %q(
   it 'fails with bad data' do
     visit root_path
     sign_in(user)
-    visit edit_video_game_path
+    visit edit_video_game_path(video_game.id)
 
     fill_in 'Title', with: ''
     fill_in 'Developer', with: ''
     fill_in 'Description', with: ''
-    check_box 'Platforms', with: []
     fill_in 'Date', with: ''
 
-    click_button 'Create Video Game'
+    click_button 'Update Game'
 
     expect(page).to have_content('Errors to be on page')
   end
 
   it 'fails by no user logged in' do
 
-    visit edit_video_game_path
+    visit edit_video_game_path(video_game.id)
 
-    expect(page).to have_content('You must be logged in to see this resource')
+    expect(page).to have_content('You need to sign in or sign up before continuing.')
   end
 end

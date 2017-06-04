@@ -45,7 +45,7 @@ feature 'existing user updates information', %q(
 
     expect(page).to have_content('Sign Out')
     expect(page).not_to have_content('Log In')
-    expect(page).to have_content('1 error prohibited this user from being saved: Current password is invalid')
+    expect(page).to have_content('1 error in user form. Current password is invalid')
 
     updated_user = User.find(user.id)
     expect(updated_user.last_name).to eq(user.last_name)
