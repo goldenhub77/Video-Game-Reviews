@@ -7,8 +7,8 @@ class ApplicationController < ActionController::Base
   def authorize_owner!
     begin
       resource = current_user.send(self.controller_path).where('id = ?', params[:id])
-      if resource.empty?
-        redirect_back(fallback_location: root_path)
+      if !current_user.is_admin? and resource.empty?
+        redirect_to user_video_games_path(current_user.id)
       else
         return true
       end

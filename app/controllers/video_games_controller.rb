@@ -51,7 +51,8 @@ class VideoGamesController < ApplicationController
   def destroy
     @game_for_form = VideoGame.find(video_game_params[:id])
     @game_for_form.destroy
-    redirect_to user_video_games_path(current_user.id) 
+    flash[:notice] = "You successfully deleted #{@game_for_form.title} "
+    redirect_to user_video_games_path(current_user.id)
   end
 
   protected
