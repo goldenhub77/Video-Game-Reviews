@@ -12,9 +12,15 @@ feature 'user updates an existing video game', %q(
   let!(:video_game) { FactoryGirl.create(:video_game, user_id: user.id) }
 
   it 'sucessfully' do
-    visit root_path
+
     sign_in(user)
-    visit edit_video_game_path(video_game.id)
+    visit video_game_path(video_game.id)
+
+    expect(page).to have_button('Edit')
+
+    click_button 'Edit'
+
+    expect(page).to have_content("Edit - #{video_game.title}")
 
     fill_in 'Title', with: 'Overwatch'
     fill_in 'Developer', with: 'Blizzard Entertainment'
@@ -49,6 +55,10 @@ feature 'user updates an existing video game', %q(
   end
 
   it 'fails by no user logged in' do
+
+    visit video_game_path(video_game.id)
+
+    expect(page).not_to have_button('Edit')
 
     visit edit_video_game_path(video_game.id)
 

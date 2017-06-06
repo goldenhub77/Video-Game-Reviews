@@ -1,5 +1,4 @@
 class VideoGamesController < ApplicationController
-  before_action :load_games, only: [:index]
 
   #welcome page/root page or if user unauthenticated
   def home
@@ -9,6 +8,7 @@ class VideoGamesController < ApplicationController
   #views all available video games sorted by title
   def index
     @title = 'Available Games'
+    @all_video_games = load_games
   end
 
   def show
@@ -55,6 +55,10 @@ class VideoGamesController < ApplicationController
     redirect_to user_video_games_path(current_user.id)
   end
 
+  def load_games
+    VideoGame.order('created_at DESC')
+  end
+
   protected
 
   def video_game_params
@@ -63,9 +67,5 @@ class VideoGamesController < ApplicationController
 
   def post_game_params
     params.require(:video_game).permit(:title, :description, :developer, :genre, :release_date, :rating, platforms: [])
-  end
-
-  def load_games
-    @all_video_games = VideoGame.all
   end
 end

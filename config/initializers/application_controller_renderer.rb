@@ -4,3 +4,17 @@
 #   http_host: 'example.org',
 #   https: false
 # )
+
+if ActiveRecord::Base.connection.data_source_exists? 'genres'
+  Genre.destroy_all
+
+  VideoGame::GENRES.each do |genre|
+    Genre.find_or_create_by(name: genre[:name], abbr: genre[:abbr])
+  end
+end
+if ActiveRecord::Base.connection.data_source_exists? 'platforms'
+  Platform.destroy_all
+  VideoGame::PLATFORMS.each do |platform|
+    Platform.find_or_create_by(name: platform[:name])
+  end
+end

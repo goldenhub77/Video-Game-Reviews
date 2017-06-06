@@ -6,13 +6,13 @@ RSpec.describe VideoGamesController, type: :controller do
     user = FactoryGirl.create(:user)
     sign_in(user)
   end
-  
+
   describe '.load_games' do
-    it 'intializes @video_games' do
-      video_games = VideoGame.all
+    it 'intializes @all_video_games' do
+      all_video_games = VideoGame.order('created_at DESC')
       controller = VideoGamesController.new()
-      loaded_games = controller.instance_eval{ load_games }
-      expect(loaded_games).to eq(video_games)
+      load_games = controller.instance_eval{ load_games }
+      expect(load_games).to eq(all_video_games)
     end
   end
 

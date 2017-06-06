@@ -3,7 +3,7 @@ FactoryGirl.define do
     sequence(:title) { |n| "Overwatch vol.#{n}"}
     developer "Blizzard Entertainment"
     description "Fantastic, frantic shooter with some violence, open chat."
-    platforms [1,2,3]
+    platforms ["1", "2", "3"]
     genre "genre"
     release_date Date.parse('2016-05-20')
     rating 95

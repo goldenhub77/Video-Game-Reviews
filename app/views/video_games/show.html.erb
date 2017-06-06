@@ -1,1 +1,11 @@
-<h2><%= @game.title %></h2>
+<div class="row">
+  <% if user_owns(@game) %>
+    <%= button_to "Edit", edit_video_game_path(@game), class: "col-md-3 btn btn-secondary", method: :get %>
+  <% end %>
+</div>
+<div class="row">
+  <div class="body">
+    <h2><%= @game.title %></h2>
+
+  </div>
+</div>

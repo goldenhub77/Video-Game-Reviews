@@ -3,6 +3,7 @@
   <nav class="navbar navbar-static-top" role="navigation">
     <% if user_signed_in? %>
       <div class= "header-buttons-div">
+        <%= link_to "All Games", video_games_path, class: "btn btn-default header-buttons" %>
         <%= link_to "Create New Game", new_video_game_path, class: "btn btn-default header-buttons" %>
       </div>
     <% end %>

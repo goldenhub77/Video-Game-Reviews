@@ -13,7 +13,15 @@ feature 'user creates a new video game', %q(
   it 'sucessfully' do
 
     visit root_path
+
+    expect(page).not_to have_content('Create New Game')
+
     sign_in(user)
+
+    visit root_path
+
+    expect(page).to have_content('Create New Game')
+
     visit new_video_game_path
     game = FactoryGirl.build(:video_game)
 
@@ -31,7 +39,7 @@ feature 'user creates a new video game', %q(
   end
 
   it 'fails with bad data' do
-    visit root_path
+    
     sign_in(user)
     visit new_video_game_path
 

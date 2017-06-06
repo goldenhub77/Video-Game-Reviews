@@ -3,7 +3,7 @@ class UserGamesController < ApplicationController
 
   def index
     @title = "My games"
-    @all_video_games = current_user.video_games
+    @all_video_games = current_user.video_games.order('created_at DESC')
   end
 
   protected

@@ -1,6 +1,7 @@
 class VideoGame < ApplicationRecord
   belongs_to :user
 
+#you must restart server after updating platforms and genres for changes to take effect
   PLATFORMS =
   [
     { name: 'Windows' },
