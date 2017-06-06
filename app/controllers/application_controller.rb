@@ -5,16 +5,18 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def authorize_owner!
-    begin
-      resource = current_user.send(self.controller_path).where('id = ?', params[:id])
-      if !current_user.is_admin? and resource.empty?
-        redirect_to user_video_games_path(current_user.id)
-      else
-        return true
+    unless self.controller_path == 'devise/registrations' or self.controller_path == 'devise/sessions'
+      begin
+        resource = current_user.send(self.controller_path).where('id = ?', params[:id])
+        if !current_user.is_admin? and resource.empty?
+          redirect_to user_video_games_path(current_user.id)
+        else
+          return true
+        end
+      rescue NoMethodError => message
+        puts message
+        return false
       end
-    rescue NoMethodError => message
-      puts message
-      return false
     end
   end
 

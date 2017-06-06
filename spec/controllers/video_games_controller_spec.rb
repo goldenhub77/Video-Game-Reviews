@@ -7,15 +7,6 @@ RSpec.describe VideoGamesController, type: :controller do
     sign_in(user)
   end
 
-  describe '.load_games' do
-    it 'intializes @all_video_games' do
-      all_video_games = VideoGame.order('created_at DESC')
-      controller = VideoGamesController.new()
-      load_games = controller.instance_eval{ load_games }
-      expect(load_games).to eq(all_video_games)
-    end
-  end
-
   describe 'index' do
     it 'initializes @title' do
       title = 'Available Games'

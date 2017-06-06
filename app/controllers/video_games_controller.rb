@@ -8,19 +8,17 @@ class VideoGamesController < ApplicationController
   #views all available video games sorted by title
   def index
     @title = 'Available Games'
-    @all_video_games = load_games
+    @all_video_games = VideoGame.order('created_at DESC')
   end
 
   def show
     @game = VideoGame.where(video_game_params).first
   end
 
-  #change existing video game if owner
   def edit
     @game_for_form = VideoGame.find(video_game_params[:id])
   end
 
-  #create new video game
   def new
     @game_for_form = VideoGame.new
   end
@@ -36,7 +34,6 @@ class VideoGamesController < ApplicationController
     end
   end
 
-  #post request of edited video game
   def update
     @game_for_form = VideoGame.find(video_game_params[:id])
     if @game_for_form.update(post_game_params)
@@ -47,16 +44,11 @@ class VideoGamesController < ApplicationController
     end
   end
 
-  #delete request to remove video game
   def destroy
     @game_for_form = VideoGame.find(video_game_params[:id])
     @game_for_form.destroy
     flash[:notice] = "You successfully deleted #{@game_for_form.title} "
     redirect_to user_video_games_path(current_user.id)
-  end
-
-  def load_games
-    VideoGame.order('created_at DESC')
   end
 
   protected
