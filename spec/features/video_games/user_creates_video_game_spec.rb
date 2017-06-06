@@ -25,7 +25,7 @@ feature 'user creates a new video game', %q(
     check "video_game_platforms_#{platform.id}"
     fill_in 'Release Date', with: Date.today
 
-    click_button 'Create Game'
+    click_button 'Create Video game'
 
     expect(page).to have_content('You successfully added Overwatch')
   end
@@ -35,7 +35,7 @@ feature 'user creates a new video game', %q(
     sign_in(user)
     visit new_video_game_path
 
-    click_button 'Create Game'
+    click_button 'Create Video game'
 
     expect(page).to have_content('8 errors in video game form.')
     expect(page).to have_content("Title can't be blank")

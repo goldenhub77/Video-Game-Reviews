@@ -15,6 +15,7 @@ feature 'user signs in', %q(
 
     expect(page).to have_content('Sign Out')
     expect(page).not_to have_content('Log In')
+    expect(page).to have_link('Create New Game')
     expect(page).to have_content('Signed in successfully.')
   end
 
@@ -26,5 +27,9 @@ feature 'user signs in', %q(
     click_button 'Log In'
 
     expect(page).to have_content('Invalid Email or password.')
+
+    visit root_path
+
+    expect(page).not_to have_link('Create New Game')
   end
 end

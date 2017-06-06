@@ -16,16 +16,15 @@ feature 'user updates an existing video game', %q(
     sign_in(user)
     visit edit_video_game_path(video_game.id)
 
-
     fill_in 'Title', with: 'Overwatch'
     fill_in 'Developer', with: 'Blizzard Entertainment'
-    fill_in 'Description', with: game.description
+    fill_in 'Description', with: video_game.description
     check "video_game_platforms_#{platform.id}"
     fill_in 'Release Date', with: '06/10/2015'
 
-    click_button 'Update Game'
+    click_button 'Update Video game'
 
-    expect(page).to have_content('You have created Overwatch successfully')
+    expect(page).to have_content('You successfully updated Overwatch')
   end
 
   it 'fails with bad data' do
@@ -38,9 +37,15 @@ feature 'user updates an existing video game', %q(
     fill_in 'Description', with: ''
     fill_in 'Date', with: ''
 
-    click_button 'Update Game'
+    click_button 'Update Video game'
 
-    expect(page).to have_content('Errors to be on page')
+    expect(page).to have_content("6 errors in video game form.")
+    expect(page).to have_content("Title can't be blank")
+    expect(page).to have_content("Title is too short (minimum is 5 characters)")
+    expect(page).to have_content("Developer can't be blank")
+    expect(page).to have_content("Description can't be blank")
+    expect(page).to have_content("Description is too short (minimum is 15 characters)")
+    expect(page).to have_content("Release date can't be blank")
   end
 
   it 'fails by no user logged in' do

@@ -1,8 +1,11 @@
 <header class="main-header">
-  <a class="logo" href="/">
-Video Game Reviews
-</a>
+  <a class="logo" href="/">Video Game Reviews</a>
   <nav class="navbar navbar-static-top" role="navigation">
+    <% if user_signed_in? %>
+      <div class= "header-buttons-div">
+        <%= link_to "Create New Game", new_video_game_path, class: "btn btn-default header-buttons" %>
+      </div>
+    <% end %>
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
         <li class="footer">

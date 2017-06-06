@@ -14,4 +14,5 @@
 //= require rails-ujs
 //= require bootstrap
 //= require jquery.slimscroll.min
+//= require video_games
 //= require_tree .

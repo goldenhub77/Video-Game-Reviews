@@ -1,0 +1,50 @@
+<%= form_for(@game_for_form) do |f| %>
+  <%= video_game_error_messages! %>
+
+  <div class="field">
+    <%= f.label :title, "Title"%><br />
+    <%= f.text_field :title, autofocus: true, required: true, size: '50' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :developer, "Developer"%><br />
+    <%= f.text_field :developer, required: true, size: '50' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :description %><br />
+    <%= f.text_area :description, required: true, size: '60x7'%>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :platforms %>
+    <div class='row'>
+      <div class="col-sm-6 col-sm-offset-3">
+        <%= f.collection_check_boxes(:platforms, Platform.all, :id, :name, include_hidden: false) do |b| %>
+          <div class="col-sm-4">
+            <%= b.label { b.check_box(checked: @game_for_form.platforms.include?(b.value.to_s)) + b.text } %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div class="field">
+    <%= f.label :genre %>
+    <%= f.collection_select :genre, Genre.all, :id, :name, { prompt: true } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :release_date, "Release Date" %>
+    <%= f.date_field :release_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :rating, '(0 worst - 5 best) Rating: ' %>
+    <%= f.range_field :rating, in: 0..5, step: 1 %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

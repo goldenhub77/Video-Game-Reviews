@@ -1,8 +1,22 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!, except: [:home]
+  before_action :authorize_owner!, only: [:edit, :update, :destroy]
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  def authorize_owner!
+    begin
+      resource = current_user.send(self.controller_path).where('id = ?', params[:id])
+      if resource.empty?
+        redirect_back(fallback_location: root_path)
+      else
+        return true
+      end
+    rescue NoMethodError => message
+      puts message
+      return false
+    end
+  end
 
   def authorize_admin!
     if current_user.nil? or !current_user.is_admin?
