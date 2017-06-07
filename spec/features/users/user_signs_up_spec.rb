@@ -5,7 +5,7 @@ feature 'user signs up', %q(
   I want to create an account
   So that I can post items and review them
 ) do
-  it 'sucessfully' do
+  scenario 'sucessfully' do
     visit new_user_registration_path
 
     fill_in 'First Name', with: 'John'
@@ -19,7 +19,7 @@ feature 'user signs up', %q(
     expect(page).to have_content('You have signed up successfully.')
   end
 
-  it 'fails' do
+  scenario 'fails' do
     visit new_user_registration_path
 
     fill_in 'First Name', with: ''

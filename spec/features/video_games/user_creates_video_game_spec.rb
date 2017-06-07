@@ -8,7 +8,7 @@ feature 'user creates a new video game', %q(
 
   let!(:user) { FactoryGirl.create(:user) }
 
-  it 'sucessfully' do
+  scenario 'sucessfully' do
 
     visit root_path
 
@@ -38,7 +38,7 @@ feature 'user creates a new video game', %q(
     expect(page).to have_content('You successfully added Overwatch')
   end
 
-  it 'fails with bad data' do
+  scenario 'fails with bad data' do
 
     sign_in(user)
     visit new_video_game_path
@@ -56,7 +56,7 @@ feature 'user creates a new video game', %q(
     expect(page).to have_content("Release date can't be blank")
   end
 
-  it 'fails by no user logged in' do
+  scenario 'fails by no user logged in' do
 
     visit new_video_game_path
 

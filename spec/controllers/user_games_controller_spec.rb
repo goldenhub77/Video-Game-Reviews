@@ -8,13 +8,13 @@ RSpec.describe UserGamesController, type: :controller do
   end
   # 
   # describe 'index' do
-  #   it 'assigns @title' do
+  #   scenario 'assigns @title' do
   #     title = 'My Games'
   #     get :index
   #     expect(assigns(:title)).to eq(title)
   #   end
   #
-  #   it 'assigns @video_games' do
+  #   scenario 'assigns @video_games' do
   #     games = current_user.video_games
   #     get :index
   #     expect(assigns(:video_games)).to eq(games)

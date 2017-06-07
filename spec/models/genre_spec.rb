@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Genre, type: :model do
   describe '.create' do
-    it 'succeeds' do
+    scenario 'succeeds' do
       genre = Genre.create(name: 'Shooter')
       genre_two = Genre.create(name: 'Shooter', abbr: 'FPS') 
 
@@ -15,7 +15,7 @@ RSpec.describe Genre, type: :model do
       expect(genre_two.abbr).to eq('FPS')
     end
 
-    it 'fails' do
+    scenario 'fails' do
       genre_fail = Genre.create()
       expect(genre_fail.valid?).to eq(false)
       expect(genre_fail.name).to eq(nil)

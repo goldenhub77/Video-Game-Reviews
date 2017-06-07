@@ -5,7 +5,7 @@ feature 'user signs out', %q(
   I want to sign out
   So that no one else can post items or reviews on my behalf
 ) do
-  it 'sucessfully' do
+  scenario 'sucessfully' do
     visit new_user_session_path
     user = FactoryGirl.create(:user)
 

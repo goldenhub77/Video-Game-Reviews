@@ -7,7 +7,7 @@ feature 'existing user updates information', %q(
 
   let!(:user) { FactoryGirl.create(:user) }
 
-  it 'sucessfully' do
+  scenario 'sucessfully' do
     visit new_user_session_path
 
     fill_in 'Email', with: user.email
@@ -29,7 +29,7 @@ feature 'existing user updates information', %q(
     expect(updated_user.id).to eq(user.id)
   end
 
-  it 'fails' do
+  scenario 'fails' do
     visit new_user_session_path
 
     fill_in 'Email', with: user.email

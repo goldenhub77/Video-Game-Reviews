@@ -4,7 +4,7 @@ RSpec.describe VideoGame, type: :model do
   describe '.create' do
     let!(:user) { FactoryGirl.create(:user) }
 
-    it 'successfully' do
+    scenario 'successfully' do
 
       video_game = VideoGame.create(
         title: "Overwatch",
@@ -20,7 +20,7 @@ RSpec.describe VideoGame, type: :model do
       expect(video_game.errors).to be_empty
     end
 
-    it 'fails' do
+    scenario 'fails' do
       video_game = VideoGame.create(
         title: "",
         developer: "",

@@ -11,7 +11,7 @@ feature 'user updates an existing video game', %q(
   let!(:genre) { FactoryGirl.create(:genre) }
   let!(:video_game) { FactoryGirl.create(:video_game, user_id: user.id) }
 
-  it 'sucessfully' do
+  scenario 'sucessfully' do
 
     sign_in(user)
     visit video_game_path(video_game.id)
@@ -33,7 +33,7 @@ feature 'user updates an existing video game', %q(
     expect(page).to have_content('You successfully updated Overwatch')
   end
 
-  it 'fails with bad data' do
+  scenario 'fails with bad data' do
     visit root_path
     sign_in(user)
     visit edit_video_game_path(video_game.id)
@@ -54,7 +54,7 @@ feature 'user updates an existing video game', %q(
     expect(page).to have_content("Release date can't be blank")
   end
 
-  it 'fails by no user logged in' do
+  scenario 'fails by no user logged in' do
 
     visit video_game_path(video_game.id)
 

@@ -5,7 +5,7 @@ feature 'user signs in', %q(
   I want to sign in
   So that I can post items and review them
 ) do
-  it 'sucessfully' do
+  scenario 'sucessfully' do
     visit new_user_session_path
     user = FactoryGirl.create(:user)
 
@@ -19,7 +19,7 @@ feature 'user signs in', %q(
     expect(page).to have_content('Signed in successfully.')
   end
 
-  it 'fails' do
+  scenario 'fails' do
     visit new_user_session_path
 
     fill_in 'Email', with: 'unknown@email.com'

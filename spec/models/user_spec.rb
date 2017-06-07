@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   describe '.create' do
-    it 'succeeds' do
+    scenario 'succeeds' do
       user = User.create(
         first_name: 'John',
         last_name: 'Smith',
@@ -14,7 +14,7 @@ RSpec.describe User, type: :model do
       expect(user.valid?).to be_truthy
       expect(user.errors).to be_empty
     end
-    it 'fails' do
+    scenario 'fails' do
       user = User.create(
         first_name: '',
         last_name: '',
@@ -34,7 +34,7 @@ RSpec.describe User, type: :model do
   end
 
   describe '.is_admin?' do
-    it 'equals false' do
+    scenario 'equals false' do
       user = User.create(
         first_name: 'John',
         last_name: 'Smith',
@@ -44,7 +44,7 @@ RSpec.describe User, type: :model do
       )
       expect(user.is_admin?).to be_falsey
     end
-    it 'equals true' do
+    scenario 'equals true' do
       user = User.create(
         first_name: 'John',
         last_name: 'Smith',
