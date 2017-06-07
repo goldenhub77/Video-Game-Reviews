@@ -20,9 +20,9 @@
     <%= f.label :platforms %>
     <div class='row'>
       <div class="col-sm-6 col-sm-offset-3">
-        <%= f.collection_check_boxes(:platforms, Platform.all, :id, :name, include_hidden: false) do |b| %>
+        <%= f.collection_check_boxes(:platform_ids, Platform.all, :id, :name, include_hidden: false) do |b| %>
           <div class="col-sm-4">
-            <%= b.label { b.check_box(checked: @game_for_form.platforms.include?(b.value.to_s)) + b.text } %>
+            <%= b.label { b.check_box(checked: @platform_ids.include?(b.value.to_s)) + b.text } %>
           </div>
         <% end %>
       </div>
@@ -31,7 +31,7 @@
 
   <div class="field">
     <%= f.label :genre %>
-    <%= f.collection_select :genre, Genre.all, :id, :name, { prompt: true } %>
+    <%= f.collection_select :genre_id, Genre.all, :id, :name, { prompt: true } %>
   </div>
 
   <div class="field">

@@ -9,5 +9,5 @@ function setRating() {
 
 $(document).ready(function() {
   setRating();
-  $("#new_video_game").on("change", setRating);
+  $("#video_game_rating").on("mousemove keyup", setRating);
 })

@@ -30,7 +30,7 @@ feature 'user creates a new video game', %q(
     fill_in 'Description', with: game.description
     select genre.name, from: 'Genre'
     fill_in 'Release Date', with: '2016-05-06'
-    check "video_game_platforms_#{platform.id}"
+    check "video_game_platform_ids_#{platform.id}"
     fill_in 'Release Date', with: Date.today
 
     click_button 'Create Video game'

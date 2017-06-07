@@ -17,10 +17,12 @@ class VideoGamesController < ApplicationController
 
   def edit
     @game_for_form = VideoGame.find(video_game_params[:id])
+    @platform_ids = @game_for_form.platform_ids
   end
 
   def new
     @game_for_form = VideoGame.new
+    @platform_ids = []
   end
 
   def create
@@ -30,6 +32,11 @@ class VideoGamesController < ApplicationController
       flash[:notice] = "You successfully added #{@game_for_form.title} "
       redirect_to root_path
     else
+      if post_game_params[:platform_ids].nil?
+        @platform_ids = []
+      else
+        @platform_ids = post_game_params[:platform_ids]
+      end
       render :new
     end
   end
@@ -58,6 +65,6 @@ class VideoGamesController < ApplicationController
   end
 
   def post_game_params
-    params.require(:video_game).permit(:title, :description, :developer, :genre, :release_date, :rating, platforms: [])
+    params.require(:video_game).permit(:title, :description, :developer, :genre_id, :release_date, :rating, platform_ids: [])
   end
 end

@@ -52,8 +52,8 @@ ActiveRecord::Schema.define(version: 20170603000829) do
     t.string "title", null: false
     t.string "developer", null: false
     t.text "description", null: false
-    t.string "platforms", default: [], null: false, array: true
-    t.string "genre", null: false
+    t.string "platform_ids", default: [], null: false, array: true
+    t.string "genre_id", null: false
     t.date "release_date", null: false
     t.integer "rating", default: 0, null: false
     t.datetime "created_at", null: false
