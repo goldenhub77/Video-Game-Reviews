@@ -1,6 +1,6 @@
 class VideoGame < ApplicationRecord
   belongs_to :user
-
+  
 #you must restart server after updating platforms and genres for changes to take effect
   PLATFORMS =
   [
@@ -39,12 +39,13 @@ class VideoGame < ApplicationRecord
   validates :release_date, presence: true
   validates :rating, presence: true, numericality: { only_integer: true, great_than_or_equal_to: 0, less_than_or_equal_to: 100 }
 
+
   def platforms
-    result = self.platform_ids.map { |platform| Platform.where('id = ?', platform)}
+    self.platform_ids.map { |platform| Platform.where('id = ?', platform).first}
   end
 
   def genre
-    Genre.find(self.genre_id)
+    Genre.where('id = ?', self.genre_id).first
   end
 
   def self.search(search)
