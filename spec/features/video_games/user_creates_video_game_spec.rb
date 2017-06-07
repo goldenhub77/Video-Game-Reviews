@@ -7,8 +7,6 @@ feature 'user creates a new video game', %q(
 ) do
 
   let!(:user) { FactoryGirl.create(:user) }
-  let!(:platform) { FactoryGirl.create(:platform) }
-  let!(:genre) { FactoryGirl.create(:genre) }
 
   it 'sucessfully' do
 
@@ -23,23 +21,25 @@ feature 'user creates a new video game', %q(
     expect(page).to have_content('Create New Game')
 
     visit new_video_game_path
-    game = FactoryGirl.build(:video_game)
 
     fill_in 'Title', with: 'Overwatch'
     fill_in 'Developer', with: 'Blizzard Entertainment'
-    fill_in 'Description', with: game.description
-    select genre.name, from: 'Genre'
+    fill_in 'Description', with: "This is a description to prove a video game can be created."
+    select "First Person Shooter"
     fill_in 'Release Date', with: '2016-05-06'
-    check "video_game_platform_ids_#{platform.id}"
+    check "Xbox One"
+    check "Playstation 4"
     fill_in 'Release Date', with: Date.today
 
     click_button 'Create Video game'
+
+
 
     expect(page).to have_content('You successfully added Overwatch')
   end
 
   it 'fails with bad data' do
-    
+
     sign_in(user)
     visit new_video_game_path
 

@@ -46,4 +46,8 @@ class VideoGame < ApplicationRecord
   def genre
     Genre.find(self.genre_id)
   end
+
+  def self.search(search)
+    where("title ILIKE ? OR description ILIKE ? OR developer ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%")
+  end
 end

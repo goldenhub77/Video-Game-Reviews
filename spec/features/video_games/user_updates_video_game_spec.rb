@@ -25,9 +25,9 @@ feature 'user updates an existing video game', %q(
     fill_in 'Title', with: 'Overwatch'
     fill_in 'Developer', with: 'Blizzard Entertainment'
     fill_in 'Description', with: video_game.description
-    check "video_game_platform_ids_#{platform.id}"
+    check "Xbox One"
     fill_in 'Release Date', with: '06/10/2015'
-
+    
     click_button 'Update Video game'
 
     expect(page).to have_content('You successfully updated Overwatch')

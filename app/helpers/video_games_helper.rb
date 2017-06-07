@@ -2,7 +2,11 @@ module VideoGamesHelper
   def video_game_error_messages!
     return "" unless video_game_error_messages?
 
-    messages = @game_for_form.errors.full_messages.map { |msg| content_tag(:p, msg) }.join
+    messages = @game_for_form.errors.full_messages.map do |msg|
+      msg = msg.gsub("Platform ids", "Platforms")
+      content_tag(:p, msg)
+    end
+    messages = messages.join
     if @game_for_form.errors.count == 1
       error_text = 'error'
     else

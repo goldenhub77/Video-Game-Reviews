@@ -9,6 +9,14 @@ class VideoGamesController < ApplicationController
   def index
     @title = 'Available Games'
     @all_video_games = VideoGame.order('created_at DESC')
+    if params[:search]
+      @all_video_games = VideoGame.search(params[:search]).order("created_at DESC")
+      if @all_video_games.empty?
+        flash[:notice] = "There are no recipes containing the term '#{params[:search]}'"
+      end
+    else
+      @all_video_games = VideoGame.all.order("created_at DESC")
+    end
   end
 
   def show
@@ -43,6 +51,11 @@ class VideoGamesController < ApplicationController
 
   def update
     @game_for_form = VideoGame.find(video_game_params[:id])
+    if post_game_params[:platform_ids].nil?
+      @platform_ids = []
+    else
+      @platform_ids = post_game_params[:platform_ids]
+    end
     if @game_for_form.update(post_game_params)
       flash[:notice] = "You successfully updated #{@game_for_form.title} "
       redirect_to root_path

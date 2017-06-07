@@ -1,7 +1,20 @@
 class UserGamesController < ApplicationController
-  before_action :check_user
+  # before_action :check_user
 
   def index
+    @title = "My games"
+    if params[:search]
+      @all_video_games = current_user.video_games.search(params[:search]).order("created_at DESC")
+      if @all_video_games.empty?
+        flash[:notice] = "There are no recipes containing the term '#{params[:search]}'"
+      end
+    else
+      @all_video_games = current_user.video_games.order("created_at DESC")
+    end
+  end
+
+  def show
+    binding.pry
     @title = "My games"
     @all_video_games = current_user.video_games.order('created_at DESC')
   end
@@ -14,7 +27,7 @@ class UserGamesController < ApplicationController
 
   def check_user
     if current_user.id != video_game_params['user_id'].to_i
-      redirect_to user_video_games_path(current_user.id)
+      redirect_to user_games_path
     end
   end
 end

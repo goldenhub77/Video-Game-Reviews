@@ -3,8 +3,13 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :video_games
-  resources :users do
-    resources :video_games, controller: :user_games, only: [:index]
+  resources :user_games, only: [:index]
+  
+  namespace :api do
+    namespace :v1 do
+      get 'search', to: 'search#videos'
+      get 'search', to: 'search#reviews'
+    end
   end
 
   root 'video_games#home'
