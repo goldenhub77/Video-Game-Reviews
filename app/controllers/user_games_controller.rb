@@ -6,7 +6,7 @@ class UserGamesController < ApplicationController
     if params[:search]
       @all_video_games = current_user.video_games.search(params[:search]).order("created_at DESC")
       if @all_video_games.empty?
-        flash[:notice] = "There are no recipes containing the term '#{params[:search]}'"
+        flash[:notice] = "There are no games containing the term '#{params[:search]}'"
       end
     else
       @all_video_games = current_user.video_games.order("created_at DESC")
@@ -14,7 +14,6 @@ class UserGamesController < ApplicationController
   end
 
   def show
-    binding.pry
     @title = "My games"
     @all_video_games = current_user.video_games.order('created_at DESC')
   end

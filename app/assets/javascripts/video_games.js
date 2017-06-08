@@ -9,39 +9,42 @@ function setRating() {
 
 function sendSearch() {
 
-  $inputValue = $("#video_games_search").val();
+  $inputValue = $("#video_game_search").val();
   $.ajax({
     type: "GET",
-    url: "/api/v1/search",
+    dataType: "json",
+    url: `/api/v1/search${window.location.pathname}`,
     data: {'search': $inputValue},
     success: function(data) {
-      $("#video_game_list").html("");
-      $dataArr = JSON.parse(data);
-      for (i=0; i < $dataArr.length; i++) {
-        $("#video_game_list").append(`<li><a href="/video_games/${$dataArr[i]['id']}">${$dataArr[i]['title']}</a></li>`);
+      $games = data.video_games;
+      if ($games.length === 0) {
+        $(".notice").text(data.notice);
+      }else {
+        $(".notice").text("")
       }
-      $("#video_game_search_form input").attr("disabled", false);
+      $("#video_game_list").html("");
+      for (i=0; i < $games.length; i++) {
+        $("#video_game_list").append(`<li><a href="/video_games/${$games[i]['id']}">${$games[i]['title']}</a></li>`);
+      }
     },
     error: function(data) {
       console.log("Server Request failed");
-    },
-    done: function() {
-
     }
   })
+
 }
 
 $(document).ready(function() {
   setRating();
   $("#video_game_rating").on("mousemove keyup", setRating);
-  $("#video_game_search_form").on("submit", function(event) {
+  $("#video_game_search_button").on("click", function(event) {
     event.preventDefault();
     sendSearch();
   });
   $("#video_game_reset_button").on("click", function(event) {
     event.preventDefault();
-    $result = $("#video_game_search");
-    $result.val("")
+    $("#video_game_search").val("")
     sendSearch();
+
   })
 })
