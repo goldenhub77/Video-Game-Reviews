@@ -2,23 +2,31 @@
 // All this logic will automatically be available in application.js.
 
 function setRating() {
-  $input_value = $("#video_game_rating").val();
+  $inputValue = $("#video_game_rating").val();
   $label = $("#video_game_rating").siblings("label");
-  $label.text("(0 worst - 5 best) Rating: " + $input_value);
+  $label.text("(0 worst - 5 best) Rating: " + $inputValue);
 }
 
 function sendSearch() {
 
-  $input_value = $("#video_games_search").val();
+  $inputValue = $("#video_games_search").val();
   $.ajax({
     type: "GET",
     url: "/api/v1/search",
-    data: {'search': $input_value},
+    data: {'search': $inputValue},
     success: function(data) {
-      debugger
+      $("#video_game_list").html("");
+      $dataArr = JSON.parse(data);
+      for (i=0; i < $dataArr.length; i++) {
+        $("#video_game_list").append(`<li><a href="/video_games/${$dataArr[i]['id']}">${$dataArr[i]['title']}</a></li>`);
+      }
+      $("#video_game_search_form input").attr("disabled", false);
     },
     error: function(data) {
-      console.log("Server Request failed")
+      console.log("Server Request failed");
+    },
+    done: function() {
+
     }
   })
 }
@@ -32,6 +40,8 @@ $(document).ready(function() {
   });
   $("#video_game_reset_button").on("click", function(event) {
     event.preventDefault();
-    $("#video_game_search").val("").on("click", sendSearch);
+    $result = $("#video_game_search");
+    $result.val("")
+    sendSearch();
   })
 })
