@@ -1,5 +1,5 @@
-<%= form_tag(self.controller_path, action: :videos,  method: "get", id: "search-form") do %>
-    <%= text_field_tag :search, params[:search], placeholder: "Search Games", size: '40' %>
-    <%= submit_tag("Reset", type: "reset" ) %>
+<%= form_tag(self.controller_path, action: :videos,  method: "get", id: :video_game_search_form) do %>
+    <%= text_field_tag :search, params[:search], id: :video_game_search, placeholder: "Search Games", size: '40' %>
+    <%= submit_tag("Reset", id: :video_game_reset_button, type: "reset" ) %>
     <%= submit_tag "Search", :name => nil %>
 <% end %>

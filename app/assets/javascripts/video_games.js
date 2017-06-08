@@ -26,5 +26,12 @@ function sendSearch() {
 $(document).ready(function() {
   setRating();
   $("#video_game_rating").on("mousemove keyup", setRating);
-  $("#video_games_search").on("submit", sendSearch);
+  $("#video_game_search_form").on("submit", function(event) {
+    event.preventDefault();
+    sendSearch();
+  });
+  $("#video_game_reset_button").on("click", function(event) {
+    event.preventDefault();
+    $("#video_game_search").val("").on("click", sendSearch);
+  })
 })
