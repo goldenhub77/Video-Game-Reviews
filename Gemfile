@@ -25,6 +25,7 @@ group :development, :test do
   gem 'dotenv-rails'
   gem 'rails-controller-testing'
   gem 'jasmine'
+  gem 'jasmine-jquery-rails'
   gem 'faker'
 end
 
