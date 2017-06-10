@@ -27,6 +27,8 @@ describe("sendSearch", function() {
 
   it("sends a ajax get request to api/v1/window.location.pathname", function() {
     sendSearch();
+    var request = jasmine.Ajax.requests.mostRecent();
+    expect(request.method).toBe("GET");
     debugger
   });
 
