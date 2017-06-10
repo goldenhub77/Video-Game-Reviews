@@ -10,10 +10,10 @@ RSpec.describe VideoGame, type: :model do
         title: "Overwatch",
         developer: "Blizzard Entertainment",
         description: "Fantastic, frantic shooter with some violence, open chat.",
-        platform_ids: ["platform"],
+        platform_ids: ["1"],
         genre_id: "genre",
         release_date: Date.parse('2016-05-20'),
-        rating: 95,
+        rating: 4,
         user_id: user.id
       )
       expect(video_game.valid?).to be_truthy
@@ -39,6 +39,28 @@ RSpec.describe VideoGame, type: :model do
         "Platform ids can't be blank", "Genre can't be blank",
         "Release date can't be blank", "Rating is not a number"
       )
+    end
+  end
+
+  describe ".destroy" do
+    let!(:user) { FactoryGirl.create(:user) }
+    let!(:video_game) { FactoryGirl.create(:video_game, user_id: user.id) }
+    let!(:review) { FactoryGirl.create(:review, user_id: user.id)}
+
+    scenario "deletes a video game from database" do
+      VideoGamesReview.create(video_game_id: video_game.id, review_id: review.id)
+      expect(VideoGame.all.first.id).to eq(video_game.id)
+      expect(video_game.reviews.first.id).to eq(review.id)
+      expect(user.reviews.first.id).to eq(review.id)
+
+      User.destroy(user.id)
+      expect(VideoGame.all).not_to be_empty
+      expect(Review.all).not_to be_empty
+      expect(VideoGamesReview.all).not_to be_empty
+      VideoGame.destroy(video_game.id)
+      expect(VideoGame.all).to be_empty
+      expect(Review.all).not_to be_empty
+      expect(VideoGamesReview.all).to be_empty
     end
   end
 end

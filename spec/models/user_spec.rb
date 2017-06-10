@@ -56,4 +56,22 @@ RSpec.describe User, type: :model do
       expect(user.is_admin?).to be_truthy
     end
   end
+
+  describe '.destroy' do
+    scenario 'user is destoyed from database' do
+      user = User.create(
+        first_name: 'John',
+        last_name: 'Smith',
+        email: 'test123@abc.com',
+        role: 'admin',
+        password: 'Pa$$word',
+        password_confirmation: 'Pa$$word'
+      )
+      new_user = User.all.first.id
+      expect(new_user).to eq(user.id)
+      User.destroy(user.id)
+      expect(User.all).to be_empty
+
+    end
+  end
 end

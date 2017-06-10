@@ -1,5 +1,7 @@
 class VideoGame < ApplicationRecord
   belongs_to :user
+  has_many :video_games_reviews, dependent: :destroy
+  has_many :reviews, through: :video_games_reviews
 
 #you must restart server after updating platforms and genres for changes to take effect
   PLATFORMS =

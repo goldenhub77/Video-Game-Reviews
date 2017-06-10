@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170603000829) do
+ActiveRecord::Schema.define(version: 20170610015815) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,17 @@ ActiveRecord::Schema.define(version: 20170603000829) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", limit: 30, null: false
+    t.text "review", null: false
+    t.string "platform_ids", default: [], null: false, array: true
+    t.integer "rating", default: 3, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -55,11 +66,20 @@ ActiveRecord::Schema.define(version: 20170603000829) do
     t.string "platform_ids", default: [], null: false, array: true
     t.string "genre_id", null: false
     t.date "release_date", null: false
-    t.integer "rating", default: 0, null: false
+    t.integer "rating", default: 3, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
     t.index ["title"], name: "index_video_games_on_title", unique: true
+  end
+
+  create_table "video_games_reviews", force: :cascade do |t|
+    t.bigint "video_game_id", null: false
+    t.bigint "review_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["review_id"], name: "index_video_games_reviews_on_review_id"
+    t.index ["video_game_id"], name: "index_video_games_reviews_on_video_game_id"
   end
 
 end
