@@ -21,6 +21,7 @@ class VideoGamesController < ApplicationController
 
   def show
     @game = VideoGame.where(video_game_params).first
+    @video_game_reviews = @game.reviews.order('created_at DESC')
   end
 
   def edit
@@ -45,8 +46,8 @@ class VideoGamesController < ApplicationController
 
   def update
     @game_for_form = VideoGame.find(video_game_params[:id])
-
-    if @game_for_form.update(VideoGameDecanter.decant(params[:video_game]))
+    @game_for_form.update_attributes(VideoGameDecanter.decant(params[:video_game]))
+    if @game_for_form.save
       flash[:notice] = "You successfully updated #{@game_for_form.title} "
       redirect_to root_path
     else
@@ -67,7 +68,7 @@ class VideoGamesController < ApplicationController
     params.permit(:id)
   end
 
-  # def post_game_params
-  #   params.require(:video_game).permit(:title, :description, :developer, :genre_id, :release_date, :rating, platforms: [])
-  # end
+  def post_game_params
+    params.require(:video_game).permit(:title, :developer, :description, :genre_id, :release_date, :rating, platforms: [])
+  end
 end

@@ -1,8 +1,7 @@
 class VideoGame < ApplicationRecord
   belongs_to :user
   belongs_to :genre, optional: true
-  has_many :video_games_reviews, dependent: :destroy
-  has_many :reviews, through: :video_games_reviews
+  has_many :reviews
   has_and_belongs_to_many :platforms
 
 

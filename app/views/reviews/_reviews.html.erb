@@ -1,0 +1,5 @@
+<ul id="video-game-review-list">
+  <% @video_game_reviews.each do |review| %>
+    <li><%= link_to review.title, video_game_reviews_path %></li>
+  <% end %>
+</ul>

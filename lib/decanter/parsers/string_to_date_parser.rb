@@ -1,4 +1,4 @@
-class ParseDateParser < Decanter::Parser::ValueParser
+class StringToDateParser < Decanter::Parser::ValueParser
   parser do |value, options|
     Date.parse(value)
   end

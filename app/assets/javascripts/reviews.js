@@ -1,12 +1,6 @@
 // Place all the behaviors and hooks related to the matching controller here.
 // All this logic will automatically be available in application.js.
 
-function setRating() {
-  $inputValue = $("#video_game_rating").val();
-  $label = $("#video_game_rating").siblings("label");
-  $label.text("(1 worst - 5 best) Rating: " + $inputValue);
-}
-
 function sendSearch() {
 
   $inputValue = $("#video_game_search").val();
@@ -16,15 +10,15 @@ function sendSearch() {
     url: `/api/v1/search${window.location.pathname}`,
     data: {'search': $inputValue},
     success: function(data) {
-      $games = data.video_games;
-      if ($games.length === 0) {
+      $reviews = data.reviews;
+      if ($reviews.length === 0) {
         $(".notice").text(data.notice);
       }else {
         $(".notice").text("")
       }
-      $("#video-game-list").html("");
-      for (i=0; i < $games.length; i++) {
-        $("#video-game-list").append(`<li><a href="/video_games/${$games[i]['id']}">${$games[i]['title']}</a></li>`);
+      $("#video-game-review-list").html("");
+      for (i=0; i < $reviews.length; i++) {
+        $("#video-game-review-list").append(`<li><a href="/video_game_reviews/${$reviews[i]['id']}">${$reviews[i]['title']}</a></li>`);
       }
     },
     error: function(data) {
@@ -35,9 +29,8 @@ function sendSearch() {
 }
 
 $(document).ready(function() {
-  setRating();
-  $("#video_game_rating").on("mousemove keyup", setRating);
-  $("#video_game_search_button").on("click", function(event) {
+
+  $("#video_game_review_search_button").on("click", function(event) {
     event.preventDefault();
     sendSearch();
   });
