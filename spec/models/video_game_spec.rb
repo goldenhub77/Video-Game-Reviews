@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe VideoGame, type: :model do
   describe '.create' do
     let!(:user) { FactoryGirl.create(:user) }
+    let!(:platform) { FactoryGirl.create(:platform) }
+    let!(:genre) { FactoryGirl.create(:genre) }
 
     scenario 'successfully' do
 
@@ -10,7 +12,7 @@ RSpec.describe VideoGame, type: :model do
         title: "Overwatch",
         developer: "Blizzard Entertainment",
         description: "Fantastic, frantic shooter with some violence, open chat.",
-        platform_ids: ["1"],
+        platform_ids: [platform.id],
         genre_id: "genre",
         release_date: Date.parse('2016-05-20'),
         rating: 4,
@@ -36,7 +38,7 @@ RSpec.describe VideoGame, type: :model do
         "Title can't be blank",
         "Title is too short (minimum is 5 characters)",
         "Developer can't be blank", "Description is too short (minimum is 15 characters)",
-        "Platform ids can't be blank", "Genre can't be blank",
+        "Platforms can't be blank", "Genre can't be blank",
         "Release date can't be blank", "Rating is not a number"
       )
     end
@@ -44,6 +46,8 @@ RSpec.describe VideoGame, type: :model do
 
   describe ".destroy" do
     let!(:user) { FactoryGirl.create(:user) }
+    let!(:platform) { FactoryGirl.create(:platform) }
+    let!(:genre) { FactoryGirl.create(:genre) }
     let!(:video_game) { FactoryGirl.create(:video_game, user_id: user.id) }
     let!(:review) { FactoryGirl.create(:review, user_id: user.id)}
 

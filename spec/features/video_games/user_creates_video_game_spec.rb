@@ -7,6 +7,8 @@ feature 'user creates a new video game', %q(
 ) do
 
   let!(:user) { FactoryGirl.create(:user) }
+  let!(:platform) { FactoryGirl.create(:platform) }
+  let!(:genre) { FactoryGirl.create(:genre) }
 
   scenario 'sucessfully' do
 
@@ -25,11 +27,9 @@ feature 'user creates a new video game', %q(
     fill_in 'Title', with: 'Overwatch'
     fill_in 'Developer', with: 'Blizzard Entertainment'
     fill_in 'Description', with: "This is a description to prove a video game can be created."
-    select "First Person Shooter"
+    select "genre1", from: "video_game_genre_id"
     fill_in 'Release Date', with: '2016-05-06'
-    check "Xbox One"
-    check "Playstation 4"
-    fill_in 'Release Date', with: Date.today
+    check "platform1"
 
     click_button 'Create Video game'
 

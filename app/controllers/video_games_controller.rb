@@ -25,38 +25,28 @@ class VideoGamesController < ApplicationController
 
   def edit
     @game_for_form = VideoGame.find(video_game_params[:id])
-    @platform_ids = @game_for_form.platform_ids
   end
 
   def new
     @game_for_form = VideoGame.new
-    @platform_ids = []
   end
 
   def create
-    @game_for_form = VideoGame.new(post_game_params)
+    @game_for_form = VideoGame.new(VideoGameDecanter.decant(params[:video_game]))
     @game_for_form.user_id = current_user.id
+
     if @game_for_form.save
       flash[:notice] = "You successfully added #{@game_for_form.title} "
       redirect_to root_path
     else
-      if post_game_params[:platform_ids].nil?
-        @platform_ids = []
-      else
-        @platform_ids = post_game_params[:platform_ids]
-      end
       render :new
     end
   end
 
   def update
     @game_for_form = VideoGame.find(video_game_params[:id])
-    if post_game_params[:platform_ids].nil?
-      @platform_ids = []
-    else
-      @platform_ids = post_game_params[:platform_ids]
-    end
-    if @game_for_form.update(post_game_params)
+
+    if @game_for_form.update(VideoGameDecanter.decant(params[:video_game]))
       flash[:notice] = "You successfully updated #{@game_for_form.title} "
       redirect_to root_path
     else
@@ -77,7 +67,7 @@ class VideoGamesController < ApplicationController
     params.permit(:id)
   end
 
-  def post_game_params
-    params.require(:video_game).permit(:title, :description, :developer, :genre_id, :release_date, :rating, platform_ids: [])
-  end
+  # def post_game_params
+  #   params.require(:video_game).permit(:title, :description, :developer, :genre_id, :release_date, :rating, platforms: [])
+  # end
 end

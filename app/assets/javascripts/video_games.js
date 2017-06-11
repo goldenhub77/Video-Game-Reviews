@@ -4,7 +4,7 @@
 function setRating() {
   $inputValue = $("#video_game_rating").val();
   $label = $("#video_game_rating").siblings("label");
-  $label.text("(0 worst - 5 best) Rating: " + $inputValue);
+  $label.text("(1 worst - 5 best) Rating: " + $inputValue);
 }
 
 function sendSearch() {

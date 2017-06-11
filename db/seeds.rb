@@ -34,24 +34,30 @@ GENRES =
   { name: 'Survival' }
 ]
 
-10.times do
-  user = FactoryGirl.build(:user)
-  if User.where('email = ?', user.email).empty?
-    user.save
-    10.times do
-      video_game = FactoryGirl.build(:video_game)
-      if VideoGame.where('title = ?', video_game.title).empty?
-        video_game.user_id = user.id
-        video_game.save
-      end
-    end
-  end
-end
-
 PLATFORMS.each do |platform|
   Platform.find_or_create_by(name: platform[:name])
 end
 
 GENRES.each do |genre|
   Genre.find_or_create_by(name: genre[:name], abbr: genre[:abbr])
+end
+
+10.times do
+  user = FactoryGirl.build(:user)
+  if User.where('email = ?', user.email).empty?
+    user.save
+    if user.video_games.empty?
+      10.times do
+        user.video_games.create(
+          title: Faker::Team.name,
+          developer: Faker::Company.name,
+          description: Faker::Lorem.paragraph,
+          platforms: Platform.first(rand(1..Platform.count)),
+          genre: Genre.first,
+          release_date: Date.parse('2016-05-20'),
+          rating: Random.rand(0..5)
+          )
+      end
+    end
+  end
 end

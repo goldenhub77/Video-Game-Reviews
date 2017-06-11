@@ -7,6 +7,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'jquery-rails'
 gem 'devise'
 gem 'bootstrap-sass'
+gem "decanter"
 
 group :development do
   gem 'listen', '~> 3.0.5'

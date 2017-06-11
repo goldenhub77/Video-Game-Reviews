@@ -5,9 +5,10 @@ feature 'user searches a video game', %q(
   I want to be able to search for games on main
   page and on my games page
 ) do
-
   let!(:user) { FactoryGirl.create(:user) }
   let!(:user2) { FactoryGirl.create(:user) }
+  let!(:platform) { FactoryGirl.create(:platform) }
+  let!(:genre) { FactoryGirl.create(:genre) }
 
   before(:each) do
     8.times do

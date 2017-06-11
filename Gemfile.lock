@@ -57,6 +57,8 @@ GEM
       xpath (~> 2.0)
     coderay (1.1.1)
     concurrent-ruby (1.0.5)
+    decanter (0.8.2)
+      activesupport
     devise (4.3.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -223,6 +225,7 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass
   capybara
+  decanter
   devise
   dotenv-rails
   factory_girl_rails

@@ -8,6 +8,7 @@ feature 'user updates an existing video game', %q(
 
   let!(:user) { FactoryGirl.create(:user) }
   let!(:platform) { FactoryGirl.create(:platform) }
+  let!(:platform2) { FactoryGirl.create(:platform) }
   let!(:genre) { FactoryGirl.create(:genre) }
   let!(:video_game) { FactoryGirl.create(:video_game, user_id: user.id) }
 
@@ -25,9 +26,9 @@ feature 'user updates an existing video game', %q(
     fill_in 'Title', with: 'Overwatch'
     fill_in 'Developer', with: 'Blizzard Entertainment'
     fill_in 'Description', with: video_game.description
-    check "Xbox One"
+    check platform2.name
     fill_in 'Release Date', with: '06/10/2015'
-    
+
     click_button 'Update Video game'
 
     expect(page).to have_content('You successfully updated Overwatch')
