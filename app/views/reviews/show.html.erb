@@ -1,11 +1,11 @@
 <div class="row">
-  <% if user_owns(@review) %>
-    <%= button_to "Edit", edit_video_game_review_path(@review), class: "col-md-3 btn btn-secondary", method: :get %>
+  <% if user_owns(@video_game_review) %>
+    <%= button_to "Edit", edit_video_game_review_path(@video_game_review.id), class: "col-md-3 btn btn-secondary", method: :get %>
   <% end %>
 </div>
 <div class="row">
   <div class="body">
-    <h2><%= @review.title %></h2>
+    <h2><%= @video_game_review.title %></h2>
 
   </div>
 </div>

@@ -5,8 +5,9 @@
 </div>
 <div class="row">
   <div class="body">
+    <%= button_to "Write a review...", new_video_game_review_path(@game), class: "btn btn-primary", method: :get %>
     <h2><%= @game.title %></h2>
-    
+
     <%= render 'reviews/reviews' %>
   </div>
 </div>

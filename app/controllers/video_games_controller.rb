@@ -21,7 +21,7 @@ class VideoGamesController < ApplicationController
 
   def show
     @game = VideoGame.where(video_game_params).first
-    @video_game_reviews = @game.reviews.order('created_at DESC')
+    @all_reviews = @game.reviews.order('created_at DESC')
   end
 
   def edit
@@ -29,6 +29,7 @@ class VideoGamesController < ApplicationController
   end
 
   def new
+    @title = "Create New Game"
     @game_for_form = VideoGame.new
   end
 

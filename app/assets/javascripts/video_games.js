@@ -9,7 +9,7 @@ function setRating() {
 
 function sendSearch() {
 
-  $inputValue = $("#video_game_search").val();
+  $inputValue = $("#main-search-query").val();
   $.ajax({
     type: "GET",
     dataType: "json",

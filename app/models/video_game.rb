@@ -4,8 +4,6 @@ class VideoGame < ApplicationRecord
   has_many :reviews
   has_and_belongs_to_many :platforms
 
-
-
   validates :title, presence: true, uniqueness: true, length: { minimum: 5 }
   validates :developer, presence: true
   validates :description, presence: true, length: { minimum: 15 }

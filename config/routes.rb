@@ -4,9 +4,11 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :video_games
-  resources :user_games, only: [:index]
+  resources :user_games, only: [:index, :show]
+  resources :user_reviews, only: [:index, :show, :edit]
   #this resource may not be needed, will assess later
   # resources :reviews, only: [:new, :edit, :create, :update]
+  resources :reviews, only: [:show]
 
   resources :video_games do
     resources :reviews

@@ -1,27 +1,31 @@
 class ReviewsController < ApplicationController
 
   def index
+    @title = "Reviews for"
     @game = VideoGame.find(review_params[:video_game_id])
-    @video_game_reviews = Review.order('created_at DESC')
+    @all_reviews = Review.order('created_at DESC')
     if params[:search]
-      @video_game_reviews = Review.search(params[:search]).order("created_at DESC")
-      if @video_game_reviews.empty?
+      @all_reviews = Review.search(params[:search]).order("created_at DESC")
+      if @all_reviews.empty?
         flash[:notice] = "There are no video games matching '#{params[:search]}'"
       end
     else
-      @video_game_reviews = Review.order("created_at DESC")
+      @all_reviews = Review.order("created_at DESC")
     end
   end
 
   def show
-    @review = Review.where(review_params).first
+    @game = VideoGame.where(review_params).first
+    @video_game_review = Review.find(review_params[:id])
   end
 
   def edit
+    @title = "Edit"
     @review_for_form = Review.find(review_params[:id])
   end
 
   def new
+    @title = "Write Review for"
     @game = VideoGame.find(review_params[:video_game_id])
     @review_for_form = Review.new
     # @review_for_form = VideoGame.find(review_params[:video_game_id]).reviews.new
@@ -31,7 +35,6 @@ class ReviewsController < ApplicationController
     @game = VideoGame.find(review_params[:video_game_id])
     @review_for_form = @game.reviews.new(ReviewDecanter.decant(params[:review]))
     @review_for_form.user_id = current_user.id
-    binding.pry
     if @review_for_form.save
       flash[:notice] = "You successfully added #{@review_for_form.title} "
       redirect_to root_path
