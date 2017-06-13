@@ -26,44 +26,46 @@ class ReviewsController < ApplicationController
 
   def new
     @title = "Write Review for"
-    @game = VideoGame.find(review_params[:video_game_id])
+    @game = VideoGame.find(outside_params[:video_game_id])
     @review_for_form = Review.new
-    # @review_for_form = VideoGame.find(review_params[:video_game_id]).reviews.new
   end
 
   def create
-    @game = VideoGame.find(review_params[:video_game_id])
-    @review_for_form = @game.reviews.new(ReviewDecanter.decant(params[:review]))
+    @game = VideoGame.find(outside_params[:video_game_id])
+    @review_for_form = @game.reviews.new(review_params)
     @review_for_form.user_id = current_user.id
     if @review_for_form.save
       flash[:notice] = "You successfully added #{@review_for_form.title} "
-      redirect_to root_path
+      redirect_to video_game_path(@game)
     else
       render :new
     end
   end
 
   def update
-    @review_for_form = Review.find(review_params[:id])
-
-    if @review_for_form.update(ReviewDecanter.decant(params[:review]))
+    @review_for_form = Review.find(outside_params[:id])
+    if @review_for_form.update(review_params)
       flash[:notice] = "You successfully updated #{@review_for_form.title} "
-      redirect_to root_path
+      redirect_to user_reviews_path
     else
       render :edit
     end
   end
 
   def destroy
-    @review_for_form = Review.find(review_params[:id])
+    @review_for_form = Review.find(outside_params[:id])
     @review_for_form.destroy
     flash[:notice] = "You successfully deleted #{@review_for_form.title} "
-    redirect_to user_video_games_path(current_user.id)
+    redirect_to user_reviews_path
   end
 
   protected
 
-  def review_params
+  def outside_params
     params.permit(:id, :video_game_id)
+  end
+
+  def review_params
+    ReviewDecanter.decant(params[:review])
   end
 end

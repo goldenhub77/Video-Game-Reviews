@@ -1,4 +1,4 @@
-<ul id="video-game-review-list">
+<ul class="object-list">
   <% @all_reviews.each do |review| %>
     <li><%= link_to review.title, user_review_path(review) %></li>
   <% end %>

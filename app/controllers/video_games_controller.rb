@@ -5,7 +5,6 @@ class VideoGamesController < ApplicationController
 
   end
 
-  #views all available video games sorted by title
   def index
     @title = 'Available Games'
     @all_video_games = VideoGame.order('created_at DESC')
@@ -39,7 +38,7 @@ class VideoGamesController < ApplicationController
 
     if @game_for_form.save
       flash[:notice] = "You successfully added #{@game_for_form.title} "
-      redirect_to root_path
+      redirect_to video_game_path(@game_for_form)
     else
       render :new
     end
@@ -50,7 +49,7 @@ class VideoGamesController < ApplicationController
     @game_for_form.update_attributes(VideoGameDecanter.decant(params[:video_game]))
     if @game_for_form.save
       flash[:notice] = "You successfully updated #{@game_for_form.title} "
-      redirect_to root_path
+      redirect_to user_games_path
     else
       render :edit
     end
@@ -60,7 +59,7 @@ class VideoGamesController < ApplicationController
     @game_for_form = VideoGame.find(video_game_params[:id])
     @game_for_form.destroy
     flash[:notice] = "You successfully deleted #{@game_for_form.title} "
-    redirect_to user_video_games_path(current_user.id)
+    redirect_to user_games_path
   end
 
   protected

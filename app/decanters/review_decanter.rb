@@ -1,5 +1,6 @@
 class ReviewDecanter < Decanter::Base
   strict true
+  input :id, :integer
   input :title, :string
   input :review, :string
   input :rating, :integer

@@ -6,11 +6,16 @@
 .content-wrapper, .main-footer {
   margin: 0;
 }
-p.notice, p.alert {
+.container > *  {
   text-align: center;
   font-weight: bolder;
 }
 
 li.footer {
   margin-top: 0.75rem;
+}
+
+input.range-field {
+  margin: 1rem auto;
+  width: 40%;
 }

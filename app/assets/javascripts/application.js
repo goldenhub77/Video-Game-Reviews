@@ -15,3 +15,19 @@
 //= require bootstrap
 //= require jquery.slimscroll.min
 //= require_tree .
+
+
+$(document).ready(function() {
+  setRating();
+  $(".range-field").on("mousemove keyup", setRating);
+  $(".search-submit-btn").on("click", function(event) {
+    event.preventDefault();
+    sendSearch();
+  });
+  $(".search-reset-btn").on("click", function(event) {
+    event.preventDefault();
+    $(".main-search-field").val("")
+    sendSearch();
+
+  })
+})

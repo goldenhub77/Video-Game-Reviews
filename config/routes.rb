@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :user_reviews, only: [:index, :show, :edit]
   #this resource may not be needed, will assess later
   # resources :reviews, only: [:new, :edit, :create, :update]
-  resources :reviews, only: [:show]
+  resources :reviews, only: [:show, :destroy, :update]
 
   resources :video_games do
     resources :reviews
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       get 'search/video_games', to: 'search#all_games'
       get 'search/user_games', to: 'search#user_games'
-      get 'search/reviews', to: 'search#reviews'
+      get 'search/user_reviews', to: 'search#user_reviews'
     end
   end
 

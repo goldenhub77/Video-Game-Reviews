@@ -19,13 +19,15 @@ class UserReviewsController < ApplicationController
   end
 
   def edit
-    binding.pry
+    @title = "Edit"
+    @review_for_form = Review.find(review_params[:id])
   end
 
   protected
 
   def review_params
-    params.permit([:id])
+    results = params.permit(:id)
+    ReviewDecanter.decant(results)
   end
 
   def check_user
