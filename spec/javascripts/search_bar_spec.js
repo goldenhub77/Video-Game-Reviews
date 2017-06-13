@@ -18,16 +18,17 @@ describe("sendSearch", function() {
   //   '</form>'
   // ].join('\n'));
 
-  searchData = $("#video_game_search");
+  searchData = $(".main-search-field");
   searchData.val("overwatch");
 
   // ajaxData = {
   //   search: 'overwatch'
   // }
 
-  it("sends a ajax get request to api/v1/window.location.pathname", function() {
+  it("sends a ajax get request to api/v1/user_games", function() {
     sendSearch();
     var request = jasmine.Ajax.requests.mostRecent();
+    expect(request.method).toBe("GET");
     expect(request.method).toBe("GET");
     debugger
   });

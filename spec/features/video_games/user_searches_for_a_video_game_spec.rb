@@ -17,7 +17,7 @@ feature 'user searches a video game', %q(
     end
   end
 
-  scenario 'returns some results on all games page' do
+  scenario 'returns search some results on all games page' do
     video_games = VideoGame.all
     sign_in(user)
 
@@ -47,7 +47,7 @@ feature 'user searches a video game', %q(
     video_games.each { |game| expect(page).not_to have_content(game.title) }
   end
 
-  scenario 'returns some results on user games page' do
+  scenario 'returns search results on user games page' do
     video_games = user.video_games
     sign_in(user)
 

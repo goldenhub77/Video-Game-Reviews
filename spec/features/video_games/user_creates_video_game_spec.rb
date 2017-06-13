@@ -22,7 +22,7 @@ feature 'user creates a new video game', %q(
 
     expect(page).to have_content('Create New Game')
 
-    visit new_video_game_path
+    click_link 'Create New Game'
 
     fill_in 'Title', with: 'Overwatch'
     fill_in 'Developer', with: 'Blizzard Entertainment'
