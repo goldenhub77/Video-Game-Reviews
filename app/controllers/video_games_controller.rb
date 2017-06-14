@@ -6,25 +6,40 @@ class VideoGamesController < ApplicationController
   end
 
   def index
-    @title = 'Available Games'
-    @all_video_games = VideoGame.order('created_at DESC')
-    if params[:search]
-      @all_video_games = VideoGame.search(params[:search]).order("created_at DESC")
-      if @all_video_games.empty?
-        flash[:notice] = "There are no video games matching '#{params[:search]}'"
+    if !get_video_game_params[:user_id].nil?
+      authorize_owner!
+      @title = "My games"
+      if params[:search]
+        @all_video_games = current_user.video_games.search(params[:search]).order("created_at DESC")
+        if @all_video_games.empty?
+          flash[:notice] = "There are no games containing the term '#{params[:search]}'"
+        end
+      else
+        @all_video_games = current_user.video_games.order("created_at DESC")
       end
+    elsif !get_video_game_params[:video_game_id].nil?
+
     else
-      @all_video_games = VideoGame.all.order("created_at DESC")
+      @title = 'Available Games'
+      @all_video_games = VideoGame.order('created_at DESC')
+      if params[:search]
+        @all_video_games = VideoGame.search(params[:search]).order("created_at DESC")
+        if @all_video_games.empty?
+          flash[:notice] = "There are no video games matching '#{params[:search]}'"
+        end
+      else
+        @all_video_games = VideoGame.all.order("created_at DESC")
+      end
     end
   end
 
   def show
-    @game = VideoGame.where(video_game_params).first
+    @game = VideoGame.find(get_video_game_params[:id])
     @all_reviews = @game.reviews.order('created_at DESC')
   end
 
   def edit
-    @game_for_form = VideoGame.find(video_game_params[:id])
+    @game_for_form = VideoGame.find(get_video_game_params[:id])
   end
 
   def new
@@ -45,30 +60,31 @@ class VideoGamesController < ApplicationController
   end
 
   def update
-    @game_for_form = VideoGame.find(video_game_params[:id])
-    @game_for_form.update_attributes(VideoGameDecanter.decant(params[:video_game]))
+    @game_for_form = VideoGame.find(get_video_game_params[:id])
+    @game_for_form.update_attributes(post_video_game_params)
     if @game_for_form.save
       flash[:notice] = "You successfully updated #{@game_for_form.title} "
-      redirect_to user_games_path
+      redirect_to user_video_games_path(@game_for_form)
     else
       render :edit
     end
   end
 
   def destroy
-    @game_for_form = VideoGame.find(video_game_params[:id])
+    @game_for_form = VideoGame.find(get_video_game_params[:id])
     @game_for_form.destroy
     flash[:notice] = "You successfully deleted #{@game_for_form.title} "
-    redirect_to user_games_path
+    redirect_to user_video_games_path(@game_for_form)
   end
 
   protected
 
-  def video_game_params
-    params.permit(:id)
+  def get_video_game_params
+    params.permit(:id, :user_id)
   end
 
-  def post_game_params
-    params.require(:video_game).permit(:title, :developer, :description, :genre_id, :release_date, :rating, platforms: [])
+  def post_video_game_params
+    result = params.require(:video_game).permit(:id, :title, :developer, :description, :genre_id, :release_date, :rating, platforms: [])
+    VideoGameDecanter.decant(result)
   end
 end

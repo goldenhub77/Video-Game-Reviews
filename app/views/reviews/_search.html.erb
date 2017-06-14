@@ -1,0 +1,5 @@
+<%= form_tag(user_video_games_path(@game), action: :index,  method: "get") do %>
+    <%= text_field_tag :search, params[:search], class: "main-search-field", placeholder: "Search reviews", size: '40' %>
+    <%= submit_tag("Reset", type: "reset", class: "search-reset-btn" ) %>
+    <%= submit_tag "Search", :name => nil, class: "search-submit-btn" %>
+<% end %>

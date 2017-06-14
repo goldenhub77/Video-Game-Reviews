@@ -4,9 +4,10 @@ function sendSearch() {
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: `/api/v1/search${window.location.pathname}`,
+    url: `/api/v1/${window.location.pathname}`,
     data: {'search': $inputValue},
     success: function(data) {
+      debugger
       if (data.objects.length === 0) {
         $(".notice").text(data.notice);
       }else {
@@ -18,6 +19,7 @@ function sendSearch() {
       }
     },
     error: function(data) {
+      debugger
       console.log("Server Request failed");
     }
   })

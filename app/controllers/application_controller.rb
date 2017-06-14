@@ -1,17 +1,22 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :authenticate_user!, except: [:home]
-  before_action :authorize_owner!, only: [:edit, :update, :destroy]
+  before_action :authorize_owner!, only: [:edit, :create, :destroy]
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def authorize_owner!
-    unless self.controller_path == 'devise/registrations' or self.controller_path == 'devise/sessions'
+    unless controller_path == 'devise/registrations' or controller_path == 'devise/sessions'
       begin
-        resource = current_user.send(self.controller_path).where('id = ?', params[:id])
-        if !current_user.is_admin? and resource.empty?
-          redirect_to user_video_games_path(current_user.id)
+        if params[:id].nil?
+          return nil
         else
-          return true
+          resource = current_user.send(controller_path).find(params[:id])
+          if !current_user.is_admin? and resource.user != current_user
+            redirect_back(fallback_location: "#{controller_path}#index")
+            return false
+          else
+            return true
+          end
         end
       rescue NoMethodError => message
         puts message

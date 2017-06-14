@@ -51,7 +51,7 @@ feature 'user searches a video game', %q(
     video_games = user.video_games
     sign_in(user)
 
-    visit user_games_path
+    visit user_video_games_path(user.id)
 
     video_games.each { |game| expect(page).to have_content(game.title) }
     expect(video_games.count).to eq(8)

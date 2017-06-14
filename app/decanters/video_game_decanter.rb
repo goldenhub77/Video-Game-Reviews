@@ -1,6 +1,6 @@
 class VideoGameDecanter < Decanter::Base
   strict true
-  
+  input :id, :integer
   input :title, :string
   input :developer, :string
   input :description, :string
