@@ -34,8 +34,16 @@ class VideoGamesController < ApplicationController
   end
 
   def show
-    @game = VideoGame.find(get_video_game_params[:id])
-    @all_reviews = @game.reviews.order('created_at DESC')
+    if !get_video_game_params[:search].nil?
+      @game = VideoGame.find(get_video_game_params[:video_game_id])
+    else
+      @game = VideoGame.find(get_video_game_params[:id])
+    end
+    if get_video_game_params[:search].nil?
+      @all_reviews = @game.reviews.order('created_at DESC')
+    else
+      @all_reviews = @game.reviews.search(params[:search]).order("created_at DESC")
+    end
   end
 
   def edit
@@ -80,7 +88,7 @@ class VideoGamesController < ApplicationController
   protected
 
   def get_video_game_params
-    params.permit(:id, :user_id)
+    params.permit(:id, :user_id, :search, :video_game_id)
   end
 
   def post_video_game_params
