@@ -31,7 +31,7 @@ feature 'user searches a video game', %q(
     click_button 'Search'
 
     expect(page).to have_content(query.title)
-    video_games.each { |game| expect(page).not_to have_content(game.title) }
+    video_games.each { |game| expect(page).not_to have_content(game.title, exact: true) }
   end
 
   scenario 'returns no results on all games page' do
@@ -43,8 +43,8 @@ feature 'user searches a video game', %q(
     fill_in 'search', with: "no match will be found"
     click_button 'Search'
 
-    expect(page).to have_content("There are no video games matching 'no match will be found'")
-    video_games.each { |game| expect(page).not_to have_content(game.title) }
+    expect(page).to have_content("There are no video games matching the term 'no match will be found'")
+    video_games.each { |game| expect(page).not_to have_content(game.title, exact: true) }
   end
 
   scenario 'returns search results on user games page' do
@@ -61,7 +61,7 @@ feature 'user searches a video game', %q(
     click_button 'Search'
 
     expect(page).to have_content(query.title)
-    video_games.each { |game| expect(page).not_to have_content(game.title) }
+    video_games.each { |game| expect(page).not_to have_content(game.title, exact: true) }
   end
 
   scenario 'returns no results on user games page' do
@@ -73,7 +73,7 @@ feature 'user searches a video game', %q(
     fill_in 'search', with: "no match will be found"
     click_button 'Search'
 
-    expect(page).to have_content("There are no video games matching 'no match will be found'")
-    video_games.each { |game| expect(page).not_to have_content(game.title) }
+    expect(page).to have_content("There are no video games matching the term 'no match will be found'")
+    video_games.each { |game| expect(page).not_to have_content(game.title, exact: true) }
   end
 end

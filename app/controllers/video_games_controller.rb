@@ -25,7 +25,7 @@ class VideoGamesController < ApplicationController
       if params[:search]
         @all_video_games = VideoGame.search(params[:search]).order("created_at DESC")
         if @all_video_games.empty?
-          flash[:notice] = "There are no video games matching '#{params[:search]}'"
+          flash[:notice] = "There are no video games matching the term '#{params[:search]}'"
         end
       else
         @all_video_games = VideoGame.all.order("created_at DESC")
