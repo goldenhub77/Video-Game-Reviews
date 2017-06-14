@@ -62,7 +62,7 @@ class ReviewsController < ApplicationController
     @review_for_form = Review.find(get_review_params[:id])
     if @review_for_form.update(post_review_params)
       flash[:notice] = "You successfully updated #{@review_for_form.title} "
-      redirect_to user_reviews_path
+      redirect_to user_review_path(current_user)
     else
       render :edit
     end

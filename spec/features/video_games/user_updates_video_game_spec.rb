@@ -15,7 +15,7 @@ feature 'user updates an existing video game', %q(
   scenario 'sucessfully' do
 
     sign_in(user)
-    visit video_game_path(video_game.id)
+    visit video_game_path(video_game)
 
     expect(page).to have_button('Edit')
 
@@ -27,6 +27,7 @@ feature 'user updates an existing video game', %q(
     fill_in 'Developer', with: 'Blizzard Entertainment'
     fill_in 'Description', with: video_game.description
     check platform2.name
+    find(:xpath, "//input[@id='video_game_rating']").set 4
     fill_in 'Release Date', with: '06/10/2015'
 
     click_button 'Update Video game'
@@ -35,9 +36,9 @@ feature 'user updates an existing video game', %q(
   end
 
   scenario 'fails with bad data' do
-    visit root_path
+
     sign_in(user)
-    visit edit_video_game_path(video_game.id)
+    visit edit_video_game_path(video_game)
 
     fill_in 'Title', with: ''
     fill_in 'Developer', with: ''
