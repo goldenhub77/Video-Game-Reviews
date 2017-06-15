@@ -18,12 +18,16 @@
 
 
 $(document).ready( () => {
+  setRating();
+  $(".range-field").on("mousemove keydown keyup", () => {
+    setRating();
+  });
 
-  $(".search-submit-btn").on("click", function(event) {
+  $(".search-submit-btn").on("click", (event) => {
     event.preventDefault();
     sendSearch();
   });
-  $(".search-reset-btn").on("click", function(event) {
+  $(".search-reset-btn").on("click", (event) => {
     event.preventDefault();
     $(".main-search-field").val("")
     sendSearch();

@@ -40,7 +40,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :rating, "(1 worst - 5 best) Rating: ", class: "range-label" %>
+    <%= f.label :rating, "(1 worst - 5 best) Rating: #{@game_for_form.rating}", class: "range-label" %>
     <%= f.range_field :rating, class: "range-field", in: 1..5, step: 1 %>
   </div>
 

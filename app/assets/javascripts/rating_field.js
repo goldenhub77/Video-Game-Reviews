@@ -3,6 +3,6 @@
 
 let setRating = () => {
   $inputValue = $(".range-field").val();
-  $label = $(".range-field").siblings("label");
+  $label = $(".range-label")
   $label.text("(1 worst - 5 best) Rating: " + $inputValue);
 }
