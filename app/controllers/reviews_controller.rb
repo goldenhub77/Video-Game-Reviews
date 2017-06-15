@@ -5,10 +5,10 @@ class ReviewsController < ApplicationController
       @game = VideoGame.find(get_review_params[:video_game_id])
       @title = "Reviews for #{@game.title}"
       @all_reviews = Review.order('created_at DESC')
-      if params[:search]
+      if get_review_params[:search]
         @all_reviews = Review.search(params[:search]).order("created_at DESC")
         if @all_reviews.empty?
-          no_results!
+          no_results!(get_review_params[:search])
         end
       else
         @all_reviews = Review.order("created_at DESC")
@@ -19,7 +19,7 @@ class ReviewsController < ApplicationController
       if params[:search]
         @all_reviews = current_user.reviews.search(params[:search]).order("created_at DESC")
         if @all_reviews.empty?
-          no_results!
+          no_results!(get_review_params[:search])
         end
       else
         @all_reviews = current_user.reviews.order("created_at DESC")
@@ -76,10 +76,6 @@ class ReviewsController < ApplicationController
   end
 
   protected
-
-  def no_results!
-    flash[:notice] = "There are no results containing the term '#{ajax_params[:searchQuery]}'"
-  end
 
   def get_review_params
     params.permit(:id, :user_id, :video_game_id, :review_search)

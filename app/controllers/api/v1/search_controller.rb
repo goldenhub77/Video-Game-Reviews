@@ -6,11 +6,15 @@ class Api::V1::SearchController < Api::V1::ApiController
         @objects = VideoGame.search(ajax_params[:searchQuery]).order("created_at DESC")
       end
     elsif ajax_params[:reviewsPresent].nil? && ajax_params[:url].include?('user')
-      @objects = current_user.video_games.search(ajax_params[:searchQuery]).order("created_at DESC")
+        @objects = current_user.video_games.search(ajax_params[:searchQuery]).order("created_at DESC")
     elsif !ajax_params[:reviewsPresent].nil? && !ajax_params[:url].include?('user')
-      @objects = current_user.reviews.search(ajax_params[:searchQuery]).order("created_at DESC")
+      if ajax_params[:searchQuery]
+        video_game = VideoGame.find(ajax_params[:videoGameId])
+        @objects = video_game.reviews.search(ajax_params[:searchQuery]).order("created_at DESC")
+      end
     end
-    if @objects.empty?
+
+    if @objects.empty? && ajax_params[:searchQuery] != ""
       @notice = "There are no results containing the term '#{ajax_params[:searchQuery]}'"
     end
     respond_to do |response|
@@ -29,7 +33,7 @@ class Api::V1::SearchController < Api::V1::ApiController
         @objects = current_user.reviews.search(ajax_params[:searchQuery]).order("created_at DESC")
       end
     end
-    if @objects.empty?
+    if @objects.empty? && ajax_params[:searchQuery] != ""
       @notice = "There are no results containing the term '#{ajax_params[:searchQuery]}'"
     end
     respond_to do |response|

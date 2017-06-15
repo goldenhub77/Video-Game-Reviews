@@ -39,11 +39,11 @@ feature 'user searches a video game', %q(
     sign_in(user)
 
     visit video_games_path
-
+    # http://localhost:9292/users/4/video_games?utf8=%E2%9C%93&search=test&url=%2Fusers%2F4%2Fvideo_games&page_type=video_games
     fill_in 'search', with: "no match will be found"
     click_button 'Search'
 
-    expect(page).to have_content("There are no video games matching the term 'no match will be found'")
+    expect(page).to have_content("There are no results matching the term 'no match will be found'")
     video_games.each { |game| expect(page).not_to have_content(game.title, exact: true) }
   end
 
@@ -71,9 +71,10 @@ feature 'user searches a video game', %q(
     visit video_games_path
 
     fill_in 'search', with: "no match will be found"
+    # http://localhost:9292/users/4/video_games?utf8=%E2%9C%93&search=test&url=%2Fusers%2F4%2Fvideo_games&page_type=video_games
     click_button 'Search'
 
-    expect(page).to have_content("There are no video games matching the term 'no match will be found'")
+    expect(page).to have_content("There are no results matching the term 'no match will be found'")
     video_games.each { |game| expect(page).not_to have_content(game.title, exact: true) }
   end
 end

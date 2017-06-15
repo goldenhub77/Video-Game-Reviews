@@ -44,8 +44,9 @@ feature 'user searches for a review', %q(
     visit video_game_reviews_path(video_game)
 
     fill_in 'search', with: "no match will be found"
+    visit "/video_games/#{video_game.id}/reviews?utf8=%E2%9C%93&search=#{query.title}"
     click_button 'Search'
-    expect(page).to have_content("There are no reviews matching the term 'no match will be found'")
+    expect(page).to have_content("There are no results matching the term 'no match will be found'")
     reviews.each { |review| expect(page).not_to have_content(review.title, exact: true) }
   end
 
@@ -59,8 +60,9 @@ feature 'user searches for a review', %q(
     expect(reviews.count).to eq(8)
     reviews = reviews.to_a
     query = reviews.pop
-    fill_in 'search', with: query.title
-    click_button 'Search'
+    # fill_in 'search', with: query.title
+    visit "/users/#{user.id}/reviews?utf8=%E2%9C%93&search=#{query.title}"
+    # click_button 'Search'
 
     expect(page).to have_content(query.title)
     reviews.each { |review| expect(page).not_to have_content(review.title, exact: true) }
@@ -73,9 +75,10 @@ feature 'user searches for a review', %q(
     visit user_reviews_path(user)
 
     fill_in 'search', with: "no match will be found"
+    # http://localhost:9292/users/4/video_games?utf8=%E2%9C%93&search=test&url=%2Fusers%2F4%2Fvideo_games&page_type=video_games
     click_button 'Search'
 
-    expect(page).to have_content("There are no reviews matching the term 'no match will be found'")
+    expect(page).to have_content("There are no results matching the term 'no match will be found'")
     reviews.each { |review| expect(page).not_to have_content(review.title, exact: true) }
   end
 end

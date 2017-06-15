@@ -9,10 +9,10 @@ class VideoGamesController < ApplicationController
     if !get_video_game_params[:user_id].nil?
       authorize_owner!
       @title = "My games"
-      if params[:search]
+      if get_video_game_params[:search]
         @all_video_games = current_user.video_games.search(params[:search]).order("created_at DESC")
         if @all_video_games.empty?
-          flash[:notice] = "There are no games containing the term '#{params[:search]}'"
+          no_results!(get_video_game_params[:search])
         end
       else
         @all_video_games = current_user.video_games.order("created_at DESC")
@@ -22,10 +22,10 @@ class VideoGamesController < ApplicationController
     else
       @title = 'Available Games'
       @all_video_games = VideoGame.order('created_at DESC')
-      if params[:search]
+      if get_video_game_params[:search]
         @all_video_games = VideoGame.search(params[:search]).order("created_at DESC")
         if @all_video_games.empty?
-          flash[:notice] = "There are no video games matching the term '#{params[:search]}'"
+          no_results!(get_video_game_params[:search])
         end
       else
         @all_video_games = VideoGame.all.order("created_at DESC")

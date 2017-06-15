@@ -9,7 +9,7 @@
         <%= hidden_field_tag :user_id, current_user.id %>
     <% end %>
     <%= hidden_field_tag :url, request.env["PATH_INFO"] %>
-    <%= hidden_field_tag :controller, controller_name %>
+    <%= hidden_field_tag :page_type, controller_name %>
     <%= submit_tag("Reset", type: "reset", class: "search-reset-btn" ) %>
     <%= submit_tag "Search", :name => nil, class: "search-submit-btn" %>
 <% end %>

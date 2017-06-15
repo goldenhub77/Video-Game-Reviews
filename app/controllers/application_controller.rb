@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def no_results!(term)
+    flash[:notice] = "There are no results containing the term '#{term}'"
+  end
+
   protected
 
   def configure_permitted_parameters
