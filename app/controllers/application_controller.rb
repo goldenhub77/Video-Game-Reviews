@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   end
 
   def no_results!(term)
-    flash[:notice] = "There are no results containing the term '#{term}'"
+    flash[:notice] = "There are no results matching the term '#{term}'"
   end
 
   protected

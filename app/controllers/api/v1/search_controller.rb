@@ -23,7 +23,7 @@ class Api::V1::SearchController < Api::V1::ApiController
     end
 
     if @objects.empty? && ajax_params[:searchQuery] != ""
-      @notice = "There are no results containing the term '#{ajax_params[:searchQuery]}'"
+      @notice = "There are no results matching the term '#{ajax_params[:searchQuery]}'"
     end
     respond_to do |response|
       response.js { render json: {
@@ -43,7 +43,7 @@ class Api::V1::SearchController < Api::V1::ApiController
       end
     end
     if @objects.empty? && ajax_params[:searchQuery] != ""
-      @notice = "There are no results containing the term '#{ajax_params[:searchQuery]}'"
+      @notice = "There are no results matching the term '#{ajax_params[:searchQuery]}'"
     end
     respond_to do |response|
       response.js { render json: {

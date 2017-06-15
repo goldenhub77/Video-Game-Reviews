@@ -16,9 +16,10 @@ class ReviewsController < ApplicationController
     elsif !get_review_params[:user_id].nil? || (get_review_params[:video_game_id] && !get_review_params[:review_search].nil?)
       authorize_owner!
       @title = "My Reviews"
-      if params[:search]
+      if get_review_params[:search]
         @all_reviews = current_user.reviews.search(params[:search]).order("created_at DESC")
         if @all_reviews.empty?
+
           no_results!(get_review_params[:search])
         end
       else
@@ -78,7 +79,7 @@ class ReviewsController < ApplicationController
   protected
 
   def get_review_params
-    params.permit(:id, :user_id, :video_game_id, :review_search)
+    params.permit(:id, :search, :user_id, :video_game_id, :review_search)
   end
 
   def post_review_params
