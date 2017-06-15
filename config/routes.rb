@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get 'video_games', to: 'search#video_games'
+      get 'reviews', to: 'search#reviews'
       # resources :video_games, only: [:index], to: 'search#all_games'
       # resources :video_games, only: [:show], to: 'search#game_page'
       # resources :user_games, only:[:index], to: 'search#user_games'
