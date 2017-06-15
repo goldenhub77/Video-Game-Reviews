@@ -1,16 +1,24 @@
 class Api::V1::SearchController < Api::V1::ApiController
 
-  def video_games
+  def index
     if ajax_params[:reviewsPresent].nil? && !ajax_params[:url].include?('user')
       if ajax_params[:searchQuery]
         @objects = VideoGame.search(ajax_params[:searchQuery]).order("created_at DESC")
+        @url = "/video_games"
       end
     elsif ajax_params[:reviewsPresent].nil? && ajax_params[:url].include?('user')
         @objects = current_user.video_games.search(ajax_params[:searchQuery]).order("created_at DESC")
+        @url = "/video_games"
     elsif !ajax_params[:reviewsPresent].nil? && !ajax_params[:url].include?('user')
       if ajax_params[:searchQuery]
         video_game = VideoGame.find(ajax_params[:videoGameId])
         @objects = video_game.reviews.search(ajax_params[:searchQuery]).order("created_at DESC")
+        @url = "/reviews"
+      end
+    elsif !ajax_params[:reviewsPresent].nil? && ajax_params[:url].include?('user')
+      if ajax_params[:searchQuery]
+        @objects = current_user.reviews.search(ajax_params[:searchQuery]).order("created_at DESC")
+        @url = "/reviews"
       end
     end
 
@@ -20,7 +28,8 @@ class Api::V1::SearchController < Api::V1::ApiController
     respond_to do |response|
       response.js { render json: {
           objects: @objects,
-          notice: @notice
+          notice: @notice,
+          linkUrl: @url
         }
       }
       response.html { redirect_back(fallback_location: root_path) }

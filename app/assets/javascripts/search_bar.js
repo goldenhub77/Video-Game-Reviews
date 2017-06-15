@@ -10,7 +10,7 @@ let sendSearch = () => {
   $.ajax({
     type: "GET",
     dataType: "json",
-    url: `/api/v1/${$pageType}`,
+    url: `/api/v1/search`,
     data: {'searchQuery': $searchQuery, 'videoGameId': $videoGameId, 'reviewsPresent': $reviewsPresent, 'url': $url, 'userId': $userId },
     success: (data) => {
 
@@ -21,7 +21,7 @@ let sendSearch = () => {
       }
       $(".object-list").html("");
       for (i=0; i < data.objects.length; i++) {
-        $(".object-list").append(`<li><a href="${location.pathname}/${data.objects[i]['id']}">${data.objects[i]['title']}</a></li>`);
+        $(".object-list").append(`<li><a href="${data.linkUrl}/${data.objects[i]['id']}">${data.objects[i]['title']}</a></li>`);
       }
     },
     error: (data) => {
