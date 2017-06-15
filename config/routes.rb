@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :video_games
   resources :reviews, only: [:show, :destroy, :update]
-  
+
   resources :users do
     resources :video_games
     resources :reviews
@@ -17,10 +17,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :video_games, only: [:index], to: 'search#all_games'
-      resources :video_games, only: [:show], to: 'search#game_page'
-      resources :user_games, only:[:index], to: 'search#user_games'
-      resources :user_reviews, only: [:index], to: 'search#user_reviews'
+      get 'video_games', to: 'search#video_games'
+      # resources :video_games, only: [:index], to: 'search#all_games'
+      # resources :video_games, only: [:show], to: 'search#game_page'
+      # resources :user_games, only:[:index], to: 'search#user_games'
+      # resources :user_reviews, only: [:index], to: 'search#user_reviews'
     end
   end
 

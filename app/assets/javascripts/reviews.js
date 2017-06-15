@@ -28,16 +28,3 @@
 //
 // }
 //
-// $(document).ready( () => {
-//
-//   $("#video_game_review_search_button").on("click", function(event) {
-//     event.preventDefault();
-//     sendSearch();
-//   });
-//   $("#video_game_reset_button").on("click", function(event) {
-//     event.preventDefault();
-//     $("#video_game_search").val("")
-//     sendSearch();
-//
-//   })
-// })
