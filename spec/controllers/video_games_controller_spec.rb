@@ -7,11 +7,5 @@ RSpec.describe VideoGamesController, type: :controller do
     sign_in(user)
   end
 
-  describe 'index' do
-    scenario 'initializes @title' do
-      title = 'Available Games'
-      get :index
-      expect(assigns(:title)).to eq(title)
-    end
-  end
+  
 end

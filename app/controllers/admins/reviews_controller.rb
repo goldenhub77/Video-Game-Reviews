@@ -1,29 +1,8 @@
-class ReviewsController < ApplicationController
+class Admins::ReviewsController < ApplicationController
 
   def index
-    if !get_review_params[:video_game_id].nil? && get_review_params[:review_search].nil?
-      @game = VideoGame.find(get_review_params[:video_game_id])
-      @all_reviews = Review.order('created_at DESC')
-      if get_review_params[:search]
-        @all_reviews = Review.search(params[:search]).order("created_at DESC")
-        if @all_reviews.empty?
-          no_results!(get_review_params[:search])
-        end
-      else
-        @all_reviews = Review.order("created_at DESC")
-      end
-    elsif !get_review_params[:user_id].nil? || (get_review_params[:video_game_id] && !get_review_params[:review_search].nil?)
-      authorize_owner!
-      if get_review_params[:search]
-        @all_reviews = current_user.reviews.search(params[:search]).order("created_at DESC")
-        if @all_reviews.empty?
-
-          no_results!(get_review_params[:search])
-        end
-      else
-        @all_reviews = current_user.reviews.order("created_at DESC")
-      end
-    end
+    @user = User.find(params[:user_id])
+    @all_reviews = @user.reviews
   end
 
   def show

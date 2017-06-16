@@ -16,6 +16,13 @@ Rails.application.routes.draw do
   end
 
   resources :admins
+  
+  namespace :admins do
+    resources :users do
+      resources :video_games
+      resources :reviews
+    end
+  end
 
   namespace :api do
     namespace :v1 do

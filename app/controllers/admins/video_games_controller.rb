@@ -1,4 +1,4 @@
-class VideoGamesController < ApplicationController
+class Admins::VideoGamesController < ApplicationController
 
   #welcome page/root page or if user unauthenticated
   def home
@@ -6,27 +6,8 @@ class VideoGamesController < ApplicationController
   end
 
   def index
-    if !get_video_game_params[:user_id].nil?
-      authorize_owner!
-      if get_video_game_params[:search]
-        @all_video_games = current_user.video_games.search(params[:search]).order("created_at DESC")
-        if @all_video_games.empty?
-          no_results!(get_video_game_params[:search])
-        end
-      else
-        @all_video_games = current_user.video_games.order("created_at DESC")
-      end
-    else
-      @all_video_games = VideoGame.order('created_at DESC')
-      if get_video_game_params[:search]
-        @all_video_games = VideoGame.search(params[:search]).order("created_at DESC")
-        if @all_video_games.empty?
-          no_results!(get_video_game_params[:search])
-        end
-      else
-        @all_video_games = VideoGame.all.order("created_at DESC")
-      end
-    end
+    @user = User.find(params[:user_id])
+    @all_video_games = @user.video_games
   end
 
   def show

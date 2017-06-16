@@ -1,0 +1,27 @@
+<div class="container">
+  <% if @all_video_games.empty? %>
+      <h3>No video games have been created yet.</h3>
+  <% else %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Published</th>
+          <th>Title</th>
+          <th>User</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @all_video_games.each do |game| %>
+          <tr>
+            <td><%= game.created_at %></td>
+            <td><%= game.title %></td>
+            <td><%= "#{game.user.first_name} #{game.user.last_name}" %></td>
+            <td><%= game.user.email %></td>
+            <td><%= button_to "Delete", video_game_path(game), data: { confirm: "Are you sure?" }, class: "btn btn-danger", method: :delete %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   before_action :authorize_admin!, if: :admins_controller?
 
   def authorize_owner!
-    unless controller_path == 'devise/registrations' or controller_path == 'devise/sessions'
+    unless controller_path == 'devise/registrations' or controller_path == 'devise/sessions' or current_user.admin?
       begin
         if params[:id].nil?
           return nil

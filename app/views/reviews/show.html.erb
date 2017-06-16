@@ -1,3 +1,4 @@
+<h3>Review for - <%= @game.title %></h3>
 <div class="row">
   <% if user_owns(@review) %>
     <%= button_to "Edit", edit_user_review_path(current_user), class: "col-md-3 btn btn-secondary", method: :get %>

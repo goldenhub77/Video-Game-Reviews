@@ -32,6 +32,9 @@
                 </p>
               </li>
               <li class="user-footer">
+                <% if current_user.admin? %>
+                  <%= link_to 'Administration', admins_path, class: "btn-sm btn-default" %>
+                <% end %>
                 <%= link_to 'My Games', user_video_games_path(current_user), class: "btn-sm btn-default" %>
                 <%= link_to 'My Reviews', user_reviews_path(current_user), class: "btn-sm btn-default" %>
                 <%= link_to 'Edit Account', edit_user_registration_path, class: "btn-sm btn-default" %>

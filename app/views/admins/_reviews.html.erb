@@ -1,0 +1,29 @@
+<div class="container">
+  <% if @all_reviews.empty? %>
+      <h3>No reviews have been created yet.</h3>
+  <% else %>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Published</th>
+          <th>Title</th>
+          <th>Game</th>
+          <th>User</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @all_reviews.each do |review| %>
+          <tr>
+            <td><%= review.created_at %></td>
+            <td><%= review.title %></td>
+            <td><%= review.video_game.title %></td>
+            <td><%= "#{review.user.first_name} #{review.user.last_name}" %></td>
+            <td><%= review.user.email %></td>
+            <td><%= button_to "Delete", review_path(review), data: { confirm: "Are you sure?" }, class: "btn btn-danger", method: :delete %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>
