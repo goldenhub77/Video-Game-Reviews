@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
+  include AdminsHelper
   protect_from_forgery with: :exception
   before_action :authenticate_user!, except: [:home]
   before_action :authorize_owner!, only: [:edit, :create, :destroy]
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :authorize_admin!, if: :admins_controller?
 
   def authorize_owner!
     unless controller_path == 'devise/registrations' or controller_path == 'devise/sessions'
@@ -26,8 +28,9 @@ class ApplicationController < ActionController::Base
   end
 
   def authorize_admin!
-    if current_user.nil? or !current_user.is_admin?
-      redirect_back(fallback_location: root_path, message: "You are not authorized to view this resource.")
+    if current_user.nil? or !current_user.admin?
+      flash[:notice] =  "You are not authorized to view this resource."
+      redirect_back(fallback_location: root_path)
     end
   end
 

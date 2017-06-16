@@ -15,13 +15,11 @@ Rails.application.routes.draw do
     resources :reviews
   end
 
+  resources :admins
+
   namespace :api do
     namespace :v1 do
       resources :search, only: [:index]
-      # resources :video_games, only: [:index], to: 'search#all_games'
-      # resources :video_games, only: [:show], to: 'search#game_page'
-      # resources :user_games, only:[:index], to: 'search#user_games'
-      # resources :user_reviews, only: [:index], to: 'search#user_reviews'
     end
   end
 
