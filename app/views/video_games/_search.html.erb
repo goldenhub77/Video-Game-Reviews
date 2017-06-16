@@ -1,9 +1,0 @@
-<%= form_tag(controller_path, method: "get") do %>
-    <%= text_field_tag :search, params[:search], class: "main-search-field", size: '40' %>
-    <% if controller_name == 'video_games' && self.action_name == 'show' %>
-      <%= hidden_field_tag :video_game_id, @game.id %>
-      <%= hidden_field_tag :review_search, true %>      
-    <% end %>
-    <%= submit_tag("Reset", type: "reset", class: "search-reset-btn" ) %>
-    <%= submit_tag "Search", :name => nil, class: "search-submit-btn" %>
-<% end %>

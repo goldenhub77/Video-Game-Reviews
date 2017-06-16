@@ -1,3 +1,6 @@
+<% if @all_video_games.empty? %>
+  <h3>No games have been created yet.</h3>
+<% end %>
 <ul class="object-list">
   <% @all_video_games.each do |game| %>
     <li><%= link_to game.title, video_game_path(game.id) %></li>

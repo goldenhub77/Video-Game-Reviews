@@ -1,3 +1,6 @@
+<% if @all_reviews.empty? %>
+  <h3>No reviews have been created yet.</h3>
+<% end %>
 <ul class="object-list">
   <% @all_reviews.each do |review| %>
     <li><%= link_to review.title, review_path(review.id) %></li>

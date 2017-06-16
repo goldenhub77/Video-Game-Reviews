@@ -13,4 +13,10 @@ class Review < ApplicationRecord
   def self.search(search)
     where("title ILIKE ? OR review ILIKE ?", "%#{search}%", "%#{search}%")
   end
+
+  def self.status
+    if Review.all.empty?
+      "There are currently no reviews available, but you can add one."
+    end
+  end
 end

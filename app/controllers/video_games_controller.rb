@@ -51,7 +51,6 @@ class VideoGamesController < ApplicationController
   end
 
   def new
-    @title = "Create New Game"
     @game_for_form = VideoGame.new
   end
 
