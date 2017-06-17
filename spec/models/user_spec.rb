@@ -33,7 +33,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '.is_admin?' do
+  describe '.admin?' do
     scenario 'equals false' do
       user = User.create(
         first_name: 'John',
@@ -42,7 +42,7 @@ RSpec.describe User, type: :model do
         password: 'Pa$$word',
         password_confirmation: 'Pa$$word'
       )
-      expect(user.is_admin?).to be_falsey
+      expect(user.admin?).to be_falsey
     end
     scenario 'equals true' do
       user = User.create(
@@ -53,7 +53,7 @@ RSpec.describe User, type: :model do
         password: 'Pa$$word',
         password_confirmation: 'Pa$$word'
       )
-      expect(user.is_admin?).to be_truthy
+      expect(user.admin?).to be_truthy
     end
   end
 
@@ -67,10 +67,11 @@ RSpec.describe User, type: :model do
         password: 'Pa$$word',
         password_confirmation: 'Pa$$word'
       )
-      new_user = User.all.first.id
-      expect(new_user).to eq(user.id)
-      User.destroy(user.id)
-      expect(User.all).to be_empty
+      new_user = User.where(email: 'test123@abc.com').first
+      expect(new_user).to eq(user)
+      destroyed_user = User.destroy(user.id)
+      expect(new_user).to eq(destroyed_user)
+      expect(User.where(id: user.id)).to be_empty
 
     end
   end

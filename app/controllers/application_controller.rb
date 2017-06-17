@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
           return nil
         else
           resource = current_user.send(controller_path).find(params[:id])
-          if !current_user.is_admin? and resource.user != current_user
+          if !current_user.admin? and resource.user != current_user
             redirect_back(fallback_location: "#{controller_path}#index")
             return false
           else
