@@ -26,6 +26,7 @@ let adminSearch = () => {
               <td>${data.videoGames.objects[i].game.title}</td>
               <td>${data.videoGames.objects[i].user.first_name} ${data.videoGames.objects[i].user.last_name}</td>
               <td>${data.videoGames.objects[i].user.email}</td>
+              <td><form class="button_to" method="get" action="/video_games/${data.videoGames.objects[i].game.id}"><input class="btn btn-secondary" type="submit" value="Show"></form></td>
               <td><form class="button_to" method="post" action="/video_games/${data.videoGames.objects[i].game.id}"><input type="hidden" name="_method" value="delete"><input data-confirm="Are you sure?" class="btn btn-danger" type="submit" value="Delete"><input type="hidden" name="authenticity_token" value="${AUTH_TOKEN}"></form></td>
             </tr>`;
 

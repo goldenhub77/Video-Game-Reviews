@@ -17,6 +17,7 @@
             <td><%= review.video_game.title %></td>
             <td><%= review.user.full_name %></td>
             <td><%= review.user.email %></td>
+            <td><%= button_to "Show", review_path(review), class: "btn btn-secondary", method: :get %></td>
             <td><%= button_to "Delete", review_path(review), data: { confirm: "Are you sure?" }, class: "btn btn-danger", method: :delete %></td>
           </tr>
         <% end %>

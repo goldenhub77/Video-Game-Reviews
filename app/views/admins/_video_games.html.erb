@@ -15,6 +15,7 @@
             <td><%= game.title %></td>
             <td><%= game.user.full_name %></td>
             <td><%= game.user.email %></td>
+            <td><%= button_to "Show", video_game_path(game), class: "btn btn-secondary", method: :get %></td>
             <td><%= button_to "Delete", video_game_path(game), data: { confirm: "Are you sure?" }, class: "btn btn-danger", method: :delete %></td>
           </tr>
         <% end %>

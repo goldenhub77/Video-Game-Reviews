@@ -13,6 +13,6 @@ class VideoGame < ApplicationRecord
   validates_presence_of :platforms
 
   def self.search(search)
-    where("title ILIKE ? OR description ILIKE ? OR developer ILIKE ? OR user ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
+    joins(:user).where("users.first_name ILIKE ? OR users.last_name ILIKE ? OR title ILIKE ? OR description ILIKE ? OR developer ILIKE ? OR user ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
   end
 end
