@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :video_games
-  resources :reviews, only: [:show, :destroy, :update]
+  resources :reviews, only: [:index, :show, :destroy, :update]
 
   resources :users do
     resources :video_games
@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :admins
-  
+
   namespace :admins do
     resources :users do
       resources :video_games

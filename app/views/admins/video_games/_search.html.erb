@@ -1,0 +1,5 @@
+<%= form_tag(admins_path, {method: :get}) do %>
+    <%= text_field_tag :video_game_search, params[:video_game_search], class: "admin-game-search-field", size: '40' %>
+    <%= submit_tag("Reset", type: "reset", class: "admin-game-reset-btn" ) %>
+    <%= submit_tag "Search", :name => nil, class: "admin-submit-btn" %>
+<% end %>

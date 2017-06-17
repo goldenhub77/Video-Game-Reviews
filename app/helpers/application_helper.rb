@@ -1,7 +1,7 @@
 module ApplicationHelper
 
-  def current_user_date_joined
-    current_user.created_at.strftime('%-m/%-d/%Y')
+  def object_date_joined(object)
+    object.created_at.strftime('%-m/%-d/%Y')
   end
 
   def user_owns(resource)

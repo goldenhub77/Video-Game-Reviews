@@ -15,4 +15,13 @@ class User < ApplicationRecord
   def admin?
     self.role == 'admin'
   end
+
+  def full_name
+    "#{self.first_name} #{self.last_name}"
+  end
+
+  def self.search(search)
+    where("first_name ILIKE ? OR last_name ILIKE ? OR email ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%")
+  end
+
 end

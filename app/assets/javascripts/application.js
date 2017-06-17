@@ -19,6 +19,7 @@
 
 $(document).ready( () => {
   setRating();
+
   $(".range-field").on("mousemove keydown keyup", () => {
     setRating();
   });
@@ -27,10 +28,33 @@ $(document).ready( () => {
     event.preventDefault();
     sendSearch();
   });
+
   $(".search-reset-btn").on("click", (event) => {
     event.preventDefault();
     $(".main-search-field").val("")
     sendSearch();
+  })
 
+  $(".admin-game-reset-btn").on("click", (event) => {
+    event.preventDefault();
+    $(".admin-game-search-field").val("");
+    adminSearch();
+  })
+
+  $(".admin-review-reset-btn").on("click", (event) => {
+    event.preventDefault();
+    $(".admin-review-search-field").val("");
+    adminSearch();
+  })
+
+  $(".admin-user-reset-btn").on("click", (event) => {
+    event.preventDefault();
+    $(".admin-user-search-field").val("");
+    adminSearch();
+  })
+
+  $(".admin-submit-btn").on("click", (event) => {
+    event.preventDefault();
+    adminSearch();
   })
 })

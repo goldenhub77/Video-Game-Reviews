@@ -1,0 +1,15 @@
+<h3>User Profile</h3>
+<div class="container">
+  <div class="jumbotron">
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-12">
+        <h1><%= @user.full_name %></h1>
+      </div>
+      <div class="col-sm-12 col-md-4 col-lg-3">
+        <h4>Role: <%= @user.role %></h4>
+        <h5>Joined: <%= object_date_joined(@user) %></h5>
+        <h5>Email: <%= @user.email %></h5>
+      </div>
+    </div>
+  </div>
+</div>

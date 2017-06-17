@@ -1,29 +1,26 @@
 <div class="container">
-  <% if @all_users.empty? %>
-      <h3>No video user have been created yet.</h3>
-  <% else %>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>Created</th>
+          <th>Joined</th>
           <th>Name</th>
           <th>Email</th>
           <th># Video Games</th>
           <th># Reviews</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="admins-users">
         <% @all_users.each do |user| %>
           <tr>
-            <td><%= user.created_at %></td>
-            <td><%= "#{user.first_name} #{user.last_name}" %></td>
+            <td><%= object_date_joined(user) %></td>
+            <td><%= user.full_name %></td>
             <td><%= user.email %></td>
             <td><%= link_to user.video_games.count, admins_user_video_games_path(user) %></td>
             <td><%= link_to user.reviews.count, admins_user_reviews_path(user) %></td>
+            <td><%= button_to "Show", admins_user_path(user), class: "btn btn-secondary", method: :get %></td>
             <td><%= button_to "Delete", user_path(user), data: { confirm: "Are you sure?" }, class: "btn btn-danger", method: :delete %></td>
           </tr>
         <% end %>
       </tbody>
     </table>
-  <% end %>
 </div>
