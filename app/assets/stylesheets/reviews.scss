@@ -2,23 +2,13 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.header-buttons-div {
-  display: inline-block;
-}
-
-.header-buttons {
-  margin-top: 0.75rem;
-  margin-left: 0.75rem;
-}
-
-.video-game-block {
+.review-block {
   margin: 2rem;
   padding: 1rem;
   border: 1.5px solid #808080;
   border-radius: 5px;
   box-shadow: 0 0 30px black;
 }
-
-.rating-parameters * {
+.voting-parameters * {
   display: inline;
 }

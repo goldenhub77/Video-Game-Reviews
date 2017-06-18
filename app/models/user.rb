@@ -4,8 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :video_games
-  has_many :reviews
+  has_many :video_games, dependent: :destroy
+  has_many :reviews, dependent: :destroy
+  has_many :review_votes, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true

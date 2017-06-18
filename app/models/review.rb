@@ -2,6 +2,7 @@ class Review < ApplicationRecord
   belongs_to :user
   belongs_to :video_game
   has_and_belongs_to_many :platforms
+  has_many :review_votes, dependent: :destroy
 
   validates :user_id, presence: true, numericality: true
   validates :title, presence: true, length: { minumum: 10, maximum: 30 }
@@ -18,5 +19,13 @@ class Review < ApplicationRecord
     if Review.all.empty?
       "There are currently no reviews available, but you can add one."
     end
+  end
+
+  def total_votes
+    review_votes.inject(0) { |sum, review| sum + review.vote }
+  end
+
+  def voted_thumbs_up?(user)
+    review_votes.where('user_id = ?', user.id).present? && review_votes.where('user_id = ?', user.id).first.vote == 1
   end
 end

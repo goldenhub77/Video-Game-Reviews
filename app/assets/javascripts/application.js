@@ -38,23 +38,33 @@ $(document).ready( () => {
   $(".admin-game-reset-btn").on("click", (event) => {
     event.preventDefault();
     $(".admin-game-search-field").val("");
-    adminSearch();
+    adminSearch('video-games');
   })
 
   $(".admin-review-reset-btn").on("click", (event) => {
     event.preventDefault();
     $(".admin-review-search-field").val("");
-    adminSearch();
+    adminSearch('reviews');
   })
 
   $(".admin-user-reset-btn").on("click", (event) => {
     event.preventDefault();
     $(".admin-user-search-field").val("");
-    adminSearch();
+    adminSearch('users');
   })
 
-  $(".admin-submit-btn").on("click", (event) => {
+  $(".admin-review-submit-btn").on("click", (event) => {
     event.preventDefault();
-    adminSearch();
+    adminSearch('reviews');
+  })
+
+  $(".admin-video-games-submit-btn").on("click", (event) => {
+    event.preventDefault();
+    adminSearch('video-games');
+  })
+
+  $(".admin-user-submit-btn").on("click", (event) => {
+    event.preventDefault();
+    adminSearch('users');
   })
 })

@@ -1,8 +1,26 @@
 <% if @all_video_games.empty? %>
   <h3>No games have been created yet.</h3>
 <% end %>
-<ul class="object-list">
+<div class="object-list">
   <% @all_video_games.each do |game| %>
-    <li><%= link_to game.title, video_game_path(game.id) %></li>
+    <div class="video-game-block col-sm-12 col-md-4 col-lg-3">
+      <%= link_to game.title, video_game_path(game.id) %>
+      <p><%= game.developer %></p>
+      <div class="col-sm-6 col-md-6">
+        Release Date:
+        <p><%= object_date_joined(game, :release_date) %></p>
+      </div>
+      <div class="col-sm-6 col-md-6">
+        <p><%= game.html_platforms %></p>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-12">
+          <span class="rating-parameters">
+            <i class="fa fa-gamepad fa-2x"></i>
+            <p>Rating: <%= game.rating_avg %></p>
+          </span>
+        </div>
+      </div>
+    </div>
   <% end %>
-</ul>
+</div>

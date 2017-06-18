@@ -6,12 +6,13 @@ let sendSearch = () => {
   let $userId = $("#user_id").val();
   let $pageType = $("#page_type").val();
   let $url = $("#url").val();
+  let AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
   $.ajax({
     type: "GET",
     dataType: "json",
     url: `/api/v1/search`,
-    data: {'searchQuery': $searchQuery, 'videoGameId': $videoGameId, 'reviewsPresent': $reviewsPresent, 'url': $url, 'userId': $userId },
+    data: {'searchQuery': $searchQuery, 'videoGameId': $videoGameId, 'reviewsPresent': $reviewsPresent, 'url': $url, 'userId': $userId, 'auth': AUTH_TOKEN },
     success: (data) => {
 
       if (data.objects.length === 0 && data.notice != null) {
@@ -21,11 +22,10 @@ let sendSearch = () => {
       }
       $(".object-list").html("");
       for (i=0; i < data.objects.length; i++) {
-        $(".object-list").append(`<li><a href="${data.linkUrl}/${data.objects[i]['id']}">${data.objects[i]['title']}</a></li>`);
+        $(".object-list").append(data.html[i]);
       }
     },
     error: (data) => {
-      debugger
       console.log("Server Request failed");
     }
   })

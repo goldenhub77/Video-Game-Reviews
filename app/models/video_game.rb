@@ -1,7 +1,7 @@
 class VideoGame < ApplicationRecord
   belongs_to :user
   belongs_to :genre, optional: true
-  has_many :reviews
+  has_many :reviews, dependent: :destroy
   has_and_belongs_to_many :platforms
 
   validates :title, presence: true, uniqueness: true, length: { minimum: 5 }
@@ -14,5 +14,15 @@ class VideoGame < ApplicationRecord
 
   def self.search(search)
     joins(:user).where("users.first_name ILIKE ? OR users.last_name ILIKE ? OR title ILIKE ? OR description ILIKE ? OR developer ILIKE ? OR user ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%", "%#{search}%")
+  end
+
+  def rating_avg
+    total_ratings = reviews.count + 1
+    summed_ratings = reviews.inject(0) { |sum, review| sum + review.rating } + rating
+    summed_ratings.to_f/total_ratings
+  end
+
+  def html_platforms
+    "#{platforms.map { |platform| platform.name }.join(" ")}"
   end
 end

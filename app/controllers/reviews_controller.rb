@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  before_action :find_review, only: [:show, :vote]
 
   def index
     if !get_review_params[:video_game_id].nil? && get_review_params[:review_search].nil?
@@ -27,7 +28,6 @@ class ReviewsController < ApplicationController
   end
 
   def show
-    @review = Review.find(get_review_params[:id])
     @game = @review.video_game
   end
 
@@ -69,7 +69,18 @@ class ReviewsController < ApplicationController
     redirect_back(fallback_location: user_reviews_path(current_user))
   end
 
+  def vote
+    review_vote = ReviewVote.find_or_initialize_by(user_id: current_user.id, review_id: @review.id)
+    review_vote.vote = params[:vote].to_i
+    review_vote.save!
+    redirect_back(fallback_location: video_game_path(@review.video_game))
+  end
+
   protected
+
+  def find_review
+    @review = Review.find(get_review_params[:id])
+  end
 
   def get_review_params
     params.permit(:id, :search, :user_id, :video_game_id, :review_search)

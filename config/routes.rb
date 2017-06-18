@@ -4,7 +4,11 @@ Rails.application.routes.draw do
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   resources :video_games
-  resources :reviews, only: [:index, :show, :destroy, :update]
+  resources :reviews, only: [:index, :show, :destroy, :update] do
+    member do
+        post :vote
+    end
+  end
 
   resources :users do
     resources :video_games
@@ -29,6 +33,8 @@ Rails.application.routes.draw do
       resources :search, only: [:index]
     end
   end
+
+
 
   root 'video_games#home'
 end

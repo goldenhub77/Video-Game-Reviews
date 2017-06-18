@@ -1,5 +1,5 @@
 <%= form_tag(admins_path, {method: :get}) do %>
     <%= text_field_tag :review_search, params[:review_search], class: "admin-review-search-field", size: '40' %>
     <%= submit_tag("Reset", type: "reset", class: "admin-review-reset-btn" ) %>
-    <%= submit_tag "Search", :name => nil, class: "admin-submit-btn" %>
+    <%= submit_tag "Search", :name => nil, class: "admin-review-submit-btn" %>
 <% end %>
