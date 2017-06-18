@@ -14,9 +14,27 @@
 .video-game-block {
   margin: 2rem;
   padding: 1rem;
+  min-width: 300px;
+  height: 250px;
+  position: relative;
   border: 1.5px solid #808080;
   border-radius: 5px;
   box-shadow: 0 0 30px black;
+}
+
+.video-game-block h4 {
+  line-height: 3rem;
+  text-align: right;
+}
+
+.video-game-block p {
+  text-align: center;
+}
+
+.video-game-block span {
+  position: absolute;
+   top: 0;
+   left: 10px;
 }
 
 .rating-parameters * {

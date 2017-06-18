@@ -85,23 +85,21 @@ class Api::V1::SearchController < Api::V1::ApiController
 
   def video_game_html(resource)
     "<div class='video-game-block col-sm-12 col-md-4 col-lg-3'>
-      <a href='/video_games/#{resource.id}'>#{resource.title}</a>
+      <h4><a href='/video_games/#{resource.id}'>#{resource.title}</a></h4>
       <p>#{resource.developer}</p>
       <div class='col-sm-6 col-md-6'>
         Release Date:
         <p>#{object_date_joined(resource, :release_date)}</p>
       </div>
-      <div class='col-sm-6 col-md-6'>
-        <p>#{resource.html_platforms}</p>
-      </div>
       <div class='row'>
         <div class='col-sm-12 col-md-12'>
-          <span class='rating-parameters'>
-            <i class='fa fa-gamepad fa-2x'></i>
-            <p>Rating: #{resource.rating_avg}</p>
-          </span>
+          <p>#{resource.html_platforms}</p>
         </div>
       </div>
+      <span class='rating-parameters'>
+        <i class='fa fa-gamepad fa-2x'></i>
+        <p>Rating: #{resource.rating_avg}</p>
+      </span>
     </div>"
   end
 

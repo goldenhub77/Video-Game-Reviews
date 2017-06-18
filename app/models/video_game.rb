@@ -23,6 +23,6 @@ class VideoGame < ApplicationRecord
   end
 
   def html_platforms
-    "#{platforms.map { |platform| platform.name }.join(" ")}"
+    "#{platforms.map { |platform| platform.name }.join(", ")}"
   end
 end
