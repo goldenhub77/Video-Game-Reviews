@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   resources :admins
 
   namespace :admins do
+    resources :reviews, only: [:destroy]
+    resources :video_games, only: [:destroy]
     resources :users do
       resources :video_games
       resources :reviews
