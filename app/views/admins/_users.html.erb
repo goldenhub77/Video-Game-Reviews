@@ -17,8 +17,8 @@
             <td><%= user.email %></td>
             <td><%= link_to user.video_games.count, admins_user_video_games_path(user) %></td>
             <td><%= link_to user.reviews.count, admins_user_reviews_path(user) %></td>
-            <td><%= button_to "Show", admins_user_path(user), class: "btn btn-secondary", method: :get %></td>
-            <td><%= button_to "Delete", admins_user_path(user), data: { confirm: "Are you sure?" }, class: "btn btn-danger", method: :delete %></td>
+            <td><%= button_to "Show", admins_user_path(user), id: "admin-show-user-#{user.id}", class: "btn btn-secondary", method: :get %></td>
+            <td><%= button_to "Delete", admins_user_path(user), id: "admin-delete-user-#{user.id}", data: { confirm: "Are you sure?" }, class: "btn btn-danger", method: :delete %></td>
           </tr>
         <% end %>
       </tbody>

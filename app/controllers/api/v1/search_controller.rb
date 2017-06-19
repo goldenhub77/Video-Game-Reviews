@@ -70,11 +70,11 @@ class Api::V1::SearchController < Api::V1::ApiController
       <div class='row'>
         <div class='col-sm-12 col-md-12'>
           <span class='voting-parameters'>
-            <form class='button_to' method='post' action='/reviews/11/vote?vote=1'><button class='btn btn-default' type='submit'>
+            <form class='button_to' method='post' action='/reviews/11/vote?vote=1'><button id='up-vote-review-#{review.id}' #{voted_thumbs_up?(current_user)} class='btn btn-default' type='submit'>
               <i class='fa fa-thumbs-up fa-2x'></i>
               </button><input type='hidden' name='authenticity_token' value='mnIwESwma87MLHsP1YtaEmoU3tfxu9f4rHJu2b/G1ve0XbVJOLBkcko8E5HDnI9XFTfG7qSAaRjjexacJCocWw=='></form>
-              <p>Rating: #{resource.total_votes}</p>
-            <form class='button_to' method='post' action='/reviews/11/vote?vote=-1'><button class='btn btn-default' type='submit'>
+              <p>Rating: #{resource.total_rating}</p>
+            <form class='button_to' method='post' action='/reviews/11/vote?vote=-1'><button id='down-vote-review-#{review.id}' #{voted_thumbs_down?(current_user)} class='btn btn-default' type='submit'>
               <i class='fa fa-thumbs-down fa-2x'></i>
               </button><input type='hidden' name='authenticity_token' value=#{ajax_params[:auth]}></form>
           </span>

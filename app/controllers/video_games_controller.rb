@@ -77,7 +77,7 @@ class VideoGamesController < ApplicationController
     @game_for_form = VideoGame.find(get_video_game_params[:id])
     @game_for_form.destroy
     flash[:notice] = "You successfully deleted #{@game_for_form.title} "
-    redirect_back(fallback_location: user_video_games_path(@game_for_form))
+    redirect_to user_video_games_path(@game_for_form)
   end
 
   protected

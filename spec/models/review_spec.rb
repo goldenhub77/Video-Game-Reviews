@@ -50,13 +50,10 @@ RSpec.describe Review, type: :model do
     let!(:video_game) { FactoryGirl.create(:video_game, user_id: user.id) }
     let!(:review) { FactoryGirl.create(:review, user_id: reviewer.id, video_game: video_game)}
 
-    scenario "deletes a video game from database" do
-      expect(VideoGame.first.id).to eq(video_game.id)
+    scenario "deletes a review from database" do
+      expect(Review.first.id).to eq(review.id)
       expect(video_game.reviews.first.id).to eq(review.id)
       expect(reviewer.reviews.first.id).to eq(review.id)
-      User.destroy(user.id)
-      expect(user.video_games).not_to be_empty
-      expect(reviewer.reviews).not_to be_empty
       Review.destroy(review.id)
       expect(reviewer.reviews).to be_empty
     end

@@ -21,11 +21,31 @@ class Review < ApplicationRecord
     end
   end
 
-  def total_votes
-    review_votes.inject(0) { |sum, review| sum + review.vote }
+  def total_rating
+    sum = review_votes.inject(0) { |sum, review| sum + review.vote }
+    avg = (sum.to_f/review_votes.count*100).round(2)
+    if avg < 0
+      "0%"
+    elsif avg.nan?
+      "No ratings!"
+    else
+      "#{avg}%"
+    end
+  end
+
+  def user_voted?(user)
+    review_votes.where('user_id = ?', user.id).present?
   end
 
   def voted_thumbs_up?(user)
-    review_votes.where('user_id = ?', user.id).present? && review_votes.where('user_id = ?', user.id).first.vote == 1
+    if user_voted?(user)
+      review_votes.where('user_id = ?', user.id).first.vote == 1
+    end
+  end
+
+  def voted_thumbs_down?(user)
+    if user_voted?(user)
+      review_votes.where('user_id = ?', user.id).first.vote == -1
+    end
   end
 end

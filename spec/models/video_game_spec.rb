@@ -61,12 +61,9 @@ RSpec.describe VideoGame, type: :model do
       expect(video_game.reviews.first.id).to eq(review.id)
       expect(reviewer.reviews.first.id).to eq(review.id)
 
-      User.destroy(user.id)
-      expect(VideoGame.where("id = ?", video_game.id)).not_to be_empty
-      expect(Review.where("id = ?", review.id)).not_to be_empty
       VideoGame.destroy(video_game.id)
       expect(VideoGame.where("id = ?", video_game.id)).to be_empty
-      expect(Review.where("id = ?", review.id)).not_to be_empty
+      expect(Review.where("id = ?", review.id)).to be_empty
     end
   end
 end

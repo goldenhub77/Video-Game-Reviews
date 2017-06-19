@@ -9,7 +9,12 @@ class Admins::UsersController < ApplicationController
   end
 
   def destroy
-    @user.destroy
+    if @user.destroy
+      flash[:notice] = "You successfully deleted #{@user.full_name}"
+    else
+      flash[:notice] = "Failed to remove #{@user.full_name}"
+    end
+    redirect_to admins_path
   end
 
   protected

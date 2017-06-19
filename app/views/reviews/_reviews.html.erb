@@ -8,11 +8,11 @@
       <div class="row">
         <div class="col-sm-12 col-md-12">
           <span class="voting-parameters">
-            <%= button_to vote_review_path(review, vote: 1), method: :post, disabled: review.voted_thumbs_up?(current_user), class: "btn btn-default" do %>
+            <%= button_to vote_review_path(review, vote: 1), id: "up-vote-review-#{review.id}", method: :post, disabled: review.voted_thumbs_up?(current_user), class: "btn btn-default" do %>
               <i class="fa fa-thumbs-up fa-2x"></i>
             <% end %>
-            <p>Rating: <%= review.total_votes %></p>
-            <%= button_to vote_review_path(review, vote: -1), method: :post, disabled: !review.voted_thumbs_up?(current_user), class: "btn btn-default" do %>
+            <p>Rating: <%= review.total_rating %></p>
+            <%= button_to vote_review_path(review, vote: -1), id: "down-vote-review-#{review.id}", method: :post, disabled: review.voted_thumbs_down?(current_user), class: "btn btn-default" do %>
               <i class="fa fa-thumbs-down fa-2x"></i>
             <% end %>
         </span>

@@ -29,7 +29,7 @@ feature 'user creates a new video game', %q(
     fill_in 'Description', with: "This is a description to prove a video game can be created."
     select "genre1", from: "video_game_genre_id"
     fill_in 'Release Date', with: '2016-05-06'
-    check "platform1"
+    check platform.name
 
     click_button 'Create Video game'
 

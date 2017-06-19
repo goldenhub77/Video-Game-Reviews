@@ -46,7 +46,7 @@ class ReviewsController < ApplicationController
     @review_for_form.user_id = current_user.id
     if @review_for_form.save
       flash[:notice] = "You successfully added #{@review_for_form.title} "
-      redirect_back(fallback_location: video_game_path(@game))
+      redirect_to video_game_path(@game)
     else
       render :new
     end
@@ -66,7 +66,7 @@ class ReviewsController < ApplicationController
     @review_for_form = Review.find(get_review_params[:id])
     @review_for_form.destroy
     flash[:notice] = "You successfully deleted #{@review_for_form.title} "
-    redirect_back(fallback_location: user_reviews_path(current_user))
+    redirect_to user_reviews_path(current_user)
   end
 
   def vote
