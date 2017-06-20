@@ -27,7 +27,7 @@ feature 'user creates a new review', %q(
 
     click_button 'Create Review'
 
-    expect(page).to have_content('You successfully added Test review for a video game')
+    expect(page).to have_content('Successfully created Test review for a video game')
   end
 
   scenario 'fails with bad data' do

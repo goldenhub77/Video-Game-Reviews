@@ -38,6 +38,10 @@ class ApplicationController < ActionController::Base
     flash[:notice] = "There are no results matching the term '#{term}'"
   end
 
+  def success_notice!(obj, action="completed action for")
+    flash[:notice] = "Successfully #{action} #{obj}"
+  end
+
   protected
 
   def configure_permitted_parameters

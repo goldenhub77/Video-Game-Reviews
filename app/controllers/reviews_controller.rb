@@ -44,7 +44,7 @@ class ReviewsController < ApplicationController
     @review = @game.reviews.new(post_review_params)
     @review.user_id = current_user.id
     if @review.save
-      flash[:notice] = "You successfully added #{@review.title} "
+      success_notice!(@review.title, "created")
       redirect_to video_game_path(@game)
     else
       render :new
@@ -53,7 +53,7 @@ class ReviewsController < ApplicationController
 
   def update
     if @review.update(post_review_params)
-      flash[:notice] = "You successfully updated #{@review.title} "
+      success_notice!(@review.title, "updated")
       redirect_back(fallback_location: user_review_path(current_user))
     else
       render :edit
@@ -62,7 +62,7 @@ class ReviewsController < ApplicationController
 
   def destroy
     @review.destroy
-    flash[:notice] = "You successfully deleted #{@review.title} "
+    success_notice!(@review.title, "deleted")
     redirect_to user_reviews_path(current_user)
   end
 

@@ -21,9 +21,9 @@ feature 'user deletes video game', %q(
 
     click_button 'Delete'
 
-    expect(page).to have_content("You successfully deleted #{video_game.title}")
+    expect(page).to have_content("Successfully deleted #{video_game.title}")
     expect{ VideoGame.find(video_game.id) }.to raise_exception(ActiveRecord::RecordNotFound)
     expect{ Review.find(review.id) }.to raise_exception(ActiveRecord::RecordNotFound)
-    
+
   end
 end

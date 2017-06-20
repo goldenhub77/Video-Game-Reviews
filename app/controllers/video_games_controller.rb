@@ -51,8 +51,8 @@ class VideoGamesController < ApplicationController
     @game.user_id = current_user.id
 
     if @game.save
-      flash[:notice] = "You successfully added #{@game.title} "
-      redirect_back(fallback_location: video_game_path(@game))
+      success_notice!(@game.title, "saved")
+      redirect_to video_game_path(@game)
     else
       render :new
     end
@@ -61,7 +61,7 @@ class VideoGamesController < ApplicationController
   def update
     @game.update_attributes(post_video_game_params)
     if @game.save
-      flash[:notice] = "You successfully updated #{@game.title} "
+      success_notice!(@game.title, "updated")
       redirect_back(fallback_location: user_video_games_path(@game))
     else
       render :edit
@@ -70,7 +70,7 @@ class VideoGamesController < ApplicationController
 
   def destroy
     @game.destroy
-    flash[:notice] = "You successfully deleted #{@game.title} "
+    success_notice!(@game.title, "deleted")
     redirect_to user_video_games_path(@game)
   end
 

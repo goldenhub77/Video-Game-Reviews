@@ -21,8 +21,8 @@ feature 'user deletes review', %q(
 
     click_button 'Delete'
 
-    expect(page).to have_content("You successfully deleted #{review.title}")
+    expect(page).to have_content("Successfully deleted #{review.title}")
     expect{ Review.find(review.id) }.to raise_exception(ActiveRecord::RecordNotFound)
-    
+
   end
 end

@@ -32,7 +32,7 @@ feature 'user updates an existing video game', %q(
 
     click_button 'Update Video game'
 
-    expect(page).to have_content('You successfully updated Overwatch')
+    expect(page).to have_content('Successfully updated Overwatch')
   end
 
   scenario 'fails with bad data' do

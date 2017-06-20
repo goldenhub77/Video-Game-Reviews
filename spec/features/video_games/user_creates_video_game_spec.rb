@@ -35,7 +35,7 @@ feature 'user creates a new video game', %q(
 
 
 
-    expect(page).to have_content('You successfully added Overwatch')
+    expect(page).to have_content('Successfully saved Overwatch')
   end
 
   scenario 'fails with bad data' do

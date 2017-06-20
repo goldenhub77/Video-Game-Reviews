@@ -32,7 +32,7 @@ feature 'user updates an existing review', %q(
 
     click_button 'Update Review'
 
-    expect(page).to have_content('You successfully updated Overwatch Review')
+    expect(page).to have_content('Successfully updated Overwatch Review')
   end
 
   scenario 'fails with bad data' do
