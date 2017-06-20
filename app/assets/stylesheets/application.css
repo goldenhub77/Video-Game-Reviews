@@ -13,3 +13,11 @@
  *= require style
  *= require_self
  */
+
+.main-header {
+  font-family: 'Frijole', cursive;
+}
+
+.review-block, .review-show-page {
+  font-family: 'Nixie One', cursive;
+}

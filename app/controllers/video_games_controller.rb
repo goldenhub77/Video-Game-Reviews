@@ -1,4 +1,5 @@
 class VideoGamesController < ApplicationController
+  before_action :find_video_game, only: [:show, :edit, :update, :destroy]
 
   #welcome page/root page or if user unauthenticated
   def home
@@ -30,11 +31,6 @@ class VideoGamesController < ApplicationController
   end
 
   def show
-    if !get_video_game_params[:search].nil?
-      @game = VideoGame.find(get_video_game_params[:video_game_id])
-    else
-      @game = VideoGame.find(get_video_game_params[:id])
-    end
     if get_video_game_params[:search].nil?
       @all_reviews = @game.reviews.order('created_at DESC')
     else
@@ -43,44 +39,46 @@ class VideoGamesController < ApplicationController
   end
 
   def edit
-    @game_for_form = VideoGame.find(get_video_game_params[:id])
+
   end
 
   def new
-    @game_for_form = VideoGame.new
+    @game = VideoGame.new
   end
 
   def create
-    @game_for_form = VideoGame.new(VideoGameDecanter.decant(params[:video_game]))
-    @game_for_form.user_id = current_user.id
+    @game = VideoGame.new(VideoGameDecanter.decant(params[:video_game]))
+    @game.user_id = current_user.id
 
-    if @game_for_form.save
-      flash[:notice] = "You successfully added #{@game_for_form.title} "
-      redirect_back(fallback_location: video_game_path(@game_for_form))
+    if @game.save
+      flash[:notice] = "You successfully added #{@game.title} "
+      redirect_back(fallback_location: video_game_path(@game))
     else
       render :new
     end
   end
 
   def update
-    @game_for_form = VideoGame.find(get_video_game_params[:id])
-    @game_for_form.update_attributes(post_video_game_params)
-    if @game_for_form.save
-      flash[:notice] = "You successfully updated #{@game_for_form.title} "
-      redirect_back(fallback_location: user_video_games_path(@game_for_form))
+    @game.update_attributes(post_video_game_params)
+    if @game.save
+      flash[:notice] = "You successfully updated #{@game.title} "
+      redirect_back(fallback_location: user_video_games_path(@game))
     else
       render :edit
     end
   end
 
   def destroy
-    @game_for_form = VideoGame.find(get_video_game_params[:id])
-    @game_for_form.destroy
-    flash[:notice] = "You successfully deleted #{@game_for_form.title} "
-    redirect_to user_video_games_path(@game_for_form)
+    @game.destroy
+    flash[:notice] = "You successfully deleted #{@game.title} "
+    redirect_to user_video_games_path(@game)
   end
 
   protected
+
+  def find_video_game
+    @game = VideoGame.find(get_video_game_params[:id])
+  end
 
   def get_video_game_params
     params.permit(:id, :user_id, :search, :video_game_id)

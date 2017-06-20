@@ -7,13 +7,13 @@
       <%= link_to review.title, review_path(review.id) %>
       <div class="row">
         <div class="col-sm-12 col-md-12">
-          <span class="voting-parameters">
+          <span class="badge voting-parameters">
             <%= button_to vote_review_path(review, vote: 1), id: "up-vote-review-#{review.id}", method: :post, disabled: review.voted_thumbs_up?(current_user), class: "btn btn-default" do %>
-              <i class="fa fa-thumbs-up fa-2x"></i>
+              <i class="fa fa-thumbs-up"></i>
             <% end %>
-            <p>Rating: <%= review.total_rating %></p>
+            <p><%= review.total_rating %></p>
             <%= button_to vote_review_path(review, vote: -1), id: "down-vote-review-#{review.id}", method: :post, disabled: review.voted_thumbs_down?(current_user), class: "btn btn-default" do %>
-              <i class="fa fa-thumbs-down fa-2x"></i>
+              <i class="fa fa-thumbs-down"></i>
             <% end %>
         </span>
         </div>

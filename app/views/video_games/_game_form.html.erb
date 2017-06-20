@@ -1,5 +1,5 @@
-<%= form_for(@game_for_form) do |f| %>
-  <%= error_messages(@game_for_form) %>
+<%= form_for(@game) do |f| %>
+  <%= error_messages(@game) %>
 
   <div class="field">
     <%= f.label :title, "Title"%><br />
@@ -22,7 +22,7 @@
       <div class="col-sm-6 col-sm-offset-3">
         <%= f.collection_check_boxes(:platforms, Platform.all, :id, :name, include_hidden: false) do |b| %>
           <div class="col-sm-4">
-            <%= b.label { b.check_box(checked: @game_for_form.platform_ids.include?(b.value)) + b.text } %>
+            <%= b.label { b.check_box(checked: @game.platform_ids.include?(b.value)) + b.text } %>
           </div>
         <% end %>
       </div>
@@ -40,7 +40,7 @@
   </div>
 
   <div class="field">
-    <%= f.label :rating, "(1 worst - 5 best) Rating: #{@game_for_form.rating}", class: "range-label" %>
+    <%= f.label :rating, "(1 worst - 5 best) Rating: #{@game.rating}", class: "range-label" %>
     <%= f.range_field :rating, class: "range-field", in: 1..5, step: 1 %>
   </div>
 

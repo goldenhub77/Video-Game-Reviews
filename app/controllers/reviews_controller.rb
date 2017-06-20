@@ -1,5 +1,6 @@
 class ReviewsController < ApplicationController
-  before_action :find_review, only: [:show, :vote]
+  before_action :find_review, only: [:show, :edit, :update, :vote, :destroy]
+  before_action :find_game, only: [:new, :create]
 
   def index
     if !get_review_params[:video_game_id].nil? && get_review_params[:review_search].nil?
@@ -32,20 +33,18 @@ class ReviewsController < ApplicationController
   end
 
   def edit
-    @review_for_form = Review.find(get_review_params[:id])
+
   end
 
   def new
-    @game = VideoGame.find(get_review_params[:video_game_id])
-    @review_for_form = Review.new
+    @review = Review.new
   end
 
   def create
-    @game = VideoGame.find(get_review_params[:video_game_id])
-    @review_for_form = @game.reviews.new(post_review_params)
-    @review_for_form.user_id = current_user.id
-    if @review_for_form.save
-      flash[:notice] = "You successfully added #{@review_for_form.title} "
+    @review = @game.reviews.new(post_review_params)
+    @review.user_id = current_user.id
+    if @review.save
+      flash[:notice] = "You successfully added #{@review.title} "
       redirect_to video_game_path(@game)
     else
       render :new
@@ -53,9 +52,8 @@ class ReviewsController < ApplicationController
   end
 
   def update
-    @review_for_form = Review.find(get_review_params[:id])
-    if @review_for_form.update(post_review_params)
-      flash[:notice] = "You successfully updated #{@review_for_form.title} "
+    if @review.update(post_review_params)
+      flash[:notice] = "You successfully updated #{@review.title} "
       redirect_back(fallback_location: user_review_path(current_user))
     else
       render :edit
@@ -63,9 +61,8 @@ class ReviewsController < ApplicationController
   end
 
   def destroy
-    @review_for_form = Review.find(get_review_params[:id])
-    @review_for_form.destroy
-    flash[:notice] = "You successfully deleted #{@review_for_form.title} "
+    @review.destroy
+    flash[:notice] = "You successfully deleted #{@review.title} "
     redirect_to user_reviews_path(current_user)
   end
 
@@ -80,6 +77,10 @@ class ReviewsController < ApplicationController
 
   def find_review
     @review = Review.find(get_review_params[:id])
+  end
+
+  def find_game
+    @game = VideoGame.find(get_review_params[:video_game_id])
   end
 
   def get_review_params

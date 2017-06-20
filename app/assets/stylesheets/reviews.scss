@@ -9,6 +9,15 @@
   border-radius: 5px;
   box-shadow: 0 0 30px black;
 }
+
+.voting-parameters p{
+  width: 50px;
+}
+
 .voting-parameters * {
-  display: inline;
+  display: inline-block;
+}
+
+.voting-parameters button {
+  border-radius: 50%;
 }

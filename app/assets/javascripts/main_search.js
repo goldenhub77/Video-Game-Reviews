@@ -14,7 +14,6 @@ let sendSearch = () => {
     url: `/api/v1/search`,
     data: {'searchQuery': $searchQuery, 'videoGameId': $videoGameId, 'reviewsPresent': $reviewsPresent, 'url': $url, 'userId': $userId, 'auth': AUTH_TOKEN },
     success: (data) => {
-
       if (data.objects.length === 0 && data.notice != null) {
         $(".notice").text(data.notice);
       }else {

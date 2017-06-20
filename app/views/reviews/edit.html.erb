@@ -1,4 +1,4 @@
-<h2>Edit - <%= @review_for_form.title %></h2>
+<h2>Edit - <%= @review.title %></h2>
 
 <%= render "reviews/review_form" %>
-<%= button_to "Delete", review_path(@review_for_form), data: { confirm: "Are you sure?" }, class: "col-md-4 col-md-offset-4 btn btn-danger", method: :delete %>
+<%= button_to "Delete", review_path(@review), data: { confirm: "Are you sure?" }, class: "col-md-4 col-md-offset-4 btn btn-danger", method: :delete %>

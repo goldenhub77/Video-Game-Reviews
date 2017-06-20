@@ -5,7 +5,6 @@ class Admins::UsersController < ApplicationController
   end
 
   def show
-
   end
 
   def destroy
