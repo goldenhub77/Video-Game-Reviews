@@ -27,7 +27,6 @@ feature 'user updates an existing review', %q(
 
     fill_in 'Title', with: 'Overwatch Review'
     fill_in 'Review', with: Faker::Lorem.paragraph
-    check platform2.name
     find(:xpath, "//input[@id='review_rating']").set 4
 
     click_button 'Update Review'
@@ -42,7 +41,7 @@ feature 'user updates an existing review', %q(
 
     fill_in 'Title', with: ''
     fill_in 'Review', with: nil
-
+  
     click_button 'Update Review'
 
     expect(page).to have_content("3 errors in review form.")

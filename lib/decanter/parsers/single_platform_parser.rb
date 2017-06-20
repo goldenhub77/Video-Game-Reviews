@@ -1,5 +1,5 @@
 class SinglePlatformParser < Decanter::Parser::ValueParser
   parser do |value, options|
-    [Platform.find(value.to_i)]
+    Platform.where('id = ?', value)
   end
 end

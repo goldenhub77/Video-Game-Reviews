@@ -1,6 +1,7 @@
 class ReviewsController < ApplicationController
   before_action :find_review, only: [:show, :edit, :update, :vote, :destroy]
   before_action :find_game, only: [:new, :create]
+  before_action :find_review_game, only: [:show, :edit, :update]
 
   def index
     if !get_review_params[:video_game_id].nil? && get_review_params[:review_search].nil?
@@ -29,11 +30,11 @@ class ReviewsController < ApplicationController
   end
 
   def show
-    @game = @review.video_game
+
   end
 
   def edit
-    @game = @review.video_game
+
   end
 
   def new
@@ -52,7 +53,8 @@ class ReviewsController < ApplicationController
   end
 
   def update
-    if @review.update(post_review_params)
+    @review.update_attributes(post_review_params)
+    if @review.save
       success_notice!(@review.title, "updated")
       redirect_back(fallback_location: user_review_path(current_user))
     else
@@ -83,11 +85,21 @@ class ReviewsController < ApplicationController
     @game = VideoGame.find(get_review_params[:video_game_id])
   end
 
+  def find_review_game
+    @game = @review.video_game
+  end
+
   def get_review_params
     params.permit(:id, :search, :user_id, :video_game_id, :review_search)
   end
 
   def post_review_params
-    ReviewDecanter.decant(params[:review])
+    permitted = params.require(:review).permit(:id, :vote, :title, :review, :rating, :video_game_id, :platforms)
+    if permitted[:platforms].present?
+      permitted[:platforms] = Platform.where('id = ?', permitted[:platforms])
+    else
+      permitted[:platforms] = []
+    end
+    permitted
   end
 end

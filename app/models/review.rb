@@ -13,7 +13,9 @@ class Review < ApplicationRecord
   validates_presence_of :video_game
 
   def platform_check
-    (video_game.platforms.map { |game_platform| game_platform.name == platforms.first.name }).include?(true)
+    if platforms.present?
+      (video_game.platforms.map { |game_platform| game_platform.name == platforms.first.name }).include?(true)
+    end
   end
 
   def self.search(search)

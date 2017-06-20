@@ -23,7 +23,7 @@ feature 'user creates a new review', %q(
 
     fill_in 'Title', with: 'Test review for a video game'
     fill_in 'Review', with: Faker::Lorem.paragraph
-    check platform.name
+    select video_game.platforms.first.name, from: 'review_platforms'
 
     click_button 'Create Review'
 
