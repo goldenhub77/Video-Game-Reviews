@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include AdminsHelper
   protect_from_forgery with: :exception
   before_action :authenticate_user!, except: [:home]
-  before_action :authorize_owner!, only: [:edit, :create, :destroy]
+  before_action :authorize_owner!, only: [:edit, :destroy]
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize_admin!, if: :admins_controller?
 
@@ -10,11 +10,17 @@ class ApplicationController < ActionController::Base
     unless controller_path == 'devise/registrations' or controller_path == 'devise/sessions' or current_user.admin?
       begin
         if params[:id].nil?
-          return nil
+          acting_user = User.find(params[:user_id])
+          if acting_user.id != current_user.id
+            redirect_to "#{controller_path}#index"
+            return false
+          else
+            return true
+          end
         else
           resource = current_user.send(controller_path).find(params[:id])
           if !current_user.admin? and resource.user != current_user
-            redirect_back(fallback_location: "#{controller_path}#index")
+            redirect_to "#{controller_path}#index"
             return false
           else
             return true

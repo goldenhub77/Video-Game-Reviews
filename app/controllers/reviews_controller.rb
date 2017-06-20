@@ -16,12 +16,14 @@ class ReviewsController < ApplicationController
     elsif !get_review_params[:user_id].nil? || (get_review_params[:video_game_id] && !get_review_params[:review_search].nil?)
       authorize_owner!
       if get_review_params[:search]
-        @reviews = current_user.reviews.search(params[:search]).order("created_at DESC")
+        load_user
+        @reviews = @user.reviews.search(params[:search]).order("created_at DESC")
         if @reviews.empty?
           no_results!(get_review_params[:search])
         end
       else
-        @reviews = current_user.reviews.order("created_at DESC")
+        load_user
+        @reviews = @user.reviews.order("created_at DESC")
       end
     end
   end
@@ -74,6 +76,10 @@ class ReviewsController < ApplicationController
 
   def load_reviews
     @reviews = Review.order('created_at DESC')
+  end
+
+  def load_user
+    @user = User.find(get_review_params[:user_id])
   end
 
   def find_review

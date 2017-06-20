@@ -67,18 +67,18 @@ class Api::V1::SearchController < Api::V1::ApiController
     if ajax_params[:url].include?('reviews')
       game_title = "<h5>Game - #{resource.video_game.title}</h5>"
     end
-    "<div class='review-block col-sm-12 col-md-4 col-lg-3'>
+    "<div class='review-block col-sm-8 col-md-4 col-lg-4'>
       #{game_title}
       <a href='/reviews/#{resource.id}'>#{resource.title}</a>
       <div class='row'>
         <div class='col-sm-12 col-md-12'>
           <span class=' badge voting-parameters'>
             <form class='button_to' method='post' action='/reviews/11/vote?vote=1'><button id='up-vote-review-#{resource.id}' #{resource.voted_thumbs_up?(current_user)} class='btn btn-default' type='submit'>
-              <i class='fa fa-thumbs-up fa-2x'></i>
+              <i class='fa fa-thumbs-up'></i>
               </button><input type='hidden' name='authenticity_token' value='mnIwESwma87MLHsP1YtaEmoU3tfxu9f4rHJu2b/G1ve0XbVJOLBkcko8E5HDnI9XFTfG7qSAaRjjexacJCocWw=='></form>
               <p>#{resource.total_rating}</p>
             <form class='button_to' method='post' action='/reviews/11/vote?vote=-1'><button id='down-vote-review-#{resource.id}' #{resource.voted_thumbs_down?(current_user)} class='btn btn-default' type='submit'>
-              <i class='fa fa-thumbs-down fa-2x'></i>
+              <i class='fa fa-thumbs-down'></i>
               </button><input type='hidden' name='authenticity_token' value=#{ajax_params[:auth]}></form>
           </span>
         </div>

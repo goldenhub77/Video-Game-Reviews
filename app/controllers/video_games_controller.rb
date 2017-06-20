@@ -9,14 +9,15 @@ class VideoGamesController < ApplicationController
   def index
     if !get_video_game_params[:user_id].nil?
       authorize_owner!
+      load_user
       @title = "My Games"
       if get_video_game_params[:search]
-        @all_video_games = current_user.video_games.search(params[:search]).order("created_at DESC")
+        @all_video_games = @user.video_games.search(params[:search]).order("created_at DESC")
         if @all_video_games.empty?
           no_results!(get_video_game_params[:search])
         end
       else
-        @all_video_games = current_user.video_games.order("created_at DESC")
+        @all_video_games = @user.video_games.order("created_at DESC")
       end
     else
       @title = "All Games"
@@ -51,7 +52,6 @@ class VideoGamesController < ApplicationController
   def create
     @game = VideoGame.new(VideoGameDecanter.decant(params[:video_game]))
     @game.user_id = current_user.id
-
     if @game.save
       success_notice!(@game.title, "saved")
       redirect_to video_game_path(@game)
@@ -73,13 +73,17 @@ class VideoGamesController < ApplicationController
   def destroy
     @game.destroy
     success_notice!(@game.title, "deleted")
-    redirect_to user_video_games_path(@game)
+    redirect_to user_video_games_path(current_user)
   end
 
   protected
 
   def find_video_game
     @game = VideoGame.find(get_video_game_params[:id])
+  end
+
+  def load_user
+    @user = User.find(get_video_game_params[:user_id])
   end
 
   def get_video_game_params
