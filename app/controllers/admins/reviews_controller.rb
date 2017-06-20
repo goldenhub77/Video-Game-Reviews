@@ -3,7 +3,7 @@ class Admins::ReviewsController < ApplicationController
 
   def index
     @user = User.find(params[:user_id])
-    @all_reviews = @user.reviews
+    @reviews = @user.reviews
   end
 
   def destroy

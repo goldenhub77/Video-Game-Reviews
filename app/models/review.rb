@@ -19,7 +19,7 @@ class Review < ApplicationRecord
   end
 
   def self.search(search)
-    where("title ILIKE ? OR review ILIKE ?", "%#{search}%", "%#{search}%")
+    joins(:video_game).where("video_games.title ILIKE ? OR reviews.title ILIKE ? OR review ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%")
   end
 
   def self.status

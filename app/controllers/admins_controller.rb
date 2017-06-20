@@ -3,9 +3,9 @@ class AdminsController < ApplicationController
   include ApplicationHelper
   def index
     if get_admin_params[:review_search]
-      @all_reviews = Review.search(get_admin_params[:review_search])
+      @reviews = Review.search(get_admin_params[:review_search])
       load_review_html
-      if @all_reviews.empty? or @js_reviews.empty?
+      if @reviews.empty? or @js_reviews.empty?
         @review_notice = "No reviews matching #{get_admin_params[:review_search]}"
       end
     end
@@ -40,7 +40,7 @@ class AdminsController < ApplicationController
 
   def load_objects
     @all_video_games = VideoGame.all
-    @all_reviews = Review.all
+    @reviews = Review.all
     @all_users = User.all
     load_review_html
     load_video_game_html
@@ -56,7 +56,7 @@ class AdminsController < ApplicationController
 
   def load_review_html
     @js_reviews = []
-    @all_reviews.each do |review|
+    @reviews.each do |review|
       @js_reviews << { html: review_html(review) }
     end
   end

@@ -63,7 +63,12 @@ class Api::V1::SearchController < Api::V1::ApiController
   end
 
   def review_html(resource)
+    game_title = nil
+    if ajax_params[:url].include?('reviews')
+      game_title = "<h5>Game - #{resource.video_game.title}</h5>"
+    end
     "<div class='review-block col-sm-12 col-md-4 col-lg-3'>
+      #{game_title}
       <a href='/reviews/#{resource.id}'>#{resource.title}</a>
       <div class='row'>
         <div class='col-sm-12 col-md-12'>

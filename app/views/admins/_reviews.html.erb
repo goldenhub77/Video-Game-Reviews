@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody id="admins-reviews">
-        <% @all_reviews.each do |review| %>
+        <% @reviews.each do |review| %>
           <tr>
             <td><%= object_date_joined(review) %></td>
             <td><%= review.title %></td>

@@ -1,9 +1,12 @@
-<% if @all_reviews.empty? %>
+<% if @reviews.empty? %>
   <h3>No reviews have been created yet.</h3>
 <% end %>
 <div class="object-list">
-  <% @all_reviews.each do |review| %>
-    <div class="review-block col-sm-12 col-md-4 col-lg-3">
+  <% @reviews.each do |review| %>
+    <div class="review-block col-sm-8 col-md-4 col-lg-4">
+      <% if controller_path == 'reviews' %>
+        <h5><strong>Game - <%= review.video_game.title %></strong></h5>
+      <% end %>
       <%= link_to review.title, review_path(review.id) %>
       <div class="row">
         <div class="col-sm-12 col-md-12">
@@ -20,4 +23,3 @@
       </div>
     </div>
   <% end %>
-</ul>

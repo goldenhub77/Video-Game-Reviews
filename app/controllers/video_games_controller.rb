@@ -34,9 +34,9 @@ class VideoGamesController < ApplicationController
 
   def show
     if get_video_game_params[:search].nil?
-      @all_reviews = @game.reviews.order('created_at DESC')
+      @reviews = @game.reviews.order('created_at DESC')
     else
-      @all_reviews = @game.reviews.search(params[:search]).order("created_at DESC")
+      @reviews = @game.reviews.search(params[:search]).order("created_at DESC")
     end
   end
 

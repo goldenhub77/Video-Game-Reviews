@@ -1,4 +1,5 @@
 class ReviewsController < ApplicationController
+  before_action :load_reviews, only: [:index]
   before_action :find_review, only: [:show, :edit, :update, :vote, :destroy]
   before_action :find_game, only: [:new, :create]
   before_action :find_review_game, only: [:show, :edit, :update]
@@ -6,35 +7,29 @@ class ReviewsController < ApplicationController
   def index
     if !get_review_params[:video_game_id].nil? && get_review_params[:review_search].nil?
       @game = VideoGame.find(get_review_params[:video_game_id])
-      @all_reviews = Review.order('created_at DESC')
       if get_review_params[:search]
-        @all_reviews = Review.search(params[:search]).order("created_at DESC")
-        if @all_reviews.empty?
+        @reviews = Review.search(params[:search]).order("created_at DESC")
+        if @reviews.empty?
           no_results!(get_review_params[:search])
         end
-      else
-        @all_reviews = Review.order("created_at DESC")
       end
     elsif !get_review_params[:user_id].nil? || (get_review_params[:video_game_id] && !get_review_params[:review_search].nil?)
       authorize_owner!
       if get_review_params[:search]
-        @all_reviews = current_user.reviews.search(params[:search]).order("created_at DESC")
-        if @all_reviews.empty?
-
+        @reviews = current_user.reviews.search(params[:search]).order("created_at DESC")
+        if @reviews.empty?
           no_results!(get_review_params[:search])
         end
       else
-        @all_reviews = current_user.reviews.order("created_at DESC")
+        @reviews = current_user.reviews.order("created_at DESC")
       end
     end
   end
 
   def show
-
   end
 
   def edit
-
   end
 
   def new
@@ -76,6 +71,10 @@ class ReviewsController < ApplicationController
   end
 
   protected
+
+  def load_reviews
+    @reviews = Review.order('created_at DESC')
+  end
 
   def find_review
     @review = Review.find(get_review_params[:id])

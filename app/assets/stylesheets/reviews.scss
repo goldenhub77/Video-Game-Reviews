@@ -3,7 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .review-block {
-  margin: 2rem;
+  margin: 1rem;
   padding: 1rem;
   border: 1.5px solid #808080;
   border-radius: 5px;
@@ -20,4 +20,9 @@
 
 .voting-parameters button {
   border-radius: 50%;
+}
+
+.right-side {
+  height: 100%;
+  border: 1px red solid;
 }
