@@ -17,6 +17,8 @@ PLATFORMS =
   { name: 'Playstation 2' },
   { name: 'Playstation 3' },
   { name: 'Playstation 4' },
+  { name: 'Nintendo Wii' },
+  { name: 'Nintendo 3DS' },
   { name: 'Android' },
   { name: 'IOS' }
 ]

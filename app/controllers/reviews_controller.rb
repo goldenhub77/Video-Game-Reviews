@@ -33,7 +33,7 @@ class ReviewsController < ApplicationController
   end
 
   def edit
-
+    @game = @review.video_game
   end
 
   def new

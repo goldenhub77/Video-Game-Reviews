@@ -11,17 +11,9 @@
     <%= f.text_area :review, required: true, size: '60x7' %>
   </div>
 
-  <div class="form-group">
-    <%= f.label :platforms %>
-    <div class='row'>
-      <div class="col-sm-6 col-sm-offset-3">
-        <%= f.collection_check_boxes(:platforms, Platform.all, :id, :name, include_hidden: false) do |b| %>
-          <div class="col-sm-4">
-            <%= b.label { b.check_box(checked: @review.platform_ids.include?(b.value)) + b.text } %>
-          </div>
-        <% end %>
-      </div>
-    </div>
+  <div class="field">
+    <%= f.label :platform %>
+    <%= f.collection_select :platforms, @game.platforms, :id, :name, { selected: @review.platform_ids, prompt: true } %>
   </div>
 
   <div class="field">

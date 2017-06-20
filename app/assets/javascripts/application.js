@@ -67,4 +67,5 @@ $(document).ready( () => {
     event.preventDefault();
     adminSearch('users');
   })
+
 })

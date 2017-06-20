@@ -9,6 +9,7 @@ class VideoGamesController < ApplicationController
   def index
     if !get_video_game_params[:user_id].nil?
       authorize_owner!
+      @title = "My Games"
       if get_video_game_params[:search]
         @all_video_games = current_user.video_games.search(params[:search]).order("created_at DESC")
         if @all_video_games.empty?
@@ -18,6 +19,7 @@ class VideoGamesController < ApplicationController
         @all_video_games = current_user.video_games.order("created_at DESC")
       end
     else
+      @title = "All Games"
       @all_video_games = VideoGame.order('created_at DESC')
       if get_video_game_params[:search]
         @all_video_games = VideoGame.search(params[:search]).order("created_at DESC")

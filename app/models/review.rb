@@ -9,7 +9,12 @@ class Review < ApplicationRecord
   validates :review, presence: true, length: { minimum: 50, maximum: 300 }
   validates :rating, presence: true, numericality: true
   validates_presence_of :platforms
+  validate :platform_check
   validates_presence_of :video_game
+
+  def platform_check
+    (video_game.platforms.map { |game_platform| game_platform.name == platforms.first.name }).include?(true)
+  end
 
   def self.search(search)
     where("title ILIKE ? OR review ILIKE ?", "%#{search}%", "%#{search}%")

@@ -6,5 +6,5 @@ class ReviewDecanter < Decanter::Base
   input :review, :string
   input :rating, :integer
   input :video_game_id, :integer
-  input :platforms, :platform_array
+  input :platforms, :single_platform
 end
