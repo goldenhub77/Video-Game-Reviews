@@ -3,6 +3,7 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .review-block {
+  position: relative;
   margin: 1rem;
   padding: 1rem;
   border: 1.5px solid #808080;
@@ -10,12 +11,20 @@
   box-shadow: 0 0 30px black;
 }
 
-.voting-parameters p{
-  width: 70px;
+.review-block * {
+  word-wrap: break-word;
+}
+
+.voting-parameters {
+
 }
 
 .voting-parameters * {
   display: inline-block;
+}
+
+.voting-parameters p{
+  margin: 0;
 }
 
 .voting-parameters button {
@@ -25,4 +34,8 @@
 .right-side {
   height: 100%;
   border: 1px red solid;
+}
+
+.review_platforms {
+  float: right;
 }

@@ -22,7 +22,5 @@ feature 'admin shows user review', %q(
 
     expect(page).to have_content(review.title)
     expect(page).to have_content(review.review)
-    expect(page).to have_content(video_game.title)
-
   end
 end

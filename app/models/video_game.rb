@@ -20,10 +20,6 @@ class VideoGame < ApplicationRecord
     total_ratings = reviews.count + 1
     summed_ratings = reviews.inject(0) { |sum, review| sum + review.rating } + rating
     avg = (summed_ratings.to_f/total_ratings).round(2)
-    "#{avg}/5"
-  end
-
-  def html_platforms
-    "#{platforms.map { |platform| platform.name }.join(", ")}"
+    "#{avg} / 5.0"
   end
 end

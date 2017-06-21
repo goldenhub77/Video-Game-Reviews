@@ -1,17 +1,46 @@
-<div class="row">
-  <% if user_owns(@game) %>
-    <%= button_to "Edit", edit_video_game_path(@game), class: "btn btn-secondary", method: :get %>
-  <% end %>
-</div>
-<div class="row">
-  <div class="body">
-    <%= button_to "Write a review...", new_video_game_review_path(@game), class: "btn btn-primary", method: :get %>
-    <h2><%= @game.title %></h2>
-
-    <div class="reviews-block">
-      <h3>Reviews</h3>
-      <%= render 'shared/search' %>
-      <%= render 'reviews/reviews' %>
+<div class="body">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+          <% if user_owns(@game) or current_user.admin? %>
+            <%= button_to "Edit", edit_video_game_path(@game), class: "btn btn-secondary", method: :get %>
+          <% end %>
+        </div>
+        <div class="col-xs-2">
+          <%= button_to "Write a review...", new_video_game_review_path(@game), class: "btn btn-primary", method: :get %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-3">
+          <span class="rating-parameters">
+            <i class="fa fa-gamepad fa-2x"></i>
+            <p>Rating</p>
+            <div class="row">
+              <p><%= @game.rating_avg %></p>
+            </div>
+          </span>
+        </div>
+      </div>
+      <div class="video-game-title-block">
+        <h1 class="display-3"><%= @game.title %></h1>
+        <h2><%= @game.developer %></h2>
     </div>
+      <div class="row video-game-body">
+        <div class="col-xs-6">
+          <p>Summary:</p>
+          <%= @game.description %>
+        </div>
+        <div class="col-xs-6">
+          <p>Available Platforms:</p>
+          <%= @game.html_platforms %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="reviews-block">
+    <h3>Reviews</h3>
+    <%= render 'shared/search' %>
+    <%= render 'reviews/reviews' %>
   </div>
 </div>

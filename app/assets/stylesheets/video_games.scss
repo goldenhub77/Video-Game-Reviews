@@ -23,7 +23,7 @@
 }
 
 .video-game-block h4 {
-  line-height: 3rem;
+  line-height: 4rem;
   text-align: right;
 }
 
@@ -35,6 +35,16 @@
   position: absolute;
    top: 0;
    left: 10px;
+}
+
+.video-game-title-block {
+  line-height: 0.5;
+}
+
+.video-game-body {
+  border-top: 2px dotted black;
+  padding: 3rem;
+  word-wrap: break-word;
 }
 
 .rating-parameters * {

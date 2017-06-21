@@ -3,23 +3,42 @@
 <% end %>
 <div class="object-list">
   <% @reviews.each do |review| %>
-    <div class="review-block col-sm-8 col-md-4 col-lg-4">
-      <% if controller_path == 'reviews' %>
-        <h5><strong>Game - <%= review.video_game.title %></strong></h5>
-      <% end %>
-      <%= link_to review.title, review_path(review.id) %>
-      <div class="row">
-        <div class="col-sm-12 col-md-12">
-          <span class="badge voting-parameters">
-            <%= button_to vote_review_path(review, vote: 1), id: "up-vote-review-#{review.id}", method: :post, disabled: review.voted_thumbs_up?(current_user), class: "btn btn-default" do %>
-              <i class="fa fa-thumbs-up"></i>
-            <% end %>
-            <p><%= review.total_rating %></p>
-            <%= button_to vote_review_path(review, vote: -1), id: "down-vote-review-#{review.id}", method: :post, disabled: review.voted_thumbs_down?(current_user), class: "btn btn-default" do %>
-              <i class="fa fa-thumbs-down"></i>
-            <% end %>
-        </span>
+    <div class="row">
+      <div class="review-block col-xs-12">
+        <div class="user-data row">
+          <div class="col-xs-2">
+            <p>Published</p>
+            <p><%= object_date_joined(review, :created_at) %></p>
+          </div>
+          <div class="row">
+            <div class="col-xs-3">
+              <p>Written by: <%= review.user.first_name %></p>
+              <% if current_user.admin? %>
+                <p><%= review.user.email %></p>
+              <% end %>
+            </div>
+          </div>
         </div>
+        <% if controller_path == 'reviews' %>
+          <h2>Game - <%= review.video_game.title %></h2>
+        <% end %>
+        <h2><%= link_to review.title, review_path(review.id) %></h2>
+        <p><%= review.short_review %>...</p>
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="badge voting-parameters">
+              <%= button_to vote_review_path(review, vote: 1), id: "up-vote-review-#{review.id}", method: :post, disabled: review.voted_thumbs_up?(current_user), class: "btn btn-default" do %>
+                <i class="fa fa-thumbs-up"></i>
+              <% end %>
+              <%= button_to vote_review_path(review, vote: -1), id: "down-vote-review-#{review.id}", method: :post, disabled: review.voted_thumbs_down?(current_user), class: "btn btn-default" do %>
+                <i class="fa fa-thumbs-down"></i>
+              <% end %>
+              <p><%= review.total_rating %></p>
+              <p><%= review.review_helpful? %></p>
+            </div>
+          </div>
+        </div>
+        <p class="review_platforms">Platform: <%= review.html_platforms %></p>
       </div>
     </div>
   <% end %>

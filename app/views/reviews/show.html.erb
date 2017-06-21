@@ -1,14 +1,40 @@
-<div class="review-show-page">
-  <h3>Review for - <%= @game.title %></h3>
-  <div class="row">
-    <% if user_owns(@review) %>
-      <%= button_to "Edit", edit_user_review_path(current_user), class: "btn btn-secondary", method: :get %>
-    <% end %>
-  </div>
-  <div class="row">
-    <div class="body">
-      <h2><%= @review.title %></h2>
-      <p><%= @review.review %></p>
+<div class="body">
+  <div class="jumbotron jumbotron-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-2 col-sm-2 col-md-1 col-lg-1">
+          <% if user_owns(@review) or current_user.admin? %>
+            <%= button_to "Edit", edit_user_review_path(current_user), class: "btn btn-secondary", method: :get %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-5">
+          <span class="rating-parameters">
+            <p><%= @review.total_rating %>% of voters found this review helpful</p>
+          </span>
+        </div>
+      </div>
+      <div class="show-title-block">
+        <h1 class="display-3"><%= @review.title %></h1>
+    </div>
+      <div class="row video-game-body">
+        <div class="show-review-block col-xs-12">
+          <div class="row">
+            <div class="user-data col-xs-6">
+              <p>Written by: <strong><%= @review.user.first_name %></strong></p>
+              <% if current_user.admin? %>
+                <p><%= @review.user.email %></p>
+              <% end %>
+            </div>
+          </div>
+          <%= @review.review %>
+        </div>
+        <div class="col-xs-6">
+          <p>Platform:</p>
+          <%= @game.html_platforms %>
+        </div>
+      </div>
     </div>
   </div>
 </div>

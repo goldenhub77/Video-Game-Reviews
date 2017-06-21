@@ -24,7 +24,7 @@ feature 'user votes on an existing review', %q(
 
     click_button "up-vote-review-#{review.id}"
 
-    expect(page).to have_content("100.0%")
+    expect(page).to have_content("100.0")
     expect(page).to have_button("up-vote-review-#{review.id}", disabled: true)
     expect(page).to have_button("down-vote-review-#{review.id}", disabled: false)
   end
@@ -41,7 +41,7 @@ feature 'user votes on an existing review', %q(
 
     click_button "down-vote-review-#{review.id}"
 
-    expect(page).to have_content("0%")
+    expect(page).to have_content("0")
     expect(page).to have_button("up-vote-review-#{review.id}", disabled: false)
     expect(page).to have_button("down-vote-review-#{review.id}", disabled: true)
   end

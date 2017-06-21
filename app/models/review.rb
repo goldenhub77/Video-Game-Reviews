@@ -32,12 +32,34 @@ class Review < ApplicationRecord
     sum = review_votes.inject(0) { |sum, review| sum + review.vote }
     avg = (sum.to_f/review_votes.count*100).round(2)
     if avg < 0
-      "0%"
+      0
     elsif avg.nan?
       "No ratings!"
     else
-      "#{avg}%"
+      avg
     end
+  end
+
+  def review_helpful?
+    if total_rating.class == String
+      return nil
+    elsif total_rating > 90
+      "Very helpful"
+    elsif total_rating.between?(80, 90)
+      "Liked by most"
+    elsif total_rating.between?(70,80)
+      "questionable"
+    elsif total_rating < 70
+      "Not so helpful"
+    end
+  end
+
+  def short_review
+    short_review = review
+    if review.length > 60
+      short_review = review[0..60]
+    end
+    short_review
   end
 
   def user_voted?(user)
