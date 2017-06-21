@@ -40,6 +40,6 @@ form input:last-of-type {
   line-height: 0.40;
 }
 
-div {
+.container > div {
   margin-bottom: 1rem;
 }
