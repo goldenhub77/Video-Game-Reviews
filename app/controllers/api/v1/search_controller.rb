@@ -12,14 +12,14 @@ class Api::V1::SearchController < Api::V1::ApiController
         @objects = current_user.video_games.search(ajax_params[:searchQuery]).order("created_at DESC")
         @url = "/video_games"
         @html = @objects.map { |obj| video_game_html(obj) }
-    elsif !ajax_params[:reviewsPresent].nil? && !ajax_params[:url].include?('user')
+    elsif ajax_params[:reviewsPresent].present? && !ajax_params[:url].include?('user')
       if ajax_params[:searchQuery]
         video_game = VideoGame.find(ajax_params[:videoGameId])
         @objects = video_game.reviews.search(ajax_params[:searchQuery]).order("created_at DESC")
         @url = "/reviews"
         @html = @objects.map { |obj| review_html(obj) }
       end
-    elsif !ajax_params[:reviewsPresent].nil? && ajax_params[:url].include?('user')
+    elsif ajax_params[:reviewsPresent].present? && ajax_params[:url].include?('user')
       if ajax_params[:searchQuery]
         @objects = current_user.reviews.search(ajax_params[:searchQuery]).order("created_at DESC")
         @url = "/reviews"

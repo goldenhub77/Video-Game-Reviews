@@ -8,21 +8,20 @@ class ReviewsController < ApplicationController
     if !get_review_params[:video_game_id].nil? && get_review_params[:review_search].nil?
       @game = VideoGame.find(get_review_params[:video_game_id])
       if get_review_params[:search]
-        @reviews = Review.search(params[:search]).order("created_at DESC")
+        @reviews = Review.search(params[:search])
         if @reviews.empty?
           no_results!(get_review_params[:search])
         end
       end
     elsif !get_review_params[:user_id].nil? || (get_review_params[:video_game_id] && !get_review_params[:review_search].nil?)
       authorize_owner!
+      load_user
       if get_review_params[:search]
-        load_user
-        @reviews = @user.reviews.search(params[:search]).order("created_at DESC")
+        @reviews = @user.reviews.search(params[:search])
         if @reviews.empty?
           no_results!(get_review_params[:search])
         end
       else
-        load_user
         @reviews = @user.reviews.order("created_at DESC")
       end
     end
@@ -80,6 +79,11 @@ class ReviewsController < ApplicationController
 
   def load_user
     @user = User.find(get_review_params[:user_id])
+    if @user.id != current_user.id && current_user.admin?
+      @title = "#{@user.full_name}'s Reviews (#{@user.email})"
+    else
+      @title = "My Reviews"
+    end
   end
 
   def find_review

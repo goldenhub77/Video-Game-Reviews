@@ -7,12 +7,11 @@ class VideoGamesController < ApplicationController
   end
 
   def index
-    if !get_video_game_params[:user_id].nil?
+    if get_video_game_params[:user_id].present?
       authorize_owner!
       load_user
-      @title = "My Games"
       if get_video_game_params[:search]
-        @all_video_games = @user.video_games.search(params[:search]).order("created_at DESC")
+        @all_video_games = @user.video_games.search(params[:search])
         if @all_video_games.empty?
           no_results!(get_video_game_params[:search])
         end
@@ -23,7 +22,7 @@ class VideoGamesController < ApplicationController
       @title = "All Games"
       @all_video_games = VideoGame.order('created_at DESC')
       if get_video_game_params[:search]
-        @all_video_games = VideoGame.search(params[:search]).order("created_at DESC")
+        @all_video_games = VideoGame.search(params[:search])
         if @all_video_games.empty?
           no_results!(get_video_game_params[:search])
         end
@@ -37,7 +36,7 @@ class VideoGamesController < ApplicationController
     if get_video_game_params[:search].nil?
       @reviews = @game.reviews.order('created_at DESC')
     else
-      @reviews = @game.reviews.search(params[:search]).order("created_at DESC")
+      @reviews = @game.reviews.search(params[:search])
     end
   end
 
@@ -50,7 +49,7 @@ class VideoGamesController < ApplicationController
   end
 
   def create
-    @game = VideoGame.new(VideoGameDecanter.decant(params[:video_game]))
+    @game = VideoGame.new(post_video_game_params)
     @game.user_id = current_user.id
     if @game.save
       success_notice!(@game.title, "saved")
@@ -64,7 +63,7 @@ class VideoGamesController < ApplicationController
     @game.update_attributes(post_video_game_params)
     if @game.save
       success_notice!(@game.title, "updated")
-      redirect_back(fallback_location: user_video_games_path(@game))
+      redirect_back(fallback_location: user_video_games_path(current_user))
     else
       render :edit
     end
@@ -78,12 +77,19 @@ class VideoGamesController < ApplicationController
 
   protected
 
+
+
   def find_video_game
     @game = VideoGame.find(get_video_game_params[:id])
   end
 
   def load_user
     @user = User.find(get_video_game_params[:user_id])
+    if @user.id != current_user.id && current_user.admin?
+      @title = "#{@user.full_name}'s Games (#{@user.email})"
+    else
+      @title = "My Games"
+    end
   end
 
   def get_video_game_params

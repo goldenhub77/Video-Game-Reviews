@@ -18,7 +18,7 @@ feature 'user deletes video game', %q(
     visit video_game_path(video_game)
 
     click_button 'Edit'
-    save_and_open_page
+    
     click_button 'Delete'
 
     expect(page).to have_content("Successfully deleted #{video_game.title}")
