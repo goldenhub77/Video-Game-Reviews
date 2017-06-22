@@ -15,10 +15,6 @@
   word-wrap: break-word;
 }
 
-.voting-parameters {
-
-}
-
 .voting-parameters * {
   display: inline-block;
 }
@@ -38,4 +34,9 @@
 
 .review_platforms {
   float: right;
+}
+
+.show-review-block {
+  padding: 1rem;
+  margin: 2rem;
 }

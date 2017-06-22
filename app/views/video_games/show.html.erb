@@ -40,6 +40,11 @@
   </div>
   <div class="reviews-block">
     <h3>Reviews</h3>
+    <div class="row">
+      <div class="col-xs-3">
+        <p><%= @game.reviews.count %> Reviews</p>
+      </div>
+    </div>
     <%= render 'shared/search' %>
     <%= render 'reviews/reviews' %>
   </div>

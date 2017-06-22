@@ -68,7 +68,20 @@ class ReviewsController < ApplicationController
     review_vote = ReviewVote.find_or_initialize_by(user_id: current_user.id, review_id: @review.id)
     review_vote.vote = params[:vote].to_i
     review_vote.save!
-    redirect_back(fallback_location: video_game_path(@review.video_game))
+    respond_to do |response|
+      response.js {
+        @html = vote_html(@review)
+        up_vote = @review.voted_thumbs_up?(current_user)
+        down_vote = @review.voted_thumbs_down?(current_user)
+        render json: {
+          id: ajax_params[:id],
+          html: @html,
+          downVote: down_vote,
+          upVote: up_vote
+        }
+      }
+      response.html { redirect_back(fallback_location: video_game_path(@review.video_game)) }
+    end
   end
 
   protected
@@ -98,8 +111,17 @@ class ReviewsController < ApplicationController
     @game = @review.video_game
   end
 
+  def ajax_params
+    params.permit(:id, :auth)
+  end
+
   def get_review_params
     params.permit(:id, :search, :user_id, :video_game_id, :review_search)
+  end
+
+  def vote_html(resource)
+    "<p>#{resource.total_rating}</p>
+     <p>#{resource.review_helpful?}</p>"
   end
 
   def post_review_params

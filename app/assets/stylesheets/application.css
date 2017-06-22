@@ -14,9 +14,6 @@
  *= require_self
  */
 
- body {
-   font-family: sans-serif, Arial;
- }
 
 .main-header {
   font-family: 'Frijole', cursive;

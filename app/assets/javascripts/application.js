@@ -68,4 +68,10 @@ $(document).ready( () => {
     adminSearch('users');
   })
 
+  $(".vote-btn").on("click", (event) => {
+    event.preventDefault();
+    currentAction = event.currentTarget.form.action;
+    reviewVote(currentAction);
+  })
+
 })

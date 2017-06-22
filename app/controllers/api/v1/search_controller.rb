@@ -34,7 +34,7 @@ class Api::V1::SearchController < Api::V1::ApiController
     if !ajax_params[:reviewsPresent].nil? && ajax_params[:url].include?('user')
       if ajax_params[:searchQuery]
         @objects = current_user.reviews.search(ajax_params[:searchQuery]).order("created_at DESC")
-        @html = @objects.map { |obj| html(obj) }
+        @html = @objects.map { |obj| review_html(obj) }
       end
     end
     load_notice
@@ -65,11 +65,19 @@ class Api::V1::SearchController < Api::V1::ApiController
   def review_html(resource)
     game_title = nil
     user_email = nil
+    thumbs_up = nil
+    thumbs_down = nil
     if ajax_params[:url].include?('reviews')
       game_title = "<h5>Game - #{resource.video_game.title}</h5>"
     end
     if current_user.admin?
       user_email = "<p>#{resource.user.email}</p>"
+    end
+    if resource.voted_thumbs_up?(current_user)
+      thumbs_up = "disabled = 'disabled'"
+    end
+    if resource.voted_thumbs_down?(current_user)
+      thumbs_down = "disabled = 'disabled'"
     end
     "<div class='row'>
       <div class='review-block col-xs-12'>
@@ -91,14 +99,14 @@ class Api::V1::SearchController < Api::V1::ApiController
         <div class='row'>
           <div class='col-xs-4'>
             <div class='badge voting-parameters'>
-              <form class='button_to' method='post' action='/reviews/#{resource.id}/vote?vote=1'><button id='up-vote-review-#{resource.id}' #{resource.voted_thumbs_up?(current_user)} class='btn btn-default' type='submit'>
+              <form class='button_to' method='post' action='/reviews/#{resource.id}/vote?vote=1'><button id='up-vote-review-#{resource.id}' #{thumbs_up} class='btn btn-default' type='submit'>
                 <i class='fa fa-thumbs-up'></i>
                 </button>
-                <input type='hidden' name='authenticity_token' value=#{ajax_params[:auth]}>
+                <input type='hidden' name='authenticity_token' value='#{ajax_params[:auth]}'>
               </form>
-              <form class='button_to' method='post' action='/reviews/#{resource.id}/vote?vote=-1'><button id='down-vote-review-#{resource.id}' #{resource.voted_thumbs_up?(current_user)} class='btn btn-default' type='submit'>
+              <form class='button_to' method='post' action='/reviews/#{resource.id}/vote?vote=-1'><button id='down-vote-review-#{resource.id}' #{thumbs_down} class='btn btn-default' type='submit'>
                 <i class='fa fa-thumbs-down'></i>
-                </button><input type='hidden' name='authenticity_token' value=#{ajax_params[:auth]}>
+                </button><input type='hidden' name='authenticity_token' value='#{ajax_params[:auth]}'>
               </form>
               <p>#{resource.total_rating}%</p>
               <p>#{resource.review_helpful?}</p>
@@ -107,26 +115,6 @@ class Api::V1::SearchController < Api::V1::ApiController
         </div>
         <p class='review_platforms'>Platform: #{resource.html_platforms}</p>
       </div>
-    </div>"
-  end
-
-  def video_game_html(resource)
-    "<div class='video-game-block col-sm-12 col-md-4 col-lg-3'>
-      <h4><a href='/video_games/#{resource.id}'>#{resource.title}</a></h4>
-      <p>#{resource.developer}</p>
-      <div class='col-sm-6 col-md-6'>
-        Release Date:
-        <p>#{object_date_joined(resource, :release_date)}</p>
-      </div>
-      <div class='row'>
-        <div class='col-sm-12 col-md-12'>
-          <p>#{resource.html_platforms}</p>
-        </div>
-      </div>
-      <span class='rating-parameters'>
-        <i class='fa fa-gamepad fa-2x'></i>
-        <p>Rating: #{resource.rating_avg}</p>
-      </span>
     </div>"
   end
 

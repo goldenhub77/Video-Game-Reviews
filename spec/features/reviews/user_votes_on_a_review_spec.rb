@@ -19,14 +19,14 @@ feature 'user votes on an existing review', %q(
 
     expect(page).to have_content(review.title)
     expect(page).to have_content("No ratings!")
-    expect(page).to have_button("up-vote-review-#{review.id}", disabled: false)
-    expect(page).to have_button("down-vote-review-#{review.id}", disabled: false)
+    expect(page).to have_button("up-vote-btn-#{review.id}", disabled: false)
+    expect(page).to have_button("down-vote-btn-#{review.id}", disabled: false)
 
-    click_button "up-vote-review-#{review.id}"
+    click_button "up-vote-btn-#{review.id}"
 
     expect(page).to have_content("100.0")
-    expect(page).to have_button("up-vote-review-#{review.id}", disabled: true)
-    expect(page).to have_button("down-vote-review-#{review.id}", disabled: false)
+    expect(page).to have_button("up-vote-btn-#{review.id}", disabled: true)
+    expect(page).to have_button("down-vote-btn-#{review.id}", disabled: false)
   end
 
   scenario 'thumbs down' do
@@ -36,13 +36,13 @@ feature 'user votes on an existing review', %q(
 
     expect(page).to have_content(review.title)
     expect(page).to have_content("No ratings!")
-    expect(page).to have_button("up-vote-review-#{review.id}", disabled: false)
-    expect(page).to have_button("down-vote-review-#{review.id}", disabled: false)
+    expect(page).to have_button("up-vote-btn-#{review.id}", disabled: false)
+    expect(page).to have_button("down-vote-btn-#{review.id}", disabled: false)
 
-    click_button "down-vote-review-#{review.id}"
+    click_button "down-vote-btn-#{review.id}"
 
     expect(page).to have_content("0")
-    expect(page).to have_button("up-vote-review-#{review.id}", disabled: false)
-    expect(page).to have_button("down-vote-review-#{review.id}", disabled: true)
+    expect(page).to have_button("up-vote-btn-#{review.id}", disabled: false)
+    expect(page).to have_button("down-vote-btn-#{review.id}", disabled: true)
   end
 end
