@@ -88,7 +88,7 @@ class Api::V1::SearchController < Api::V1::ApiController
           </div>
           <div class='row'>
             <div class='col-xs-3'>
-              <p>Written by: #{resource.user.first_name}</p>
+              <p>Written by: #{resource.written_by?(current_user)}</p>
               #{user_email}
             </div>
           </div>
