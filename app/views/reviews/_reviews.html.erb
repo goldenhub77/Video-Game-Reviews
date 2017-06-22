@@ -12,7 +12,7 @@
           </div>
           <div class="row">
             <div class="col-xs-3">
-              <p>Written by: <%= review.user.first_name %></p>
+              <p>Written by: <%= review.written_by?(current_user) %></p>
               <% if current_user.admin? %>
                 <p><%= review.user.email %></p>
               <% end %>

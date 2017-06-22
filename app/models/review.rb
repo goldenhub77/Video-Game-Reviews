@@ -62,6 +62,14 @@ class Review < ApplicationRecord
     short_review
   end
 
+  def written_by?(current_user)
+    if user.first_name == current_user.first_name
+      "Me"
+    else
+      user.first_name
+    end
+  end
+
   def user_voted?(user)
     review_votes.where('user_id = ?', user.id).present?
   end
