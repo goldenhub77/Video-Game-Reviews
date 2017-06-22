@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   before_action :authorize_owner!, only: [:edit, :destroy]
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :authorize_admin!, if: :admins_controller?
+  rescue_from ActionController::RoutingError, :with => :render_404
+  rescue_from ActiveRecord::RecordNotFound, :with => :render_404
 
   def authorize_owner!
     unless controller_path == 'devise/registrations' or controller_path == 'devise/sessions' or current_user.admin?
@@ -49,6 +51,14 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  def render_404(exception = nil)
+    if exception
+        logger.info "Rendering 404: #{exception.message}"
+    end
+
+    render :file => "#{Rails.root}/public/404.html", :status => 404, :layout => false
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name])

@@ -39,4 +39,6 @@ Rails.application.routes.draw do
 
 
   root 'video_games#home'
+
+  match '*a', :to => 'errors#routing', via: :get
 end
