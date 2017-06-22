@@ -3,9 +3,10 @@
 <% end %>
 <div class="object-list">
   <% @all_video_games.each do |game| %>
-    <div class="video-game-block col-sm-12 col-md-4 col-lg-3">
+    <div class="video-game-block col-sm-12 col-md-5 col-lg-5">
       <h4><%= link_to game.title, video_game_path(game.id) %></h4>
       <p><%= game.developer %></p>
+      <%= image_tag("video-game-image-placeholder.jpg", alt: 'default video game image') %>
       <div class="col-sm-6 col-md-6">
         Release Date:
         <p><%= object_date_joined(game, :release_date) %></p>

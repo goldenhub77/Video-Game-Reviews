@@ -118,10 +118,13 @@ class Api::V1::SearchController < Api::V1::ApiController
     </div>"
   end
 
+
   def video_game_html(resource)
-    "<div class='video-game-block col-sm-12 col-md-4 col-lg-3'>
+    image = ActionController::Base.helpers.image_tag('video-game-image-placeholder.jpg', alt: 'default video game image')
+    "<div class='video-game-block col-sm-12 col-md-5 col-lg-5'>
       <h4><a href='/video_games/#{resource.id}'>#{resource.title}</a></h4>
       <p>#{resource.developer}</p>
+      #{image}
       <div class='col-sm-6 col-md-6'>
         Release Date:
         <p>#{object_date_joined(resource, :release_date)}</p>

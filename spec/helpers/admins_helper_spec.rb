@@ -1,15 +1,16 @@
 require 'rails_helper'
 
-# Specs in this file have access to a helper object that includes
-# the AdminsHelper. For example:
-#
-# describe AdminsHelper do
-#   describe "string concat" do
-#     it "concats two strings with spaces" do
-#       expect(helper.concat_strings("this","that")).to eq("this that")
-#     end
-#   end
-# end
 RSpec.describe AdminsHelper, type: :helper do
-  pending "add some examples to (or delete) #{__FILE__}"
+    describe ".admin_controller?" do
+      it "returns true or false if you are calling a admins controller" do
+        expect(AdminsController.admin_controller?.to eq(true)
+        expect(Admins::ReviewsController.admin_controller?.to eq(true)
+        expect(Admins::VideoGamesController.admin_controller?.to eq(true)
+        expect(VideoGamesController.admin_controller?.to eq(false)
+        expect(ReviewsController.admin_controller?.to eq(false)
+        expect(SearchController.admin_controller?.to eq(false)
+        expect(UsersController.admin_controller?.to eq(false)
+      end
+    end
+  end
 end
