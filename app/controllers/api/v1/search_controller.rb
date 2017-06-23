@@ -2,20 +2,20 @@ class Api::V1::SearchController < Api::V1::ApiController
   include ApplicationHelper
 
   def index
-    if ajax_params[:reviewsPresent].nil? && !ajax_params[:url].include?('user')
-      if ajax_params[:searchQuery]
-        @objects = VideoGame.search(ajax_params[:searchQuery])
+    if search_params[:review_present].nil? && !search_params[:url].include?('user')
+      if search_params[:search]
+        @objects = VideoGame.search(search_params[:search])
       end
-    elsif ajax_params[:reviewsPresent].nil? && ajax_params[:url].include?('user')
-        @objects = current_user.video_games.search(ajax_params[:searchQuery])
-    elsif ajax_params[:reviewsPresent].present? && !ajax_params[:url].include?('user')
-      if ajax_params[:searchQuery]
-        video_game = VideoGame.find(ajax_params[:videoGameId])
-        @objects = video_game.reviews.search(ajax_params[:searchQuery])
+    elsif search_params[:review_present].nil? && search_params[:url].include?('user')
+        @objects = current_user.video_games.search(search_params[:search])
+    elsif search_params[:review_present].present? && !search_params[:url].include?('user')
+      if search_params[:search]
+        video_game = VideoGame.find(search_params[:video_game_id])
+        @objects = video_game.reviews.search(search_params[:search])
       end
-    elsif ajax_params[:reviewsPresent].present? && ajax_params[:url].include?('user')
-      if ajax_params[:searchQuery]
-        @objects = current_user.reviews.search(ajax_params[:searchQuery])
+    elsif search_params[:review_present].present? && search_params[:url].include?('user')
+      if search_params[:search]
+        @objects = current_user.reviews.search(search_params[:search])
       end
     end
     convert_to_js_ids(@objects)
@@ -26,8 +26,8 @@ class Api::V1::SearchController < Api::V1::ApiController
   protected
 
   def load_notice
-    if @js_ids.empty? && ajax_params[:searchQuery] != ""
-      @notice = "There are no results matching the term '#{ajax_params[:searchQuery]}'"
+    if @js_ids.empty? && search_params[:search] != ""
+      @notice = "There are no results matching the term '#{search_params[:search]}'"
     end
   end
 
@@ -52,7 +52,7 @@ class Api::V1::SearchController < Api::V1::ApiController
     end
   end
 
-  def ajax_params
-    params.permit(:searchQuery, :videoGameId, :reviewsPresent, :userId, :url, :auth)
+  def search_params
+    params.permit(:search, :video_game_id, :review_present, :user_id, :url)
   end
 end
