@@ -4,24 +4,26 @@ let sendSearch = () => {
   let $videoGameId = $("#video_game_id").val();
   let $reviewsPresent = $("#review_present").val();
   let $userId = $("#user_id").val();
-  let $pageType = $("#page_type").val();
   let $url = $("#url").val();
-  let AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
   $.ajax({
     type: "GET",
     dataType: "json",
     url: `/api/v1/search`,
-    data: {'searchQuery': $searchQuery, 'videoGameId': $videoGameId, 'reviewsPresent': $reviewsPresent, 'url': $url, 'userId': $userId, 'auth': AUTH_TOKEN },
+    data: {'searchQuery': $searchQuery, 'videoGameId': $videoGameId, 'reviewsPresent': $reviewsPresent, 'url': $url, 'userId': $userId },
     success: (data) => {
-      if (data.objects.length === 0 && data.notice != null) {
+      if (data.jsObjIds.length === 0 && data.notice != null) {
         $(".notice").text(data.notice);
       }else {
         $(".notice").text("")
       }
-      $(".object-list").html("");
-      for (i=0; i < data.objects.length; i++) {
-        $(".object-list").append(data.html[i]);
+      $objectBlocks = $(`.${data.objType}-block`);
+      for (i=0; i < $objectBlocks.length; i++) {
+        if (data.jsObjIds.includes($objectBlocks[i].id)) {
+          $(`#${$objectBlocks[i].id}`).show();
+        }else {
+          $(`#${$objectBlocks[i].id}`).hide();
+        }
       }
     },
     error: (data) => {

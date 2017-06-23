@@ -4,7 +4,7 @@
 <div class="object-list">
   <% @reviews.each do |review| %>
     <div class="row">
-      <div class="review-block col-xs-12">
+      <div id="review-div-<%= review.id %>" class="review-block col-xs-12">
         <div class="user-data row">
           <div class="col-xs-2">
             <p>Published</p>

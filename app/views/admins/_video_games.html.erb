@@ -1,5 +1,5 @@
 <div class="container">
-    <table class="table table-striped">
+    <table id="admins-video-game" class="table table-striped">
       <thead>
         <tr>
           <th>Published</th>
@@ -8,9 +8,9 @@
           <th>Email</th>
         </tr>
       </thead>
-      <tbody id="admins-video-games">
+      <tbody>
         <% @all_video_games.each do |game| %>
-          <tr>
+          <tr id="video-game-table-row-<%= game.id %>">
             <td><%= object_date_joined(game) %></td>
             <td><%= game.title %></td>
             <td><%= game.user.full_name %></td>

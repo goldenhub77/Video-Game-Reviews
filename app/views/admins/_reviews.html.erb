@@ -1,5 +1,5 @@
 <div class="container">
-    <table class="table table-striped">
+    <table id="admins-review" class="table table-striped">
       <thead>
         <tr>
           <th>Published</th>
@@ -9,9 +9,9 @@
           <th>Email</th>
         </tr>
       </thead>
-      <tbody id="admins-reviews">
+      <tbody>
         <% @reviews.each do |review| %>
-          <tr>
+          <tr id="review-table-row-<%= review.id %>">
             <td><%= object_date_joined(review) %></td>
             <td><%= review.title %></td>
             <td><%= review.video_game.title %></td>

@@ -19,7 +19,7 @@ class Review < ApplicationRecord
   end
 
   def self.search(search)
-    joins(:video_game).where("video_games.title ILIKE ? OR reviews.title ILIKE ? OR review ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%").order("created_at DESC")
+    joins(:video_game).where("video_games.title ILIKE ? OR reviews.title ILIKE ? OR review ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%").order("reviews.created_at DESC")
   end
 
   def self.status

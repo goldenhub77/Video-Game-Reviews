@@ -5,7 +5,7 @@
       <%= hidden_field_tag :review_present, true %>
     <% elsif controller_name == 'reviews' && self.action_name == 'index' %>
       <%= hidden_field_tag :review_present, true %>
-      <% elsif controller_name == 'video_games' && self.action_name == 'index' && !@game.nil? %>
+      <% elsif controller_name == 'video_games' && self.action_name == 'index' && @game.present? %>
         <%= hidden_field_tag :user_id, current_user.id %>
     <% end %>
     <%= hidden_field_tag :url, request.env["PATH_INFO"] %>

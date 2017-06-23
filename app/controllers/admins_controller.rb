@@ -1,38 +1,22 @@
 class AdminsController < ApplicationController
-  before_action :load_objects, only: [:index]
   include ApplicationHelper
+  before_action :load_objects, only: [:index]
+
   def index
     if get_admin_params[:review_search]
       @reviews = Review.search(get_admin_params[:review_search])
-      load_review_html
-      if @reviews.empty? or @js_reviews.empty?
-        @review_notice = "No reviews matching #{get_admin_params[:review_search]}"
-      end
+      load_notice(@reviews, get_admin_params[:review_search])
     end
     if get_admin_params[:video_game_search]
       @all_video_games = VideoGame.search(get_admin_params[:video_game_search])
-      load_video_game_html
-      if @all_video_games.empty? or @js_video_games.empty?
-        @game_notice = "No video games matching #{get_admin_params[:video_game_search]}"
-      end
+      load_notice(@reviews, get_admin_params[:video_game_search])
     end
     if get_admin_params[:user_search]
       @all_users = User.search(get_admin_params[:user_search])
-      load_user_html
-      if @all_users.empty? or @js_users.empty?
-        @user_notice = "No users matching #{get_admin_params[:user_search]}"
-      end
+      load_notice(@all_users, get_admin_params[:user_search])
     end
-
-    respond_to do |response|
-      response.js { render json: {
-          videoGames: { objects: @js_video_games, notice: @game_notice },
-          users: { objects: @js_users, notice: @user_notice },
-          reviews: { objects: @js_reviews, notice: @review_notice }
-        }
-      }
-      response.html { render :index }
-    end
+    load_js_ids
+    action_response
   end
 
 
@@ -42,65 +26,40 @@ class AdminsController < ApplicationController
     @all_video_games = VideoGame.all
     @reviews = Review.all
     @all_users = User.all
-    load_review_html
-    load_video_game_html
-    load_user_html
   end
 
-  def load_video_game_html
-    @js_video_games = []
-    @all_video_games.each do |game|
-      @js_video_games << { html: video_game_html(game) }
+  def load_js_ids
+    @js_video_games = convert_to_js_ids(@all_video_games)
+    @js_reviews = convert_to_js_ids(@reviews)
+    @js_users = convert_to_js_ids(@all_users)
+  end
+
+  def load_notice(obj, query)
+    if obj.empty? && query != ""
+      @notice = "There are no results matching the term '#{query}'"
     end
   end
 
-  def load_review_html
-    @js_reviews = []
-    @reviews.each do |review|
-      @js_reviews << { html: review_html(review) }
+  def convert_to_js_ids(objs)
+    @js_ids = []
+    @obj_type = "#{objs.model_name.element.gsub("_", "-")}"
+    objs.each do |obj|
+      @js_ids << "#{@obj_type}-table-row-#{obj.id}"
     end
+    [@js_ids, @obj_type]
   end
 
-  def load_user_html
-    @js_users = []
-    @all_users.each do |user|
-      @js_users << { html: user_html(user)}
+  def action_response
+    respond_to do |response|
+      response.js { render json: {
+          jsReviews: { ids: @js_reviews[0], type: @js_reviews[1]},
+          jsVideoGames: { ids: @js_video_games[0], type: @js_video_games[1] },
+          jsUsers: { ids: @js_users[0], type: @js_users[1] },
+          notice: @notice
+        }
+      }
+      response.html { render :index }
     end
-  end
-
-  def review_html(obj)
-    "<tr>
-      <td>#{object_date_joined(obj)}</td>
-      <td>#{obj.title}</td>
-      <td>#{obj.video_game.title}</td>
-      <td>#{obj.user.full_name}</td>
-      <td>#{obj.user.email}</td>
-      <td><form class='button_to' method='get' action='/reviews/#{obj.id}'><input class='btn btn-secondary' type='submit' value='Show'></form></td>
-      <td><form class='button_to' method='post' action='/reviews/#{obj.id}'><input type='hidden' name='_method' value='delete'><input data-confirm='Are you sure?' class='btn btn-danger' type='submit' value='Delete'><input type='hidden' name='authenticity_token' value=#{get_admin_params[:auth]}></form></td>
-    </tr>"
-  end
-
-  def video_game_html(obj)
-    "<tr>
-      <td>#{object_date_joined(obj)}</td>
-      <td>#{obj.title}</td>
-      <td>#{obj.user.full_name}</td>
-      <td>#{obj.user.email}</td>
-      <td><form class='button_to' method='get' action='/video_games/#{obj.id}'><input class='btn btn-secondary' type='submit' value='Show'></form></td>
-      <td><form class='button_to' method='post' action='/video_games/#{obj.id}'><input type='hidden' name='_method' value='delete'><input data-confirm='Are you sure?' class='btn btn-danger' type='submit' value='Delete'><input type='hidden' name='authenticity_token' value=#{get_admin_params[:auth]}></form></td>
-    </tr>"
-  end
-
-  def user_html(obj)
-    "<tr>
-      <td>#{object_date_joined(obj)}</td>
-      <td>#{obj.full_name}</td>
-      <td>#{obj.email}</td>
-      <td><a href='/admins/users/#{obj.id}/video_games'>#{obj.video_games.count}</a></td>
-      <td><a href='/admins/users/#{obj.id}/reviews'>#{obj.reviews.count}</a></td>
-      <td><form class='button_to' method='get' action='/admins/users/#{obj.id}'><input class='btn btn-secondary' type='submit' value='Show'></form></td>
-      <td><form class='button_to' method='post' action='/admins/users/#{obj.id}'><input type='hidden' name='_method' value='delete'><input data-confirm='Are you sure?' class='btn btn-danger' type='submit' value='Delete'><input type='hidden' name='authenticity_token' value=#{get_admin_params[:auth]}></form></td>
-    </tr>"
   end
 
   def get_admin_params

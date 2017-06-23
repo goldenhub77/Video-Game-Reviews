@@ -4,43 +4,55 @@ let adminSearch = (resource) => {
   let $userSearch = $(".admin-user-search-field").val();
   let $videoGameSearch = $(".admin-game-search-field").val();
   let $reviewSearch = $(".admin-review-search-field").val();
-  let AUTH_TOKEN = $('meta[name=csrf-token]').attr('content');
 
   $.ajax({
     type: "GET",
     dataType: "json",
     url: `/admins`,
-    data: {'user_search': $userSearch, 'video_game_search': $videoGameSearch, 'review_search': $reviewSearch, 'auth': AUTH_TOKEN },
+    data: {'user_search': $userSearch, 'video_game_search': $videoGameSearch, 'review_search': $reviewSearch },
     success: (data) => {
       if (resource == 'video-games') {
-        if (data.videoGames.objects.length === 0 && data.videoGames.notice != null) {
-          $("#video-game-notice").html(data.videoGames.notice);
+        if (data.jsVideoGames.ids.length === 0 && data.notice != null) {
+          $("#video-game-notice").html(data.notice);
         }else {
-          $("#video-game-notice").text("");
-            $("#admins-video-games").html("");
-            for (i=0; i < data.videoGames.objects.length; i++) {
-              $("#admins-video-games").append(data.videoGames.objects[i].html);
+          $("#video-game-notice").html("");
+          $objectBlocks = $(`#admins-${data.jsVideoGames.type} > tbody > tr`);
+          for (i=0; i < $objectBlocks.length; i++) {
+            if (data.jsVideoGames.ids.includes($objectBlocks[i].id)) {
+              $(`#${$objectBlocks[i].id}`).show();
+            }else {
+              $(`#${$objectBlocks[i].id}`).hide();
+            }
           }
         }
       }
       if (resource == 'reviews') {
-        if (data.reviews.objects.length === 0 && data.reviews.notice != null) {
-          $("#review-notice").html(data.reviews.notice);
+        if (data.jsReviews.ids.length === 0 && data.notice != null) {
+          $("#review-notice").html(data.notice);
         }else {
-            $("#review-notice").text("");
-            $("#admins-reviews").html("");
-            for (i=0; i < data.reviews.objects.length; i++) {
-              $("#admins-reviews").append(data.reviews.objects[i].html)
+          $("#review-notice").html("");
+          $objectBlocks = $(`#admins-${data.jsReviews.type} > tbody > tr`);
+          for (i=0; i < $objectBlocks.length; i++) {
+            if (data.jsReviews.ids.includes($objectBlocks[i].id)) {
+              $(`#${$objectBlocks[i].id}`).show();
+            }else {
+              $(`#${$objectBlocks[i].id}`).hide();
+            }
           }
         }
       }
       if (resource == 'users') {
-        if (data.users.objects.length === 0 && data.users.notice != null) {
-          $("#user-notice").html(data.users.notice);
+        if (data.jsUsers.ids.length === 0 && data.notice != null) {
+          $("#user-notice").html(data.notice);
         }else {
-            $("#admins-users").html("");
-            for (i=0; i < data.users.objects.length; i++) {
-              $("#admins-users").append(data.users.objects[i].html);
+          $("#user-notice").html("");
+          $objectBlocks = $(`#admins-${data.jsUsers.type} > tbody > tr`);
+          for (i=0; i < $objectBlocks.length; i++) {
+            if (data.jsUsers.ids.includes($objectBlocks[i].id)) {
+              $(`#${$objectBlocks[i].id}`).show();
+            }else {
+              $(`#${$objectBlocks[i].id}`).hide();
+            }
           }
         }
       }
